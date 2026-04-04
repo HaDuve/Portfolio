@@ -122,19 +122,27 @@ export function Hero({ profile, introDone }: Props) {
             initial={reduce ? false : "hidden"}
             animate={showContent ? "visible" : "hidden"}
             variants={{
-              hidden: { opacity: 0, y: 28, scale: 0.96, filter: "blur(8px)" },
+              hidden: {
+                opacity: 0,
+                y: 28,
+                scale: 0.88,
+                rotate: -22,
+                filter: "blur(8px)",
+              },
               visible: {
                 opacity: 1,
                 y: 0,
                 scale: 1,
+                rotate: 0,
                 filter: "blur(0px)",
                 transition: {
-                  duration: 0.72,
+                  duration: 0.85,
                   ease,
                   delay: reduce ? 0 : 0.36,
                 },
               },
             }}
+            style={{ transformOrigin: "50% 50%" }}
           >
             <HeroFan sectionRef={sectionRef} />
           </motion.div>
