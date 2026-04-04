@@ -34,8 +34,8 @@ export function ParallaxMedia({
     target: ref,
     offset: ["start end", "end start"],
   });
-  const y = useTransform(scrollYProgress, [0, 1], ["-12%", "12%"]);
-  const yApp = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
+  const y = useTransform(scrollYProgress, [0, 1], ["-15%", "15%"]);
+  const yApp = useTransform(scrollYProgress, [0, 1], ["-7.5%", "7.5%"]);
 
   if (mediaKind === "app") {
     const appContent = (
@@ -92,7 +92,7 @@ export function ParallaxMedia({
     <div ref={ref} className={frameClassName}>
       <motion.div
         style={{ y }}
-        className="absolute inset-0 h-[120%] w-full -top-[10%] will-change-transform"
+        className="absolute inset-0 h-[125%] w-full -top-[12.5%] will-change-transform"
       >
         <Image
           src={imageUrl}

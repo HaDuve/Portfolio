@@ -27,7 +27,7 @@ export function ParallaxLetter({
     target: ref,
     offset: ["start end", "end start"],
   });
-  const y = useTransform(scrollYProgress, [0, 1], ["-14%", "14%"]);
+  const y = useTransform(scrollYProgress, [0, 1], ["-17.5%", "17.5%"]);
 
   const charClass = isFeatured ? charClassFeatured : charClassDefault;
 
@@ -47,7 +47,7 @@ export function ParallaxLetter({
     <div ref={ref} className={frameClassName}>
       <motion.div
         style={{ y }}
-        className="absolute inset-0 flex h-[125%] w-full -top-[12.5%] items-center justify-center will-change-transform"
+        className="absolute inset-0 flex h-[130%] w-full -top-[15%] items-center justify-center will-change-transform"
       >
         <span className={charClass} aria-hidden>
           {letter}
