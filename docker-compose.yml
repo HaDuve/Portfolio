@@ -1,0 +1,32 @@
+# Portfolio on VM1: Caddy serves static Next.js export from shared volume.
+# First deploy / content updates:
+#   docker compose run --rm frontend
+#   docker compose up -d caddy
+
+services:
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile
+      - site_data:/var/www/html
+      - caddy_data:/data
+      - caddy_config:/config
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    restart: "no"
+    volumes:
+      - site_data:/site
+    environment:
+      NEXT_TELEMETRY_DISABLED: "1"
+
+volumes:
+  site_data:
+  caddy_data:
+  caddy_config:

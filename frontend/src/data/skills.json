@@ -1,0 +1,16 @@
+{
+  "categories": [
+    {
+      "name": "Frontend",
+      "items": ["React", "Next.js", "TypeScript", "Tailwind CSS", "Accessibility"]
+    },
+    {
+      "name": "Backend & ops",
+      "items": ["Node.js", "REST APIs", "Docker", "Linux", "PostgreSQL"]
+    },
+    {
+      "name": "Practices",
+      "items": ["CI/CD", "Testing mindset", "Performance", "Security basics"]
+    }
+  ]
+}

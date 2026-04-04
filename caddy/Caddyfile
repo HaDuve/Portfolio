@@ -1,0 +1,6 @@
+# Automatic HTTPS (Let's Encrypt). Point hannesduve.com A record to this server.
+hannesduve.com {
+	root * /var/www/html
+	encode gzip zstd
+	file_server
+}

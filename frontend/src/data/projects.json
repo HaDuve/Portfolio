@@ -1,0 +1,22 @@
+[
+  {
+    "id": "1",
+    "title": "Portfolio (this site)",
+    "slug": "portfolio",
+    "description": "Next.js static export, Tailwind CSS v4, Docker + Caddy on Hetzner Cloud.",
+    "tech": ["Next.js", "TypeScript", "Tailwind CSS", "Docker", "Caddy"],
+    "imageUrl": null,
+    "githubUrl": null,
+    "liveUrl": "https://hannesduve.com"
+  },
+  {
+    "id": "2",
+    "title": "Sample API service",
+    "slug": "sample-api",
+    "description": "Placeholder project — replace with your real work, screenshots, and links.",
+    "tech": ["Node.js", "Fastify", "PostgreSQL"],
+    "imageUrl": null,
+    "githubUrl": "https://github.com/",
+    "liveUrl": null
+  }
+]
