@@ -40,7 +40,10 @@ export function Header() {
         >
           HD
         </Link>
-        <nav className="flex flex-1 items-center justify-end gap-3 overflow-x-auto px-1 sm:gap-8" aria-label="Primary">
+        <nav
+          className="mr-2 flex flex-1 items-center justify-end gap-3 overflow-x-auto px-1 sm:gap-8"
+          aria-label="Primary"
+        >
           {sections.slice(1).map((item) => (
             <a
               key={item.href}

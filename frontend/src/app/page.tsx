@@ -18,13 +18,13 @@ export default function Home() {
       <Hero profile={profile} />
 
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 pb-24 pt-16 sm:px-6 sm:pt-20">
-        <Reveal>
-          <section id="projects" className="scroll-mt-28">
-            <SectionHeading
-              eyebrow="Work"
-              title="Projects"
-              description="Selected builds — shipping, maintainable systems across web and mobile."
-            />
+        <section id="projects" className="scroll-mt-28">
+          <SectionHeading
+            eyebrow="Work"
+            title="Projects"
+            description="Selected builds — shipping, maintainable systems across web and mobile."
+          />
+          <Reveal>
             <div className="mt-12 space-y-10">
               {featured ? (
                 <ProjectCard project={featured} variant="featured" />
@@ -35,19 +35,19 @@ export default function Home() {
                 ))}
               </div>
             </div>
-          </section>
-        </Reveal>
+          </Reveal>
+        </section>
 
-        <Reveal className="mt-28 block" delay={0.05}>
-          <section id="skills" className="scroll-mt-28">
-            <SectionHeading
-              eyebrow="Stack"
-              title="Skills"
-              description="Grouped by area — tune in src/data/skills.json to match what you ship."
-            />
-            <div className="mt-10 space-y-10 border-t border-border pt-10">
-              {skillsData.categories.map((cat) => (
-                <div key={cat.name}>
+        <section id="skills" className="scroll-mt-28">
+          <SectionHeading
+            eyebrow="Stack"
+            title="Skills"
+            description="Grouped by areas of expertise."
+          />
+          <div className="mt-10 space-y-10 border-t border-border pt-10">
+            {skillsData.categories.map((cat) => (
+              <div key={cat.name}>
+                <Reveal className="mt-28 block" delay={0.1}>
                   <h3 className="font-mono text-xs font-medium uppercase tracking-widest text-muted">
                     {cat.name}
                   </h3>
@@ -61,13 +61,13 @@ export default function Home() {
                       </li>
                     ))}
                   </ul>
-                </div>
-              ))}
-            </div>
-          </section>
-        </Reveal>
+                </Reveal>
+              </div>
+            ))}
+          </div>
+        </section>
 
-        <Reveal className="mt-28 block" delay={0.08}>
+        <Reveal className="mt-28 block" delay={0.1}>
           <section id="contact" className="scroll-mt-28">
             <SectionHeading
               eyebrow="Hello"
@@ -76,7 +76,9 @@ export default function Home() {
             />
             <div className="mt-10 flex flex-col gap-8 rounded-2xl border border-border bg-card p-8 shadow-sm sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <p className="font-mono text-xs uppercase tracking-widest text-muted">Email</p>
+                <p className="font-mono text-xs uppercase tracking-widest text-muted">
+                  Email
+                </p>
                 <a
                   href={`mailto:${profile.email}`}
                   className="mt-2 block text-xl font-medium text-accent underline-offset-4 transition hover:underline sm:text-2xl"
@@ -105,7 +107,8 @@ export default function Home() {
       <footer className="border-t border-border py-10">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <p className="font-mono text-xs text-muted">
-            © {new Date().getFullYear()} {profile.name}. Next.js, static export, Caddy.
+            © {new Date().getFullYear()} {profile.name}. Next.js, static export,
+            Caddy.
           </p>
         </div>
       </footer>

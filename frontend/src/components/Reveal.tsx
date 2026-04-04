@@ -29,7 +29,7 @@ export function Reveal({ children, className, delay = 0 }: Props) {
         visible: {
           opacity: 1,
           y: 0,
-          transition: { duration: 0.55, delay, ease },
+          transition: { duration: 1.55, delay, ease },
         },
       }}
     >
