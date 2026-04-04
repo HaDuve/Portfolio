@@ -5,10 +5,11 @@ import type { Profile } from "@/types/content";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
-type Props = { profile: Profile };
+type Props = { profile: Profile; introDone: boolean };
 
-export function Hero({ profile }: Props) {
+export function Hero({ profile, introDone }: Props) {
   const reduce = useReducedMotion();
+  const showContent = reduce || introDone;
 
   return (
     <section
@@ -33,7 +34,7 @@ export function Hero({ profile }: Props) {
         <motion.div
           className="max-w-3xl"
           initial={reduce ? false : "hidden"}
-          animate="visible"
+          animate={showContent ? "visible" : "hidden"}
           variants={{
             hidden: {},
             visible: {

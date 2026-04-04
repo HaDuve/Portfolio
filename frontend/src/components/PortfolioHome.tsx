@@ -50,7 +50,7 @@ export function PortfolioHome({ profile, projects, skillsData }: Props) {
           className={`flex flex-1 flex-col ${introDone ? "" : "pointer-events-none"}`}
           aria-hidden={!introDone}
         >
-          <Hero profile={profile} />
+          <Hero profile={profile} introDone={introDone} />
 
           <main className="mx-auto w-full max-w-6xl flex-1 px-4 pb-24 pt-16 sm:px-6 sm:pt-20">
             <section id="projects" className="scroll-mt-28">
