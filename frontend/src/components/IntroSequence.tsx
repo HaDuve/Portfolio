@@ -1,8 +1,11 @@
 "use client";
 
 import gsap from "gsap";
+import Image from "next/image";
 import type { CSSProperties } from "react";
 import { useLayoutEffect, useMemo, useRef } from "react";
+
+const INTRO_FAN_SRC = "/fan-object.png";
 
 type Props = {
   fullName: string;
@@ -46,6 +49,8 @@ const LAYOUT = {
   logoMeetLeft: "75%",
   logoSplitLeft: "50%",
   logoScaleStart: 0.96,
+  /** Full CCW spins while rolling in (GSAP: 720° → 0°). */
+  logoRollStart: 720,
 } as const;
 
 const meetEase = "power3.out";
@@ -70,7 +75,8 @@ const logoInitialStyle: CSSProperties = {
   left: LAYOUT.logoMeetLeft,
   top: "auto",
   opacity: 0,
-  transform: `translateX(-50%) scale(${LAYOUT.logoScaleStart})`,
+  transform: `translateX(-50%) rotate(${LAYOUT.logoRollStart}deg) scale(${LAYOUT.logoScaleStart})`,
+  transformOrigin: "50% 50%",
   willChange: "transform, opacity",
 };
 
@@ -90,7 +96,6 @@ export function IntroSequence({ fullName, onComplete }: Props) {
   }, [onComplete]);
 
   const { c1, c2 } = useMemo(() => normalizeInitials(fullName), [fullName]);
-  const monogram = `${c1}${c2}`.toUpperCase();
 
   useLayoutEffect(() => {
     document.body.style.overflow = "hidden";
@@ -139,6 +144,8 @@ export function IntroSequence({ fullName, onComplete }: Props) {
         yPercent: 0,
         opacity: 0,
         scale: LAYOUT.logoScaleStart,
+        rotation: LAYOUT.logoRollStart,
+        transformOrigin: "50% 50%",
         willChange: "transform,opacity",
       });
 
@@ -187,20 +194,13 @@ export function IntroSequence({ fullName, onComplete }: Props) {
           logo,
           {
             left: LAYOUT.logoSplitLeft,
+            rotation: 0,
+            opacity: 1,
+            scale: 1,
             duration: 1.05,
             ease: splitEase,
           },
           "<",
-        )
-        .to(
-          logo,
-          {
-            opacity: 1,
-            scale: 1,
-            duration: 0.58,
-            ease: "power2.out",
-          },
-          "-=0.35",
         )
         .to(root, {
           opacity: 0,
@@ -242,10 +242,19 @@ export function IntroSequence({ fullName, onComplete }: Props) {
         </div>
         <div
           ref={logoRef}
-          className="font-mono text-[clamp(2rem,8vw,3.5rem)] font-semibold tracking-tight text-foreground"
+          className="flex items-center justify-center"
           style={logoInitialStyle}
         >
-          {monogram}
+          <div className="relative h-[clamp(2.75rem,10vw,4rem)] w-[clamp(2.75rem,10vw,4rem)] shrink-0">
+            <Image
+              src={INTRO_FAN_SRC}
+              alt=""
+              fill
+              className="object-contain drop-shadow-[0_6px_20px_rgba(0,0,0,0.18)] dark:drop-shadow-[0_8px_28px_rgba(0,0,0,0.45)]"
+              sizes="(max-width: 768px) 18vw, 4rem"
+              priority
+            />
+          </div>
         </div>
       </div>
     </div>
