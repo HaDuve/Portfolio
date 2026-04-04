@@ -12,9 +12,9 @@ type Props = {
 };
 
 const charClassDefault =
-  "inline-block origin-center font-display font-normal text-stone-400/90 transition duration-500 ease-out group-hover:scale-75 dark:text-stone-600 text-5xl sm:text-6xl";
+  "inline-block origin-center font-display font-normal text-stone-400/90 transition duration-500 ease-out scale-[2.5] group-hover:scale-[1.875] dark:text-stone-600 text-5xl sm:text-6xl";
 const charClassFeatured =
-  "inline-block origin-center font-display font-normal text-stone-400/90 transition duration-500 ease-out group-hover:scale-75 dark:text-stone-600 text-6xl sm:text-8xl";
+  "inline-block origin-center font-display font-normal text-stone-400/90 transition duration-500 ease-out scale-[2.5] group-hover:scale-[1.875] dark:text-stone-600 text-6xl sm:text-8xl";
 
 export function ParallaxLetter({
   letter,
