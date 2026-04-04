@@ -1,6 +1,7 @@
 "use client";
 
 import gsap from "gsap";
+import type { CSSProperties } from "react";
 import { useLayoutEffect, useMemo, useRef } from "react";
 
 type Props = {
@@ -31,9 +32,51 @@ function normalizeInitials(fullName: string): { c1: string; c2: string } {
   return { c1, c2 };
 }
 
-const bottomInset = "12vh";
+/** Shared with GSAP and inline styles so first paint matches animation (no layout flash). */
+const LAYOUT = {
+  bottomInset: "12vh",
+  l1StartLeft: "70%",
+  l2StartLeft: "82%",
+  l1MeetLeft: "73%",
+  l2MeetLeft: "77%",
+  l1SplitLeft: "10%",
+  l2SplitLeft: "90%",
+  letterEnterY: 140,
+  /** Midpoint of meet pair; animates to 50% with split. */
+  logoMeetLeft: "75%",
+  logoSplitLeft: "50%",
+  logoScaleStart: 0.96,
+} as const;
+
 const meetEase = "power3.out";
 const splitEase = "power2.inOut";
+
+function letterInitialStyle(left: string): CSSProperties {
+  return {
+    position: "absolute",
+    bottom: LAYOUT.bottomInset,
+    left,
+    opacity: 0,
+    transform: `translateX(-50%) translateY(${LAYOUT.letterEnterY}px)`,
+    margin: 0,
+    padding: 0,
+    willChange: "transform, opacity",
+  };
+}
+
+const logoInitialStyle: CSSProperties = {
+  position: "absolute",
+  bottom: LAYOUT.bottomInset,
+  left: LAYOUT.logoMeetLeft,
+  top: "auto",
+  opacity: 0,
+  transform: `translateX(-50%) scale(${LAYOUT.logoScaleStart})`,
+  willChange: "transform, opacity",
+};
+
+const rootOverlayStyle: CSSProperties = {
+  backgroundColor: "var(--background, Canvas)",
+};
 
 export function IntroSequence({ fullName, onComplete }: Props) {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -68,7 +111,7 @@ export function IntroSequence({ fullName, onComplete }: Props) {
     const ctx = gsap.context(() => {
       gsap.set([l1, l2], {
         position: "absolute",
-        bottom: bottomInset,
+        bottom: LAYOUT.bottomInset,
         xPercent: -50,
         margin: 0,
         padding: 0,
@@ -76,24 +119,26 @@ export function IntroSequence({ fullName, onComplete }: Props) {
       });
 
       gsap.set(l1, {
-        left: "70%",
-        y: 140,
+        left: LAYOUT.l1StartLeft,
+        y: LAYOUT.letterEnterY,
         opacity: 0,
       });
       gsap.set(l2, {
-        left: "82%",
-        y: 140,
+        left: LAYOUT.l2StartLeft,
+        y: LAYOUT.letterEnterY,
         opacity: 0,
       });
 
       gsap.set(logo, {
         position: "absolute",
-        left: "50%",
-        top: "42%",
+        bottom: LAYOUT.bottomInset,
+        left: LAYOUT.logoMeetLeft,
+        top: "auto",
         xPercent: -50,
-        yPercent: -50,
+        y: 0,
+        yPercent: 0,
         opacity: 0,
-        scale: 0.96,
+        scale: LAYOUT.logoScaleStart,
         willChange: "transform,opacity",
       });
 
@@ -103,7 +148,7 @@ export function IntroSequence({ fullName, onComplete }: Props) {
       });
 
       tl.to(l1, {
-        left: "73%",
+        left: LAYOUT.l1MeetLeft,
         y: 0,
         opacity: 1,
         duration: 0.88,
@@ -112,7 +157,7 @@ export function IntroSequence({ fullName, onComplete }: Props) {
         .to(
           l2,
           {
-            left: "77%",
+            left: LAYOUT.l2MeetLeft,
             y: 0,
             opacity: 1,
             duration: 0.88,
@@ -123,7 +168,7 @@ export function IntroSequence({ fullName, onComplete }: Props) {
         .to(
           l1,
           {
-            left: "10%",
+            left: LAYOUT.l1SplitLeft,
             duration: 1.05,
             ease: splitEase,
           },
@@ -132,7 +177,16 @@ export function IntroSequence({ fullName, onComplete }: Props) {
         .to(
           l2,
           {
-            left: "90%",
+            left: LAYOUT.l2SplitLeft,
+            duration: 1.05,
+            ease: splitEase,
+          },
+          "<",
+        )
+        .to(
+          logo,
+          {
+            left: LAYOUT.logoSplitLeft,
             duration: 1.05,
             ease: splitEase,
           },
@@ -168,18 +222,28 @@ export function IntroSequence({ fullName, onComplete }: Props) {
     <div
       ref={rootRef}
       className="pointer-events-auto fixed inset-0 z-[100] bg-background"
+      style={rootOverlayStyle}
       aria-hidden
     >
       <div className="relative h-full w-full">
-        <div ref={l1Ref} className={letterClass}>
+        <div
+          ref={l1Ref}
+          className={letterClass}
+          style={letterInitialStyle(LAYOUT.l1StartLeft)}
+        >
           {c1}
         </div>
-        <div ref={l2Ref} className={letterClass}>
+        <div
+          ref={l2Ref}
+          className={letterClass}
+          style={letterInitialStyle(LAYOUT.l2StartLeft)}
+        >
           {c2}
         </div>
         <div
           ref={logoRef}
           className="font-mono text-[clamp(2rem,8vw,3.5rem)] font-semibold tracking-tight text-foreground"
+          style={logoInitialStyle}
         >
           {monogram}
         </div>
