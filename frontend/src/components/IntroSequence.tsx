@@ -209,7 +209,7 @@ export function IntroSequence({ fullName, onComplete }: Props) {
         )
         .to(root, {
           opacity: 0,
-          duration: 0.68,
+          duration: 0.98,
           ease: "power2.inOut",
         });
     }, root);
