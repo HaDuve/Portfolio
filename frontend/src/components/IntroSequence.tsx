@@ -250,13 +250,13 @@ export function IntroSequence({ fullName, onComplete }: Props) {
           className="flex items-center justify-center"
           style={logoInitialStyle}
         >
-          <div className="relative h-[clamp(2.75rem,10vw,4rem)] w-[clamp(2.75rem,10vw,4rem)] shrink-0">
+          <div className="relative h-[clamp(5.5rem,20vw,8rem)] w-[clamp(5.5rem,20vw,8rem)] shrink-0">
             <Image
               src={INTRO_FAN_SRC}
               alt=""
               fill
               className="object-contain drop-shadow-[0_6px_20px_rgba(0,0,0,0.18)] dark:drop-shadow-[0_8px_28px_rgba(0,0,0,0.45)]"
-              sizes="(max-width: 768px) 18vw, 4rem"
+              sizes="(max-width: 768px) 36vw, 8rem"
               priority
             />
           </div>
