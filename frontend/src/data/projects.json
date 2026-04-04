@@ -14,6 +14,7 @@
       "i18n"
     ],
     "imageUrl": "/projects/budget-for-nomads.webp",
+    "mediaKind": "app",
     "githubUrl": "https://github.com/HaDuve/TravelCostNative",
     "liveUrl": "https://apps.apple.com/app/budget-for-nomads/id6446042796",
     "featured": true,
@@ -74,6 +75,7 @@
       "Amplify"
     ],
     "imageUrl": "/projects/triprender-app.webp",
+    "mediaKind": "app",
     "githubUrl": null,
     "liveUrl": null
   },
@@ -90,6 +92,7 @@
       "AsyncStorage"
     ],
     "imageUrl": "/projects/drink-water.webp",
+    "mediaKind": "app",
     "githubUrl": null,
     "liveUrl": null
   },
@@ -124,6 +127,7 @@
       "Jest"
     ],
     "imageUrl": "/projects/swipe-stocks.webp",
+    "mediaKind": "app",
     "githubUrl": null,
     "liveUrl": null
   },

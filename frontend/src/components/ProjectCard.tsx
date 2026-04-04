@@ -37,13 +37,24 @@ export function ProjectCard({ project, variant = "default" }: Props) {
     <article className={cardClass}>
       <div className="relative">
         {project.imageUrl ? (
-          <ParallaxMedia
-            imageUrl={project.imageUrl}
-            alt=""
-            sizes={sizes}
-            priority={isFeatured}
-            frameClassName={frameClass}
-          />
+          <>
+            <ParallaxMedia
+              imageUrl={project.imageUrl}
+              alt=""
+              sizes={sizes}
+              priority={isFeatured}
+              frameClassName={frameClass}
+              mediaKind={project.mediaKind ?? "web"}
+            />
+            {project.mediaKind === "app" ? (
+              <span
+                className="pointer-events-none absolute left-3 top-3 z-20 rounded-md border border-border bg-background/90 px-2 py-1 text-[10px] font-mono uppercase tracking-wider text-muted shadow-sm backdrop-blur-sm"
+                aria-hidden
+              >
+                App
+              </span>
+            ) : null}
+          </>
         ) : (
           <ParallaxLetter
             letter={project.title.slice(0, 1)}
@@ -52,7 +63,7 @@ export function ProjectCard({ project, variant = "default" }: Props) {
           />
         )}
         {isFeatured ? (
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent dark:from-background/90" />
+          <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-background/80 via-transparent to-transparent dark:from-background/90" />
         ) : null}
       </div>
       <div

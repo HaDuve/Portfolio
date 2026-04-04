@@ -5,6 +5,8 @@ export type Project = {
   description: string;
   tech: string[];
   imageUrl: string | null;
+  /** App screenshots (portrait phone) vs web; drives image fit and framing in the card */
+  mediaKind?: "app" | "web";
   githubUrl: string | null;
   liveUrl: string | null;
   /** When true, shown as the large featured block above the grid */
