@@ -33,7 +33,8 @@
       "Docker",
       "Caddy"
     ],
-    "imageUrl": null,
+    "imageUrl": "/projects/portfolio.webp",
+    "mediaKind": "web",
     "githubUrl": null,
     "liveUrl": "https://hannesduve.com",
     "year": "2026",
@@ -178,7 +179,8 @@
       "Jest",
       "Maestro"
     ],
-    "imageUrl": null,
+    "imageUrl": "/projects/ondojo.webp",
+    "mediaKind": "app",
     "githubUrl": null,
     "liveUrl": null
   },
