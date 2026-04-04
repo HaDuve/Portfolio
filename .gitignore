@@ -10,3 +10,6 @@ dist
 
 # Personal deploy notes (fill with your GitHub URL and IPs)
 runbook.md
+
+# Local deploy script (contains server IP)
+scripts/deploy-remote.sh
