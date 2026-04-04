@@ -33,9 +33,23 @@ function subscribe(listener: () => void) {
   return () => listeners.delete(listener);
 }
 
+function transitionTheme(theme: Theme) {
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  const run = () => applyTheme(theme);
+
+  if (typeof document.startViewTransition === "function" && !prefersReducedMotion) {
+    document.startViewTransition(run);
+  } else {
+    run();
+  }
+}
+
 function setStoredTheme(theme: Theme) {
   localStorage.setItem("theme", theme);
-  applyTheme(theme);
+  transitionTheme(theme);
   emit();
 }
 

@@ -43,10 +43,21 @@
   html {
     scroll-behavior: auto;
   }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 1ms !important;
+  }
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 320ms;
+  animation-timing-function: var(--ease-out-expo);
 }
 
 body {
