@@ -113,6 +113,11 @@ export function IntroSequence({ fullName, onComplete }: Props) {
 
     const finish = () => onCompleteRef.current();
 
+    /** Same `bottom` on letters vs logo aligns bottoms; shift logo up so midlines match. */
+    const letterH = l1.offsetHeight;
+    const logoH = logo.offsetHeight;
+    const logoYAlign = letterH > 0 && logoH > 0 ? -(letterH - logoH) / 2 : 0;
+
     const ctx = gsap.context(() => {
       gsap.set([l1, l2], {
         position: "absolute",
@@ -140,11 +145,12 @@ export function IntroSequence({ fullName, onComplete }: Props) {
         left: LAYOUT.logoMeetLeft,
         top: "auto",
         xPercent: -50,
-        y: 0,
+        y: logoYAlign,
         yPercent: 0,
         opacity: 0,
         scale: LAYOUT.logoScaleStart,
         rotation: LAYOUT.logoRollStart,
+        transformOrigin: "50% 50%",
         willChange: "transform,opacity",
       });
 
