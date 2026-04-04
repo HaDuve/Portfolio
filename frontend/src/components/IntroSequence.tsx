@@ -8,6 +8,21 @@ type Props = {
   onComplete: () => void;
 };
 
+/** First letter of the first word + first letter of the last word (e.g. "Hannes Duve" → H, D). Single word falls back to its first two characters. */
+function getNameInitials(fullName: string): { c1: string; c2: string } {
+  const parts = fullName.trim().split(/\s+/).filter(Boolean);
+  if (parts.length >= 2) {
+    const first = parts[0]?.[0] ?? "";
+    const last = parts[parts.length - 1]?.[0] ?? "";
+    return { c1: first, c2: last };
+  }
+  const only = parts[0] ?? "";
+  return {
+    c1: only[0] ?? "",
+    c2: only[1] ?? "",
+  };
+}
+
 export function IntroSequence({ fullName, onComplete }: Props) {
   const rootRef = useRef<HTMLDivElement>(null);
   const l1Ref = useRef<HTMLDivElement>(null);
@@ -18,9 +33,7 @@ export function IntroSequence({ fullName, onComplete }: Props) {
     onCompleteRef.current = onComplete;
   }, [onComplete]);
 
-  const trimmed = fullName.trim();
-  const c1 = trimmed[0] ?? "";
-  const c2 = trimmed[1] ?? "";
+  const { c1, c2 } = getNameInitials(fullName);
 
   useLayoutEffect(() => {
     document.body.style.overflow = "hidden";
