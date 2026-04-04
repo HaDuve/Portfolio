@@ -1,21 +1,17 @@
 "use client";
 
 import type { Project } from "@/types/content";
-import { motion, useReducedMotion } from "motion/react";
 import { ParallaxMedia } from "@/components/ParallaxMedia";
-
-const ease = [0.16, 1, 0.3, 1] as const;
 
 type Props = {
   project: Project;
   variant?: "default" | "featured";
-  /** Stagger order for scroll-in animation */
+  /** Kept for API compatibility; scroll-in was removed (nested opacity + whileInView + Lenis broke visibility). */
   index?: number;
 };
 
-export function ProjectCard({ project, variant = "default", index = 0 }: Props) {
+export function ProjectCard({ project, variant = "default" }: Props) {
   const isFeatured = variant === "featured";
-  const reduce = useReducedMotion();
   const meta = [project.year, project.role].filter(Boolean).join(" · ");
 
   const frameClass = isFeatured
@@ -31,8 +27,8 @@ export function ProjectCard({ project, variant = "default", index = 0 }: Props) 
       ? "group flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition duration-300 ease-out hover:shadow-md dark:border-stone-700/80"
       : "group flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition duration-300 ease-out hover:-translate-y-0.5 hover:shadow-md dark:border-stone-800";
 
-  const inner = (
-    <>
+  return (
+    <article className={cardClass}>
       <div className="relative">
         {project.imageUrl ? (
           <ParallaxMedia
@@ -112,29 +108,6 @@ export function ProjectCard({ project, variant = "default", index = 0 }: Props) 
           ) : null}
         </div>
       </div>
-    </>
-  );
-
-  if (reduce) {
-    return <article className={cardClass}>{inner}</article>;
-  }
-
-  return (
-    <motion.article
-      className={cardClass}
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{
-        opacity: 1,
-        y: 0,
-        transition: {
-          duration: 0.55,
-          delay: index * 0.06,
-          ease,
-        },
-      }}
-      viewport={{ once: true, amount: 0.2 }}
-    >
-      {inner}
-    </motion.article>
+    </article>
   );
 }

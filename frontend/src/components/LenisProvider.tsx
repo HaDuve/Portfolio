@@ -5,7 +5,7 @@ import Lenis from "lenis";
 
 type Props = {
   children: React.ReactNode;
-  /** Start smooth scroll after intro completes (and when user allows motion). */
+  /** When true, starts Lenis. Leave false until Motion scroll + IO are integrated (Lenis can break whileInView). */
   enabled: boolean;
 };
 
