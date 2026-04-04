@@ -14,6 +14,11 @@ type Props = {
 export function ProjectCard({ project, variant = "default" }: Props) {
   const isFeatured = variant === "featured";
   const meta = [project.year, project.role].filter(Boolean).join(" · ");
+  const liveLabel =
+    project.liveUrl?.includes("apps.apple.com") ||
+    project.liveUrl?.includes("itunes.apple.com")
+      ? "App Store"
+      : "Live";
 
   const frameClass = isFeatured
     ? "relative aspect-[21/9] overflow-hidden bg-gradient-to-br from-accent/15 via-card to-stone-300/30 dark:from-accent/10 dark:via-card dark:to-stone-800/50 sm:aspect-[2.4/1]"
@@ -104,7 +109,7 @@ export function ProjectCard({ project, variant = "default" }: Props) {
               rel="noopener noreferrer"
               className="text-sm font-medium text-accent underline-offset-4 transition hover:underline"
             >
-              Live
+              {liveLabel}
             </a>
           ) : null}
         </div>

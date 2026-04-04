@@ -1,5 +1,26 @@
 [
   {
+    "id": "12",
+    "title": "Budget for Nomads",
+    "slug": "budget-for-nomads",
+    "description": "2022 freelance flagship (TravelCost Native): trip-based travel spending—per-trip budgets, daily rollups, categorized expenses, and multi-currency support (e.g. home currency with local cash). Built for long-term travel with fast logging, clear totals, and a calm, glanceable UI.",
+    "tech": [
+      "Expo",
+      "React Native",
+      "TypeScript",
+      "Firebase",
+      "Zustand",
+      "React Navigation",
+      "i18n"
+    ],
+    "imageUrl": "/projects/budget-for-nomads.webp",
+    "githubUrl": "https://github.com/HaDuve/TravelCostNative",
+    "liveUrl": "https://apps.apple.com/app/budget-for-nomads/id6446042796",
+    "featured": true,
+    "year": "2022",
+    "role": "Freelance · design & build"
+  },
+  {
     "id": "1",
     "title": "Portfolio (this site)",
     "slug": "portfolio",
@@ -14,7 +35,6 @@
     "imageUrl": null,
     "githubUrl": null,
     "liveUrl": "https://hannesduve.com",
-    "featured": true,
     "year": "2026",
     "role": "Design & build"
   },
@@ -53,7 +73,7 @@
       "Cognito",
       "Amplify"
     ],
-    "imageUrl": null,
+    "imageUrl": "/projects/triprender-app.webp",
     "githubUrl": null,
     "liveUrl": null
   },
@@ -69,7 +89,7 @@
       "expo-notifications",
       "AsyncStorage"
     ],
-    "imageUrl": null,
+    "imageUrl": "/projects/drink-water.webp",
     "githubUrl": null,
     "liveUrl": null
   },
@@ -103,7 +123,7 @@
       "React Native Paper",
       "Jest"
     ],
-    "imageUrl": null,
+    "imageUrl": "/projects/swipe-stocks.webp",
     "githubUrl": null,
     "liveUrl": null
   },
