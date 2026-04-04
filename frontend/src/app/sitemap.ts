@@ -18,39 +18,39 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     {
-      url: `${BASE}/de`,
+      url: `${BASE}/de/`,
       lastModified: now,
       changeFrequency: "monthly",
       priority: 1,
       images: homeImages,
     },
     {
-      url: `${BASE}/en`,
+      url: `${BASE}/en/`,
       lastModified: now,
       changeFrequency: "monthly",
       priority: 1,
       images: homeImages,
     },
     {
-      url: `${BASE}/de/impressum`,
+      url: `${BASE}/de/impressum/`,
       lastModified: now,
       changeFrequency: "yearly",
       priority: 0.5,
     },
     {
-      url: `${BASE}/en/impressum`,
+      url: `${BASE}/en/impressum/`,
       lastModified: now,
       changeFrequency: "yearly",
       priority: 0.5,
     },
     {
-      url: `${BASE}/de/datenschutz`,
+      url: `${BASE}/de/datenschutz/`,
       lastModified: now,
       changeFrequency: "yearly",
       priority: 0.5,
     },
     {
-      url: `${BASE}/en/privacy`,
+      url: `${BASE}/en/privacy/`,
       lastModified: now,
       changeFrequency: "yearly",
       priority: 0.5,

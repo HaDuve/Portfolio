@@ -2,5 +2,9 @@
 hannesduve.com {
 	root * /var/www/html
 	encode gzip zstd
+
+	@root path /
+	redir @root /de/ 308
+
 	file_server
 }

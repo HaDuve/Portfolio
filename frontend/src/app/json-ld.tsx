@@ -49,7 +49,7 @@ export function JsonLd({ locale }: { locale: Locale }) {
       "@type": "Person",
       "@id": `${BASE}/#person`,
       name: p.name,
-      url: `${BASE}/${locale}`,
+      url: `${BASE}/${locale}/`,
       image: `${BASE}/profile.jpg`,
       email: p.email,
       jobTitle: personJob,
@@ -59,7 +59,7 @@ export function JsonLd({ locale }: { locale: Locale }) {
     {
       "@type": "WebSite",
       "@id": `${BASE}/#website`,
-      url: `${BASE}/${locale}`,
+      url: `${BASE}/${locale}/`,
       name: "Hannes Duve — Freelance Full-Stack & Mobile",
       description: websiteDesc,
       inLanguage: isEn ? ["en", "de-DE"] : ["de-DE", "en"],
@@ -69,7 +69,7 @@ export function JsonLd({ locale }: { locale: Locale }) {
       "@type": "ProfessionalService",
       "@id": `${BASE}/#service`,
       name: serviceName,
-      url: `${BASE}/${locale}`,
+      url: `${BASE}/${locale}/`,
       description: serviceDesc,
       provider: { "@id": `${BASE}/#person` },
       areaServed: [

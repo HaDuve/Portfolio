@@ -27,15 +27,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description:
       "Datenschutzerklärung — Verarbeitung personenbezogener Daten auf dieser Website.",
     alternates: {
-      canonical: "/de/datenschutz",
+      canonical: "/de/datenschutz/",
       languages: {
-        "de-DE": "/de/datenschutz",
-        en: "/en/privacy",
-        "x-default": "/de/datenschutz",
+        "de-DE": "/de/datenschutz/",
+        en: "/en/privacy/",
+        "x-default": "/de/datenschutz/",
       },
     },
     openGraph: {
-      url: `${BASE}/de/datenschutz`,
+      url: `${BASE}/de/datenschutz/`,
       locale: "de_DE",
       type: "website",
     },

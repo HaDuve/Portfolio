@@ -14,33 +14,36 @@ export function getAlternateLocalePath(pathname: string, target: Locale): string
   const parts = pathname.replace(/\/$/, "").split("/").filter(Boolean);
   const first = parts[0];
   if (!isLocale(first)) {
-    return `/${target}`;
+    return `/${target}/`;
   }
   const sub = parts.slice(1);
   if (sub[0] === "datenschutz" && target === "en") {
-    return "/en/privacy";
+    return "/en/privacy/";
   }
   if (sub[0] === "privacy" && target === "de") {
-    return "/de/datenschutz";
+    return "/de/datenschutz/";
   }
   if (sub.length === 0) {
-    return `/${target}`;
+    return `/${target}/`;
   }
-  return `/${target}/${sub.join("/")}`;
+  return `/${target}/${sub.join("/")}/`;
 }
 
 export function localePath(locale: Locale, subPath = ""): string {
-  const p = subPath.replace(/^\//, "");
-  return p ? `/${locale}/${p}` : `/${locale}`;
+  const p = subPath.replace(/^\//, "").replace(/\/$/, "");
+  if (!p) {
+    return `/${locale}/`;
+  }
+  return `/${locale}/${p}/`;
 }
 
 export function impressumPath(locale: Locale): string {
-  return `/${locale}/impressum`;
+  return `/${locale}/impressum/`;
 }
 
-/** DE: /de/datenschutz · EN: /en/privacy */
+/** DE: /de/datenschutz/ · EN: /en/privacy/ */
 export function datenschutzPath(locale: Locale): string {
-  return locale === "en" ? "/en/privacy" : "/de/datenschutz";
+  return locale === "en" ? "/en/privacy/" : "/de/datenschutz/";
 }
 
 export function absoluteUrl(path: string): string {

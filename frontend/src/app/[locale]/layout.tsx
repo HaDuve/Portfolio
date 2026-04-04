@@ -30,13 +30,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: copy.description,
     metadataBase: new URL("https://hannesduve.com"),
     alternates: {
-      canonical: `/${locale}`,
+      canonical: `/${locale}/`,
       languages: {
-        "de-DE": "/de",
-        "de-AT": "/de",
-        "de-CH": "/de",
-        en: "/en",
-        "x-default": "/de",
+        "de-DE": "/de/",
+        "de-AT": "/de/",
+        "de-CH": "/de/",
+        en: "/en/",
+        "x-default": "/de/",
       },
     },
     robots: {
@@ -53,7 +53,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: copy.title,
       description: copy.description,
-      url: `https://hannesduve.com/${locale}`,
+      url: `https://hannesduve.com/${locale}/`,
       siteName: "Hannes Duve",
       locale: isEn ? "en_US" : "de_DE",
       alternateLocale: isEn

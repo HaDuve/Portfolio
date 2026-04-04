@@ -24,15 +24,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ? "Legal notice and provider identification (Impressum)."
       : "Impressum — Angaben gemäß § 5 TMG / § 55 RStV.",
     alternates: {
-      canonical: `/${locale}/impressum`,
+      canonical: `/${locale}/impressum/`,
       languages: {
-        "de-DE": "/de/impressum",
-        en: "/en/impressum",
-        "x-default": "/de/impressum",
+        "de-DE": "/de/impressum/",
+        en: "/en/impressum/",
+        "x-default": "/de/impressum/",
       },
     },
     openGraph: {
-      url: `${BASE}/${locale}/impressum`,
+      url: `${BASE}/${locale}/impressum/`,
       locale: isEn ? "en_US" : "de_DE",
       type: "website",
     },
