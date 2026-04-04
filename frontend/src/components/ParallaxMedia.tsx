@@ -16,9 +16,9 @@ type Props = {
 };
 
 const webImgClass =
-  "object-cover transition duration-500 ease-out group-hover:scale-[1.03]";
+  "object-cover transition duration-500 ease-out group-hover:scale-75";
 const appImgClass =
-  "object-contain object-center transition duration-500 ease-out group-hover:scale-[1.02]";
+  "object-contain object-center transition duration-500 ease-out group-hover:scale-75";
 
 export function ParallaxMedia({
   imageUrl,

@@ -12,9 +12,9 @@ type Props = {
 };
 
 const charClassDefault =
-  "font-display font-normal text-stone-400/90 dark:text-stone-600 text-5xl sm:text-6xl";
+  "inline-block origin-center font-display font-normal text-stone-400/90 transition duration-500 ease-out group-hover:scale-75 dark:text-stone-600 text-5xl sm:text-6xl";
 const charClassFeatured =
-  "font-display font-normal text-stone-400/90 dark:text-stone-600 text-6xl sm:text-8xl";
+  "inline-block origin-center font-display font-normal text-stone-400/90 transition duration-500 ease-out group-hover:scale-75 dark:text-stone-600 text-6xl sm:text-8xl";
 
 export function ParallaxLetter({
   letter,
