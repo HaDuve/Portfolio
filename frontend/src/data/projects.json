@@ -3,7 +3,7 @@
     "id": "1",
     "title": "Portfolio (this site)",
     "slug": "portfolio",
-    "description": "Next.js static export, Tailwind CSS v4, Docker + Caddy on Hetzner Cloud.",
+    "description": "Static Next.js export, Tailwind CSS v4, Docker + Caddy on a Hetzner VM. Content-driven JSON for projects and skills.",
     "tech": ["Next.js", "TypeScript", "Tailwind CSS", "Docker", "Caddy"],
     "imageUrl": null,
     "githubUrl": null,
@@ -11,12 +11,144 @@
   },
   {
     "id": "2",
-    "title": "Sample API service",
-    "slug": "sample-api",
-    "description": "Placeholder project — replace with your real work, screenshots, and links.",
-    "tech": ["Node.js", "Fastify", "PostgreSQL"],
+    "title": "Invoice Creator",
+    "slug": "invoice-creator",
+    "description": "German freelancer–focused invoicing: drafts → finalize → PDF on Vercel Blob → email via Resend → Stripe Checkout → reminder cron jobs.",
+    "tech": [
+      "Next.js",
+      "React",
+      "Prisma",
+      "PostgreSQL",
+      "Auth.js",
+      "Vercel Blob",
+      "Resend",
+      "Stripe"
+    ],
     "imageUrl": null,
-    "githubUrl": "https://github.com/",
+    "githubUrl": null,
+    "liveUrl": null
+  },
+  {
+    "id": "3",
+    "title": "TripRender App",
+    "slug": "triprender-app",
+    "description": "Mono-repo: Expo app with WebView Mapbox map and AWS backend that renders trip GeoJSON to MP4 via Remotion Lambda; download to device or web.",
+    "tech": [
+      "Expo",
+      "React Native",
+      "AWS CDK",
+      "Lambda",
+      "S3",
+      "Remotion",
+      "Mapbox",
+      "Cognito",
+      "Amplify"
+    ],
+    "imageUrl": null,
+    "githubUrl": null,
+    "liveUrl": null
+  },
+  {
+    "id": "4",
+    "title": "DrinkWater",
+    "slug": "drink-water",
+    "description": "Water intake MVP: daily goal, glass logging (AsyncStorage), SVG progress ring, and repeating local notifications with expo-notifications.",
+    "tech": ["Expo", "TypeScript", "expo-router", "expo-notifications", "AsyncStorage"],
+    "imageUrl": null,
+    "githubUrl": null,
+    "liveUrl": null
+  },
+  {
+    "id": "5",
+    "title": "HabitTracker",
+    "slug": "habit-tracker",
+    "description": "Cross-platform habit tracking with charts (react-native-chart-kit), Expo Router, Reanimated, and EAS dev builds.",
+    "tech": ["Expo", "TypeScript", "Expo Router", "React Native SVG", "Reanimated", "EAS"],
+    "imageUrl": null,
+    "githubUrl": null,
+    "liveUrl": null
+  },
+  {
+    "id": "6",
+    "title": "SwipeStocks",
+    "slug": "swipe-stocks",
+    "description": "Expo finance-style app with Firebase, Zustand, React Native Paper, gesture + reanimated stacks, MMKV, and Jest/Testing Library.",
+    "tech": [
+      "Expo",
+      "TypeScript",
+      "Firebase",
+      "Zustand",
+      "React Native Paper",
+      "Jest"
+    ],
+    "imageUrl": null,
+    "githubUrl": null,
+    "liveUrl": null
+  },
+  {
+    "id": "7",
+    "title": "TripRender (Mapbox route SPA)",
+    "slug": "triprender-map",
+    "description": "Single-page driving directions: place A to B on a Mapbox map; static build with token injection, deployable to GitHub Pages or Netlify.",
+    "tech": ["Mapbox GL", "JavaScript", "Node.js", "GitHub Pages"],
+    "imageUrl": null,
+    "githubUrl": "https://github.com/HaDuve/mapbox-route-app",
+    "liveUrl": "https://HaDuve.github.io/mapbox-route-app/"
+  },
+  {
+    "id": "8",
+    "title": "ControlMe",
+    "slug": "controlme",
+    "description": "Multi-tenant SaaS template: Next.js App Router, Supabase, billing (Stripe/Lemon Squeezy), i18n, feature packages in a Turborepo; Playwright E2E.",
+    "tech": [
+      "Next.js",
+      "TypeScript",
+      "Supabase",
+      "Turborepo",
+      "Tailwind CSS",
+      "Playwright",
+      "pnpm"
+    ],
+    "imageUrl": null,
+    "githubUrl": null,
+    "liveUrl": null
+  },
+  {
+    "id": "9",
+    "title": "Ondojo",
+    "slug": "ondojo",
+    "description": "Large Expo app on AWS Amplify: AppSync/GraphQL, many Lambda functions, EAS CI for TestFlight/production, Jest + Maestro E2E, analytics integrations.",
+    "tech": [
+      "Expo",
+      "AWS Amplify",
+      "GraphQL",
+      "Lambda",
+      "EAS",
+      "Jest",
+      "Maestro"
+    ],
+    "imageUrl": null,
+    "githubUrl": null,
+    "liveUrl": null
+  },
+  {
+    "id": "10",
+    "title": "Mobile Battlegrounds",
+    "slug": "mobile-battlegrounds",
+    "description": "Mobile card battle game: React Native (Expo), Firebase Auth & Firestore, Cloud Functions, Zustand state.",
+    "tech": ["Expo", "React Native", "Firebase", "Cloud Functions", "TypeScript", "Zustand"],
+    "imageUrl": null,
+    "githubUrl": null,
+    "liveUrl": null
+  },
+  {
+    "id": "11",
+    "title": "StreamApp",
+    "slug": "stream-app",
+    "description": "Twitch-inspired Expo MVP: stream feed, categories, and native video playback with Expo Video and React Navigation.",
+    "tech": ["Expo", "React Native", "TypeScript", "Expo Video", "React Navigation"],
+    "imageUrl": null,
+    "githubUrl": null,
     "liveUrl": null
   }
 ]

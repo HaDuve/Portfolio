@@ -1,11 +1,11 @@
 {
   "name": "Hannes Duve",
-  "tagline": "Full-stack developer · clean UIs, solid systems",
-  "bio": "I design and ship web apps with a focus on performance, accessibility, and maintainability. This site is static-first and easy to extend with a blog or CMS later.",
+  "tagline": "Full-stack & mobile — Next.js, Expo, and cloud backends",
+  "bio": "I build web apps and React Native (Expo) products end to end: SaaS on Next.js and Supabase, freelancer tooling with Prisma and Stripe, AWS pipelines with Lambda and Remotion, and Firebase- or Amplify-backed mobile apps. I care about clear UX, testable architecture, and shipping maintainable systems.",
   "location": "Remote / EU",
-  "email": "hello@hannesduve.com",
+  "email": "hannes.duve@outlook.com",
   "social": [
-    { "label": "GitHub", "href": "https://github.com/" },
-    { "label": "LinkedIn", "href": "https://www.linkedin.com/" }
+    { "label": "GitHub", "href": "https://github.com/HaDuve" },
+    { "label": "LinkedIn", "href": "https://www.linkedin.com/in/hannes-duve/" }
   ]
 }
