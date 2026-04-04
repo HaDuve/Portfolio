@@ -1,6 +1,6 @@
 # Portfolio on VM1: Caddy serves static Next.js export from shared volume.
 # First deploy / content updates:
-#   docker compose run --rm frontend
+#   docker compose run --build --rm frontend
 #   docker compose up -d caddy
 
 services:

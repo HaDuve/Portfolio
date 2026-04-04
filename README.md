@@ -33,17 +33,17 @@ Assumptions: Ubuntu 22.04, Docker Engine + Docker Compose v2, ports 80 and 443 o
 2. Build static files into the Docker volume and start Caddy:
 
    ```bash
-   docker compose run --rm frontend
+   docker compose run --build --rm frontend
    docker compose up -d caddy
    ```
 
 3. After you change JSON or frontend code, rebuild and refresh files in the volume:
 
    ```bash
-   docker compose run --rm frontend
+   docker compose run --build --rm frontend
    ```
 
-   Caddy serves updated files from the volume; restarting Caddy is usually unnecessary.
+   `--build` ensures the image includes your latest `git pull`; without it, the container can still build from an old image layer. Caddy serves updated files from the volume; restarting Caddy is usually unnecessary.
 
 4. Optional `www`: add a CNAME from `www` to `hannesduve.com`, then add a second site block in `caddy/Caddyfile` for `www.hannesduve.com` with `redir` to the apex or duplicate `root` / `file_server` as you prefer.
 
