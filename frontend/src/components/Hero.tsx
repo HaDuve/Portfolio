@@ -35,7 +35,7 @@ export function Hero({ profile, introDone }: Props) {
       <div className="grain pointer-events-none absolute inset-0" aria-hidden />
 
       <div className="relative mx-auto max-w-6xl px-4 pb-24 pt-16 sm:px-6 sm:pb-32 sm:pt-20">
-        <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(220px,380px)] lg:gap-14 xl:gap-16">
+        <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(240px,420px)] lg:gap-14 xl:gap-16">
           <motion.div
             className="min-w-0 max-w-3xl"
             initial={reduce ? false : "hidden"}
