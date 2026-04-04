@@ -7,3 +7,6 @@ dist
 .env.*.local
 *.log
 .DS_Store
+
+# Personal deploy notes (fill with your GitHub URL and IPs)
+runbook.md
