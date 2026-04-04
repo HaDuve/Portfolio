@@ -1,7 +1,8 @@
 {
   "categories": [
     {
-      "name": "Web & UI",
+      "nameDe": "Web & UI",
+      "nameEn": "Web & UI",
       "items": [
         "Next.js",
         "React",
@@ -14,7 +15,8 @@
       ]
     },
     {
-      "name": "Mobile",
+      "nameDe": "Mobile",
+      "nameEn": "Mobile",
       "items": [
         "React Native",
         "Expo",
@@ -27,7 +29,8 @@
       ]
     },
     {
-      "name": "Backend & ops",
+      "nameDe": "Backend & Betrieb",
+      "nameEn": "Backend & operations",
       "items": [
         "Node.js",
         "PostgreSQL",

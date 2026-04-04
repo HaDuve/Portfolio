@@ -3,16 +3,24 @@
 import { motion, useReducedMotion } from "motion/react";
 import { useRef } from "react";
 import type { Profile } from "@/types/content";
+import type { Locale } from "@/lib/i18n";
 import { HeroFan } from "./HeroFan";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
-type Props = { profile: Profile; introDone: boolean };
+type Props = { profile: Profile; introDone: boolean; locale: Locale };
 
-export function Hero({ profile, introDone }: Props) {
+export function Hero({ profile, introDone, locale }: Props) {
+  const showEnglish = locale === "en";
   const reduce = useReducedMotion();
   const showContent = reduce || introDone;
   const sectionRef = useRef<HTMLElement>(null);
+
+  const tagline = showEnglish ? profile.taglineEn : profile.taglineDe;
+  const bio = showEnglish ? profile.bioEn : profile.bioDe;
+  const location = showEnglish ? profile.locationEn : profile.locationDe;
+  const ctaPrimary = showEnglish ? "Book a call" : "Gespräch buchen";
+  const ctaSecondary = showEnglish ? "Contact" : "Kontakt";
 
   return (
     <section
@@ -94,7 +102,7 @@ export function Hero({ profile, introDone }: Props) {
                 },
               }}
             >
-              {profile.tagline}
+              {tagline}
             </motion.p>
             <motion.p
               className="mt-6 max-w-2xl text-base leading-relaxed text-stone-600 dark:text-stone-400 sm:text-[1.05rem]"
@@ -107,8 +115,34 @@ export function Hero({ profile, introDone }: Props) {
                 },
               }}
             >
-              {profile.bio}
+              {bio}
             </motion.p>
+            <motion.div
+              className="mt-6 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center"
+              variants={{
+                hidden: { opacity: 0, y: 14 },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  transition: { duration: 0.48, ease },
+                },
+              }}
+            >
+              <a
+                href={profile.schedulingUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:opacity-90 dark:text-stone-950"
+              >
+                {ctaPrimary}
+              </a>
+              <a
+                href={`/${locale}#contact`}
+                className="inline-flex items-center justify-center rounded-full border border-border px-6 py-3 text-sm font-medium transition hover:border-accent/40 hover:bg-accent/5"
+              >
+                {ctaSecondary}
+              </a>
+            </motion.div>
             <motion.p
               className="mt-6 font-mono text-xs uppercase tracking-widest text-muted"
               variants={{
@@ -120,7 +154,7 @@ export function Hero({ profile, introDone }: Props) {
                 },
               }}
             >
-              {profile.location}
+              {location}
             </motion.p>
           </motion.div>
         </div>

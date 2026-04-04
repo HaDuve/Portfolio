@@ -1,8 +1,6 @@
-import type { Metadata } from "next";
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
-import { Header } from "@/components/Header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,25 +17,6 @@ const displaySerif = Instrument_Serif({
   subsets: ["latin"],
   weight: "400",
 });
-
-export const metadata: Metadata = {
-  title: {
-    default: "Hannes Duve — Developer",
-    template: "%s · Hannes Duve",
-  },
-  description:
-    "Developer portfolio — projects, skills, and contact. Built with Next.js and Tailwind CSS.",
-  metadataBase: new URL("https://hannesduve.com"),
-  openGraph: {
-    title: "Hannes Duve — Developer",
-    description:
-      "Developer portfolio — projects, skills, and contact.",
-    url: "https://hannesduve.com",
-    siteName: "Hannes Duve",
-    locale: "en_US",
-    type: "website",
-  },
-};
 
 const themeInit = `
 (function () {
@@ -57,6 +36,16 @@ const themeInit = `
 })();
 `;
 
+/** Sets html[lang] before paint for static export (no middleware). */
+const langInit = `
+(function () {
+  try {
+    var seg = location.pathname.split("/")[1];
+    document.documentElement.lang = seg === "en" ? "en" : "de";
+  } catch (e) {}
+})();
+`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -64,15 +53,17 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="de"
       className={`${geistSans.variable} ${geistMono.variable} ${displaySerif.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col bg-background text-foreground">
+      <body className="flex min-h-full flex-col bg-background text-foreground">
+        <Script id="lang-init" strategy="beforeInteractive">
+          {langInit}
+        </Script>
         <Script id="theme-init" strategy="beforeInteractive">
           {themeInit}
         </Script>
-        <Header />
         {children}
       </body>
     </html>

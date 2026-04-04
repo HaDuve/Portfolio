@@ -1,24 +1,51 @@
 "use client";
 
 import type { Project } from "@/types/content";
+import type { Locale } from "@/lib/i18n";
 import { ParallaxLetter } from "@/components/ParallaxLetter";
 import { ParallaxMedia } from "@/components/ParallaxMedia";
 
 type Props = {
   project: Project;
+  locale: Locale;
   variant?: "default" | "featured";
   /** Kept for API compatibility; scroll-in was removed (nested opacity + whileInView + Lenis broke visibility). */
   index?: number;
 };
 
-export function ProjectCard({ project, variant = "default" }: Props) {
+export function ProjectCard({ project, locale, variant = "default" }: Props) {
+  const showEnglish = locale === "en";
   const isFeatured = variant === "featured";
-  const meta = [project.year, project.role].filter(Boolean).join(" · ");
+
+  const title =
+    showEnglish && project.titleEn?.trim()
+      ? project.titleEn
+      : project.title;
+  const description =
+    showEnglish && project.descriptionEn?.trim()
+      ? project.descriptionEn
+      : project.description;
+  const roleLine =
+    showEnglish && project.roleEn?.trim()
+      ? project.roleEn
+      : project.role;
+
+  const meta = [project.year, roleLine].filter(Boolean).join(" · ");
   const liveLabel =
     project.liveUrl?.includes("apps.apple.com") ||
     project.liveUrl?.includes("itunes.apple.com")
       ? "App Store"
       : "Live";
+
+  const imageAltDe =
+    project.imageAltDe?.trim() || project.title || "Projektscreenshot";
+  const imageAltEn =
+    project.imageAltEn?.trim() ||
+    project.imageAltDe?.trim() ||
+    project.titleEn ||
+    project.title ||
+    "Project screenshot";
+  const imageAlt = showEnglish ? imageAltEn : imageAltDe;
 
   const frameClass = isFeatured
     ? "relative aspect-[21/9] overflow-hidden bg-gradient-to-br from-accent/15 via-card to-stone-300/30 dark:from-accent/10 dark:via-card dark:to-stone-800/50 sm:aspect-[2.4/1]"
@@ -40,7 +67,7 @@ export function ProjectCard({ project, variant = "default" }: Props) {
           <>
             <ParallaxMedia
               imageUrl={project.imageUrl}
-              alt=""
+              alt={imageAlt}
               sizes={sizes}
               priority={isFeatured}
               frameClassName={frameClass}
@@ -57,7 +84,7 @@ export function ProjectCard({ project, variant = "default" }: Props) {
           </>
         ) : (
           <ParallaxLetter
-            letter={project.title.slice(0, 1)}
+            letter={title.slice(0, 1)}
             frameClassName={frameClass}
             isFeatured={isFeatured}
           />
@@ -81,7 +108,7 @@ export function ProjectCard({ project, variant = "default" }: Props) {
               : "text-lg font-semibold tracking-tight text-foreground"
           }
         >
-          {project.title}
+          {title}
         </h3>
         <p
           className={
@@ -90,7 +117,7 @@ export function ProjectCard({ project, variant = "default" }: Props) {
               : "text-sm leading-relaxed text-stone-600 dark:text-stone-400"
           }
         >
-          {project.description}
+          {description}
         </p>
         <ul className="flex flex-wrap gap-2">
           {project.tech.map((t) => (
