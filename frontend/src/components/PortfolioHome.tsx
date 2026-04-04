@@ -71,7 +71,7 @@ export function PortfolioHome({ profile, projects, skillsData }: Props) {
               </div>
             </section>
 
-            <section id="skills" className="scroll-mt-28">
+            <section id="skills" className="mt-6 scroll-mt-28">
               <SectionHeading
                 eyebrow="Stack"
                 title="Skills"
