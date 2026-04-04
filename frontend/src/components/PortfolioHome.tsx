@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "motion/react";
 import { useState, useSyncExternalStore } from "react";
 import { Hero } from "@/components/Hero";
 import { IntroSequence } from "@/components/IntroSequence";
@@ -47,11 +46,9 @@ export function PortfolioHome({ profile, projects, skillsData }: Props) {
   return (
     <LenisProvider enabled={introDone}>
       <div id="top" className="relative flex flex-1 flex-col">
-        <motion.div
+        {/* Do not animate opacity on this wrapper: it breaks whileInView / Reveal on descendants (cards stay opacity:0). The intro overlay covers the page instead. */}
+        <div
           className={`flex flex-1 flex-col ${introDone ? "" : "pointer-events-none"}`}
-          initial={false}
-          animate={{ opacity: introDone ? 1 : 0 }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           aria-hidden={!introDone}
         >
           <Hero profile={profile} />
@@ -159,7 +156,7 @@ export function PortfolioHome({ profile, projects, skillsData }: Props) {
               </p>
             </div>
           </footer>
-        </motion.div>
+        </div>
 
         {showIntro ? (
           <IntroSequence
