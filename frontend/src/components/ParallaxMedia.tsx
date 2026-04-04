@@ -11,7 +11,7 @@ type Props = {
   priority?: boolean;
   /** Outer frame: aspect + overflow hidden */
   frameClassName: string;
-  /** App screenshots: centered, 90% of frame height, contain (web uses full-bleed cover) */
+  /** App screenshots: centered, 90% frame height × 1.5 scale, contain (web uses full-bleed cover) */
   mediaKind?: "app" | "web";
 };
 
@@ -40,7 +40,7 @@ export function ParallaxMedia({
   if (mediaKind === "app") {
     const appContent = (
       <div className="absolute inset-0 flex items-center justify-center">
-        <div className="relative h-[90%] w-full">
+        <div className="relative h-[90%] w-full origin-center scale-[1.5]">
           <Image
             src={imageUrl}
             alt={alt}

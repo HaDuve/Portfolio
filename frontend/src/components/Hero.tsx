@@ -34,10 +34,17 @@ export function Hero({ profile, introDone }: Props) {
       />
       <div className="grain pointer-events-none absolute inset-0" aria-hidden />
 
-      <div className="relative mx-auto max-w-6xl px-4 pb-24 pt-16 sm:px-6 sm:pb-32 sm:pt-20">
-        <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(240px,420px)] lg:gap-14 xl:gap-16">
+      <div
+        className="pointer-events-none absolute inset-0 z-[1] flex items-center justify-end overflow-hidden"
+        aria-hidden
+      >
+        <HeroFan sectionRef={sectionRef} />
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-6xl pb-24 pt-16 pl-4 pe-[clamp(1.25rem,min(38vw,22rem))] sm:pb-32 sm:pt-20 sm:pl-6 sm:pe-[clamp(1.25rem,min(34vw,28rem))]">
+        <div className="grid items-center gap-12">
           <motion.div
-            className="min-w-0 max-w-3xl"
+            className="min-w-0 max-w-3xl rounded-xl border border-border bg-background p-6 sm:p-8"
             initial={reduce ? false : "hidden"}
             animate={showContent ? "visible" : "hidden"}
             variants={{
@@ -115,36 +122,6 @@ export function Hero({ profile, introDone }: Props) {
             >
               {profile.location}
             </motion.p>
-          </motion.div>
-
-          <motion.div
-            className="flex min-w-0 justify-center lg:justify-end lg:pt-2"
-            initial={reduce ? false : "hidden"}
-            animate={showContent ? "visible" : "hidden"}
-            variants={{
-              hidden: {
-                opacity: 0,
-                y: 28,
-                scale: 0.88,
-                rotate: -22,
-                filter: "blur(8px)",
-              },
-              visible: {
-                opacity: 1,
-                y: 0,
-                scale: 1,
-                rotate: 0,
-                filter: "blur(0px)",
-                transition: {
-                  duration: 0.85,
-                  ease,
-                  delay: reduce ? 0 : 0.36,
-                },
-              },
-            }}
-            style={{ transformOrigin: "50% 50%" }}
-          >
-            <HeroFan sectionRef={sectionRef} />
           </motion.div>
         </div>
       </div>
