@@ -145,7 +145,6 @@ export function IntroSequence({ fullName, onComplete }: Props) {
         opacity: 0,
         scale: LAYOUT.logoScaleStart,
         rotation: LAYOUT.logoRollStart,
-        transformOrigin: "50% 50%",
         willChange: "transform,opacity",
       });
 
