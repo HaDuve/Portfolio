@@ -7,6 +7,10 @@ export type Project = {
   imageUrl: string | null;
   githubUrl: string | null;
   liveUrl: string | null;
+  /** When true, shown as the large featured block above the grid */
+  featured?: boolean;
+  year?: string;
+  role?: string;
 };
 
 export type SkillCategory = {
