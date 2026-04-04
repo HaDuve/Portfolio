@@ -1,6 +1,7 @@
 "use client";
 
 import type { Project } from "@/types/content";
+import { ParallaxLetter } from "@/components/ParallaxLetter";
 import { ParallaxMedia } from "@/components/ParallaxMedia";
 
 type Props = {
@@ -39,11 +40,11 @@ export function ProjectCard({ project, variant = "default" }: Props) {
             frameClassName={frameClass}
           />
         ) : (
-          <div className={frameClass}>
-            <div className="flex h-full items-center justify-center text-5xl font-display font-normal text-stone-400/90 dark:text-stone-600 sm:text-6xl">
-              {project.title.slice(0, 1)}
-            </div>
-          </div>
+          <ParallaxLetter
+            letter={project.title.slice(0, 1)}
+            frameClassName={frameClass}
+            isFeatured={isFeatured}
+          />
         )}
         {isFeatured ? (
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent dark:from-background/90" />
