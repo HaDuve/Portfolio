@@ -31,7 +31,12 @@ type Props = {
   skillsData: SkillsData;
 };
 
-export function PortfolioHome({ locale, profile, projects, skillsData }: Props) {
+export function PortfolioHome({
+  locale,
+  profile,
+  projects,
+  skillsData,
+}: Props) {
   const showEnglish = locale === "en";
   const featured = projects.find((p) => p.featured);
   const rest = projects.filter((p) => !p.featured);
@@ -99,7 +104,9 @@ export function PortfolioHome({ locale, profile, projects, skillsData }: Props) 
                 </div>
                 <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
                   <h3 className="font-display text-xl font-normal text-foreground">
-                    {showEnglish ? "Quality & operations" : "Qualität & Betrieb"}
+                    {showEnglish
+                      ? "Quality & operations"
+                      : "Qualität & Betrieb"}
                   </h3>
                   <p className="mt-3 text-sm leading-relaxed text-stone-600 dark:text-stone-400">
                     {showEnglish
@@ -124,30 +131,35 @@ export function PortfolioHome({ locale, profile, projects, skillsData }: Props) 
                 {showEnglish ? (
                   <>
                     <p>
-                      Many small and mid-sized companies need experienced engineering but do not want
-                      a permanent hire or a long onboarding period. As a freelancer I bring
-                      senior-level work on architecture, code quality, and communication, and I stay
-                      plannable across project phases or a retainer when that fits you better.
+                      Many small and mid-sized companies need experienced
+                      engineering but do not want a permanent hire or a long
+                      onboarding period. As a freelancer I bring senior-level
+                      work on architecture, code quality, and communication, and
+                      I stay plannable across project phases or a retainer when
+                      that fits you better.
                     </p>
                     <p>
-                      A typical collaboration: discovery → agreed scope and milestones → implementation
-                      with regular reviews → handover and documentation. Remote-first, time zones that
-                      work for DACH, and meetings in German or English — whichever your team prefers for
-                      each session.
+                      A typical collaboration: discovery → agreed scope and
+                      milestones → implementation with regular reviews →
+                      handover and documentation. Remote-first, time zones that
+                      work for DACH, and meetings in German or English —
+                      whichever your team prefers for each session.
                     </p>
                   </>
                 ) : (
                   <>
                     <p>
-                      Viele kleine und mittlere Unternehmen brauchen erfahrene Entwicklung, wollen aber
-                      keine dauerhafte Vollbesetzung oder lange Einarbeitung. Als Freelancer liefere ich
-                      Fachniveau (Architektur, Codequalität, Kommunikation) und bleibe über
-                      Projektphasen oder Retainer strukturiert einplanbar.
+                      Viele kleine und mittlere Unternehmen brauchen erfahrene
+                      Entwicklung, wollen aber keine dauerhafte Vollbesetzung
+                      oder lange Einarbeitung. Als Freelancer liefere ich
+                      Fachniveau (Architektur, Codequalität, Kommunikation) und
+                      bleibe über Projektphasen oder Retainer strukturiert
+                      einplanbar.
                     </p>
                     <p>
-                      Typisch: Discovery → Scope & Milestones → Umsetzung mit Reviews → Übergabe &
-                      Dokumentation. Remote-first, DACH-nahe Zeitzonen, Meetings auf Deutsch oder
-                      Englisch.
+                      Typisch: Discovery → Scope & Milestones → Umsetzung mit
+                      Reviews → Übergabe & Dokumentation. Remote-first,
+                      DACH-nahe Zeitzonen, Meetings auf Deutsch oder Englisch.
                     </p>
                   </>
                 )}
