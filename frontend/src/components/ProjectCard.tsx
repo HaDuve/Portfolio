@@ -1,48 +1,65 @@
+"use client";
+
 import type { Project } from "@/types/content";
-import Image from "next/image";
+import { motion, useReducedMotion } from "motion/react";
+import { ParallaxMedia } from "@/components/ParallaxMedia";
 
-type Props = { project: Project; variant?: "default" | "featured" };
+const ease = [0.16, 1, 0.3, 1] as const;
 
-export function ProjectCard({ project, variant = "default" }: Props) {
+type Props = {
+  project: Project;
+  variant?: "default" | "featured";
+  /** Stagger order for scroll-in animation */
+  index?: number;
+};
+
+export function ProjectCard({ project, variant = "default", index = 0 }: Props) {
   const isFeatured = variant === "featured";
+  const reduce = useReducedMotion();
   const meta = [project.year, project.role].filter(Boolean).join(" · ");
 
-  return (
-    <article
-      className={
-        isFeatured
-          ? "group flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition duration-300 ease-out hover:shadow-md dark:border-stone-700/80"
-          : "group flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition duration-300 ease-out hover:-translate-y-0.5 hover:shadow-md dark:border-stone-800"
-      }
-    >
-      <div
-        className={
-          isFeatured
-            ? "relative aspect-[21/9] overflow-hidden bg-gradient-to-br from-accent/15 via-card to-stone-300/30 dark:from-accent/10 dark:via-card dark:to-stone-800/50 sm:aspect-[2.4/1]"
-            : "relative aspect-[16/9] overflow-hidden bg-gradient-to-br from-accent/10 via-stone-100 to-stone-200/80 dark:from-accent/5 dark:via-zinc-900 dark:to-zinc-950"
-        }
-      >
+  const frameClass = isFeatured
+    ? "relative aspect-[21/9] overflow-hidden bg-gradient-to-br from-accent/15 via-card to-stone-300/30 dark:from-accent/10 dark:via-card dark:to-stone-800/50 sm:aspect-[2.4/1]"
+    : "relative aspect-[16/9] overflow-hidden bg-gradient-to-br from-accent/10 via-stone-100 to-stone-200/80 dark:from-accent/5 dark:via-zinc-900 dark:to-zinc-950";
+
+  const sizes = isFeatured
+    ? "(max-width: 768px) 100vw, 72rem"
+    : "(max-width: 768px) 100vw, 50vw";
+
+  const cardClass =
+    isFeatured
+      ? "group flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition duration-300 ease-out hover:shadow-md dark:border-stone-700/80"
+      : "group flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition duration-300 ease-out hover:-translate-y-0.5 hover:shadow-md dark:border-stone-800";
+
+  const inner = (
+    <>
+      <div className="relative">
         {project.imageUrl ? (
-          <Image
-            src={project.imageUrl}
+          <ParallaxMedia
+            imageUrl={project.imageUrl}
             alt=""
-            fill
-            className="object-cover transition duration-500 ease-out group-hover:scale-[1.03]"
-            sizes={isFeatured ? "(max-width: 768px) 100vw, 72rem" : "(max-width: 768px) 100vw, 50vw"}
+            sizes={sizes}
             priority={isFeatured}
+            frameClassName={frameClass}
           />
         ) : (
-          <div className="flex h-full items-center justify-center text-5xl font-display font-normal text-stone-400/90 dark:text-stone-600 sm:text-6xl">
-            {project.title.slice(0, 1)}
+          <div className={frameClass}>
+            <div className="flex h-full items-center justify-center text-5xl font-display font-normal text-stone-400/90 dark:text-stone-600 sm:text-6xl">
+              {project.title.slice(0, 1)}
+            </div>
           </div>
         )}
         {isFeatured ? (
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent dark:from-background/90" />
         ) : null}
       </div>
-      <div className={`flex flex-1 flex-col gap-3 ${isFeatured ? "p-6 sm:p-8" : "p-5"}`}>
+      <div
+        className={`flex flex-1 flex-col gap-3 ${isFeatured ? "p-6 sm:p-8" : "p-5"}`}
+      >
         {meta ? (
-          <p className="font-mono text-[11px] uppercase tracking-widest text-muted">{meta}</p>
+          <p className="font-mono text-[11px] uppercase tracking-widest text-muted">
+            {meta}
+          </p>
         ) : null}
         <h3
           className={
@@ -95,6 +112,29 @@ export function ProjectCard({ project, variant = "default" }: Props) {
           ) : null}
         </div>
       </div>
-    </article>
+    </>
+  );
+
+  if (reduce) {
+    return <article className={cardClass}>{inner}</article>;
+  }
+
+  return (
+    <motion.article
+      className={cardClass}
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{
+        opacity: 1,
+        y: 0,
+        transition: {
+          duration: 0.55,
+          delay: index * 0.06,
+          ease,
+        },
+      }}
+      viewport={{ once: true, amount: 0.2 }}
+    >
+      {inner}
+    </motion.article>
   );
 }

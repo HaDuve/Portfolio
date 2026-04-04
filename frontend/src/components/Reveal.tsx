@@ -23,13 +23,13 @@ export function Reveal({ children, className, delay = 0 }: Props) {
       className={className}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: "-12% 0px" }}
+      viewport={{ once: true, amount: 0.25, margin: "-8% 0px" }}
       variants={{
         hidden: { opacity: 0, y: 28 },
         visible: {
           opacity: 1,
           y: 0,
-          transition: { duration: 1.55, delay, ease },
+          transition: { duration: 0.65, delay, ease },
         },
       }}
     >
