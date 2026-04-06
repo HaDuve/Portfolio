@@ -50,19 +50,6 @@
       "Branch.io",
       "CI/CD"
     ],
-    "media": [
-      {
-        "src": "/projects/wikifolio-1.webp",
-        "altDe": "wikifolio: Markenportrait und Mobile-Kontext",
-        "altEn": "wikifolio: brand portrait in mobile context"
-      },
-      {
-        "src": "/projects/wikifolio-2.webp",
-        "altDe": "wikifolio: Portfolio-Auszug mit App-Referenz",
-        "altEn": "wikifolio: portfolio excerpt referencing the app"
-      }
-    ],
-    "mediaKind": "web",
     "githubUrl": null,
     "liveUrl": "https://apps.apple.com/de/app/wikifolio/id6476974452",
     "year": "2024-2025",

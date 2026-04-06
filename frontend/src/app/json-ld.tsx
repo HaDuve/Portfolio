@@ -56,7 +56,6 @@ export function JsonLd({ locale }: { locale: Locale }) {
       name: p.name,
       url: `${BASE}/${locale}/`,
       image: `${BASE}/profile.jpg`,
-      email: p.email,
       jobTitle: personJob,
       knowsLanguage: ["de", "en"],
       sameAs: p.social.map((s) => s.href),

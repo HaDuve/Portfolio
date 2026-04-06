@@ -490,47 +490,11 @@ export function PortfolioHome({
                 title={showEnglish ? "Start a project" : "Projekt anfragen"}
                 description={
                   showEnglish
-                    ? "Email or pick a time directly. I will reply with concrete next steps. English enquiries are welcome end to end when you prefer."
-                    : "E-Mail oder direkt einen Termin wählen. Ich melde mich mit nächsten Schritten."
+                    ? "Pick a time directly. I will reply with concrete next steps. English enquiries are welcome end to end when you prefer."
+                    : "Direkt einen Termin wählen. Ich melde mich mit nächsten Schritten."
                 }
               />
               <div className="mt-10 flex flex-col gap-8 rounded-2xl border border-border bg-card p-8 shadow-sm sm:flex-row sm:flex-wrap sm:items-start sm:justify-between">
-                <div>
-                  <p className="font-mono text-xs uppercase tracking-widest text-muted">
-                    {showEnglish ? "Email" : "E-Mail"}
-                  </p>
-                  <a
-                    href={`mailto:${profile.email}`}
-                    className="mt-2 block text-xl font-medium text-accent underline-offset-4 transition hover:underline sm:text-2xl"
-                  >
-                    {profile.email}
-                  </a>
-                </div>
-                {profile.phone ? (
-                  <div>
-                    <p className="font-mono text-xs uppercase tracking-widest text-muted">
-                      {showEnglish ? "Phone" : "Telefon"}
-                    </p>
-                    <a
-                      href={`tel:${profile.phone.replace(/\s/g, "")}`}
-                      className="mt-2 block text-lg font-medium text-foreground"
-                    >
-                      {profile.phone}
-                    </a>
-                  </div>
-                ) : null}
-                {profile.addressDe || profile.addressEn ? (
-                  <div className="sm:max-w-xs">
-                    <p className="font-mono text-xs uppercase tracking-widest text-muted">
-                      {showEnglish ? "Location" : "Anschrift"}
-                    </p>
-                    <p className="mt-2 text-sm leading-relaxed text-stone-600 dark:text-stone-400">
-                      {showEnglish
-                        ? profile.addressEn ?? profile.addressDe
-                        : profile.addressDe ?? profile.addressEn}
-                    </p>
-                  </div>
-                ) : null}
                 <div>
                   <p className="font-mono text-xs uppercase tracking-widest text-muted">
                     {showEnglish ? "Schedule" : "Termin"}

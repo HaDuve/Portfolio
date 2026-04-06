@@ -56,14 +56,10 @@ export type Profile = {
   bioEn: string;
   locationDe: string;
   locationEn: string;
-  email: string;
   /** Cal.com / Calendly / etc. — shown as primary CTA */
   schedulingUrl: string;
   /** Public headshot under /public (e.g. /profile.jpg) */
   portraitSrc?: string;
-  phone?: string;
-  addressDe?: string;
-  addressEn?: string;
   /** Short ballpark rates for freelancers (HTML-free plain text) */
   ratesDe?: string;
   ratesEn?: string;

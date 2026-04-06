@@ -130,12 +130,6 @@ export default async function FreelanceAppDevelopmentPage({ params }: Props) {
           </p>
           <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center">
             <a
-              href={`mailto:${p.email}`}
-              className="inline-flex text-lg font-medium text-accent underline-offset-4 hover:underline"
-            >
-              {p.email}
-            </a>
-            <a
               href={p.schedulingUrl}
               target="_blank"
               rel="noopener noreferrer"
