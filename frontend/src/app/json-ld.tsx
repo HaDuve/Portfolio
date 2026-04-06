@@ -77,6 +77,9 @@ export function JsonLd({ locale }: { locale: Locale }) {
       url: `${BASE}/${locale}/`,
       description: serviceDesc,
       provider: { "@id": `${BASE}/#person` },
+      priceRange: isEn
+        ? "€60–€4800 depending on engagement"
+        : "60–4800 € je nach Auftrag",
       areaServed: [
         { "@type": "Country", name: "Germany" },
         { "@type": "Country", name: "Austria" },

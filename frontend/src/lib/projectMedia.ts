@@ -16,5 +16,5 @@ export function resolveProjectImageAlt(
   const name = showEnglish
     ? project.titleEn?.trim() || project.title
     : project.title;
-  return `${name} — ${slideIndex + 1} / ${slideCount}`;
+  return `${name} · ${slideIndex + 1} / ${slideCount}`;
 }

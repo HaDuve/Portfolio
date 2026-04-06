@@ -4,8 +4,8 @@
     "title": "Budget for Nomads",
     "titleEn": "Budget for Nomads",
     "slug": "budget-for-nomads",
-    "description": "Flaggschiff-App (2022, TravelCost Native): reisebasierte Ausgaben — Budgets pro Trip, Tagesübersichten, Kategorien und Multi-Währung (z. B. Heimatwährung mit Bargeld vor Ort). Für Langzeitreisen mit schnellem Erfassen, klaren Summen und ruhigem UI.",
-    "descriptionEn": "2022 freelance flagship (TravelCost Native): trip-based travel spending—per-trip budgets, daily rollups, categorized expenses, and multi-currency support (e.g. home currency with local cash). Built for long-term travel with fast logging, clear totals, and a calm, glanceable UI.",
+    "description": "React-Native- und Expo-App für reisebasiertes Budgeting: Ausgaben pro Trip, Tagesübersichten, Kategorien und Multi-Währung inklusive Wechselkurslogik, online und offline mit Sync. Entwickelt als Freelance-Flaggschiff (TravelCost Native), mit Firebase, Zustand und klarer UX für Langzeitreisende.",
+    "descriptionEn": "React Native and Expo travel budgeting app: per-trip spending, daily rollups, categories, and multi-currency handling with sync between online and offline use. Built end to end as a freelance flagship (TravelCost Native) with Firebase, Zustand, and UX focused on long-term travelers.",
     "tech": [
       "Expo",
       "React Native",
@@ -18,13 +18,13 @@
     "media": [
       {
         "src": "/projects/budget-for-nomads.webp",
-        "altDe": "Screenshot der App Budget for Nomads: Reisebudget und Ausgabenübersicht",
-        "altEn": "Budget for Nomads app screenshot showing trip budget and spending overview"
+        "altDe": "Budget for Nomads: Übersicht Reisebudget und Ausgaben",
+        "altEn": "Budget for Nomads: trip budget and spending overview"
       },
       {
-        "src": "/projects/budget-for-nomads.webp",
-        "altDe": "Budget for Nomads: Kategorien und Ausgabenliste",
-        "altEn": "Budget for Nomads: categories and expense list"
+        "src": "/projects/budget-for-nomads-2.webp",
+        "altDe": "Budget for Nomads: Splash mit Nomaden-Branding",
+        "altEn": "Budget for Nomads: splash screen with nomad branding"
       }
     ],
     "mediaKind": "app",
@@ -36,12 +36,46 @@
     "roleEn": "Freelance · design & build"
   },
   {
+    "id": "13",
+    "title": "wikifolio (Mobile App)",
+    "titleEn": "wikifolio (mobile app)",
+    "slug": "wikifolio",
+    "description": "Cross-Platform-App in React Native für iOS und Android: Pflege und Ausbau des Trading- und Community-Produkts, inklusive nativem Rich-Text-Editor für Kommentare, animierten Tabellen und Charts, Deep Linking mit Branch.io sowie stabiler Testautomatisierung (Jest, Maestro) und CI/CD für Releases. Zusammenarbeit mit Backend, Design und Produkt.",
+    "descriptionEn": "Cross-platform React Native app for iOS and Android: extending a trading and community product with a native rich-text editor for comments, animated tables and charts, Branch.io deep and native linking, automated tests (Jest, Maestro), and CI/CD for releases, alongside backend, design, and product partners.",
+    "tech": [
+      "React Native",
+      "TypeScript",
+      "Jest",
+      "Maestro",
+      "Branch.io",
+      "CI/CD"
+    ],
+    "media": [
+      {
+        "src": "/projects/wikifolio-1.webp",
+        "altDe": "wikifolio: Markenportrait und Mobile-Kontext",
+        "altEn": "wikifolio: brand portrait in mobile context"
+      },
+      {
+        "src": "/projects/wikifolio-2.webp",
+        "altDe": "wikifolio: Portfolio-Auszug mit App-Referenz",
+        "altEn": "wikifolio: portfolio excerpt referencing the app"
+      }
+    ],
+    "mediaKind": "web",
+    "githubUrl": null,
+    "liveUrl": "https://apps.apple.com/de/app/wikifolio/id6476974452",
+    "year": "2024-2025",
+    "role": "Mobile App Developer",
+    "roleEn": "Mobile app developer"
+  },
+  {
     "id": "1",
     "title": "Portfolio (diese Website)",
     "titleEn": "Portfolio (this site)",
     "slug": "portfolio",
-    "description": "Statischer Next.js-Export, Tailwind CSS v4, Docker + Caddy auf einer Hetzner-VM. Inhalte aus JSON für Projekte und Skills.",
-    "descriptionEn": "Static Next.js export, Tailwind CSS v4, Docker + Caddy on a Hetzner VM. Content-driven JSON for projects and skills.",
+    "description": "Öffentliche Freelance-Portfolio-Site als statischer Next.js-Export mit Tailwind CSS v4, mehrsprachigen Routen und inhaltsgetriebenen JSON-Dateien für Projekte und Skills. Deployment per Docker und Caddy auf einer Hetzner-VM mit Fokus auf Performance und klare SEO-Metadaten.",
+    "descriptionEn": "Public freelance portfolio as a static Next.js export with Tailwind CSS v4, localized routes, and JSON-driven projects and skills. Shipped with Docker and Caddy on a Hetzner VM with performance and clear SEO metadata in mind.",
     "tech": [
       "Next.js",
       "TypeScript",
@@ -64,8 +98,8 @@
     "title": "Invoice Creator",
     "titleEn": "Invoice Creator",
     "slug": "invoice-creator",
-    "description": "Rechnungstool für Freelancer in Deutschland: Entwurf → Finalisieren → PDF auf Vercel Blob → E-Mail via Resend → Stripe Checkout → Erinnerungen per Cron.",
-    "descriptionEn": "German freelancer–focused invoicing: drafts → finalize → PDF on Vercel Blob → email via Resend → Stripe Checkout → reminder cron jobs.",
+    "description": "Next.js-Webapp für Freelancer-Rechnungen in Deutschland: Entwürfe, Finalisierung, PDF-Speicherung auf Vercel Blob, Versand per Resend, Stripe Checkout für Zahlungen und Erinnerungen per Cron. Gedacht für klare Prozesse von Entwurf bis bezahlt.",
+    "descriptionEn": "Next.js web app for German freelancer invoicing: drafts, finalization, PDF storage on Vercel Blob, email delivery with Resend, Stripe Checkout for payments, and reminder jobs via cron. Built for a clear path from draft to paid.",
     "tech": [
       "Next.js",
       "React",
@@ -76,7 +110,6 @@
       "Resend",
       "Stripe"
     ],
-    "imageUrl": null,
     "githubUrl": null,
     "liveUrl": null
   },
@@ -85,8 +118,8 @@
     "title": "TripRender App",
     "titleEn": "TripRender App",
     "slug": "triprender-app",
-    "description": "Mono-Repo: Expo-App mit Mapbox-WebView und AWS-Backend; GeoJSON wird per Remotion Lambda zu MP4 gerendert — Download auf Gerät oder Web.",
-    "descriptionEn": "Mono-repo: Expo app with WebView Mapbox map and AWS backend that renders trip GeoJSON to MP4 via Remotion Lambda; download to device or web.",
+    "description": "Expo-App mit Mapbox-WebView und AWS-Backend: GeoJSON-Routen werden serverseitig per Remotion auf Lambda in Videos gerendert, mit Speicherung in S3 und Download auf Gerät oder Web. Stack umfasst CDK, Cognito und Amplify für eine durchgängige Cloud-Pipeline.",
+    "descriptionEn": "Expo app with a Mapbox web view and AWS backend: trip GeoJSON is rendered to video with Remotion on Lambda, stored in S3, and downloaded to device or web. The stack includes CDK, Cognito, and Amplify for an end-to-end cloud pipeline.",
     "tech": [
       "Expo",
       "React Native",
@@ -98,9 +131,18 @@
       "Cognito",
       "Amplify"
     ],
-    "imageUrl": "/projects/triprender-app.webp",
-    "imageAltDe": "Screenshot der TripRender-App mit Karte und Routenansicht",
-    "imageAltEn": "TripRender app screenshot with map and route view",
+    "media": [
+      {
+        "src": "/projects/triprender-app.webp",
+        "altDe": "TripRender App: Karte und Routenansicht",
+        "altEn": "TripRender app: map and route view"
+      },
+      {
+        "src": "/projects/triprender-app-2.webp",
+        "altDe": "TripRender App: App-Icon",
+        "altEn": "TripRender app: app icon"
+      }
+    ],
     "mediaKind": "app",
     "githubUrl": null,
     "liveUrl": null
@@ -110,8 +152,8 @@
     "title": "DrinkWater",
     "titleEn": "DrinkWater",
     "slug": "drink-water",
-    "description": "Wasser-Tracker-MVP: Tagesziel, Gläser loggen (AsyncStorage), SVG-Fortschrittsring und wiederkehrende lokale Benachrichtigungen mit expo-notifications.",
-    "descriptionEn": "Water intake MVP: daily goal, glass logging (AsyncStorage), SVG progress ring, and repeating local notifications with expo-notifications.",
+    "description": "Expo-Router-MVP zum Wasser-Tracking: Tagesziel, schnelles Loggen in AsyncStorage, SVG-Fortschrittsring und wiederkehrende lokale Benachrichtigungen mit expo-notifications. Fokus auf einfache Bedienung und klare Tagesansicht.",
+    "descriptionEn": "Expo Router water intake MVP: daily goal, quick logging with AsyncStorage, an SVG progress ring, and repeating local notifications via expo-notifications. Focused on simple use and a clear daily view.",
     "tech": [
       "Expo",
       "TypeScript",
@@ -119,9 +161,18 @@
       "expo-notifications",
       "AsyncStorage"
     ],
-    "imageUrl": "/projects/drink-water.webp",
-    "imageAltDe": "Screenshot der DrinkWater-App mit Fortschrittsring",
-    "imageAltEn": "DrinkWater app screenshot showing progress ring",
+    "media": [
+      {
+        "src": "/projects/drink-water.webp",
+        "altDe": "DrinkWater: Fortschrittsring und Tagesziel",
+        "altEn": "DrinkWater: progress ring and daily goal"
+      },
+      {
+        "src": "/projects/drink-water-history.webp",
+        "altDe": "DrinkWater: Verlauf oder Historie",
+        "altEn": "DrinkWater: history view"
+      }
+    ],
     "mediaKind": "app",
     "githubUrl": null,
     "liveUrl": null
@@ -131,8 +182,8 @@
     "title": "HabitTracker",
     "titleEn": "HabitTracker",
     "slug": "habit-tracker",
-    "description": "Plattformübergreifendes Gewohnheits-Tracking mit Charts (react-native-chart-kit), Expo Router, Reanimated und EAS-Dev-Builds.",
-    "descriptionEn": "Cross-platform habit tracking with charts (react-native-chart-kit), Expo Router, Reanimated, and EAS dev builds.",
+    "description": "Plattformübergreifende Gewohnheits-App mit Diagrammen (react-native-chart-kit), Expo Router, Reanimated und EAS-Builds. Struktur für wiederkehrende Habits und visuelles Feedback über Zeit.",
+    "descriptionEn": "Cross-platform habit app with charts (react-native-chart-kit), Expo Router, Reanimated, and EAS builds. Structured for recurring habits and visual feedback over time.",
     "tech": [
       "Expo",
       "TypeScript",
@@ -141,7 +192,10 @@
       "Reanimated",
       "EAS"
     ],
-    "imageUrl": null,
+    "imageUrl": "/projects/habit-tracker.webp",
+    "imageAltDe": "HabitTracker: App-Icon",
+    "imageAltEn": "HabitTracker: app icon",
+    "mediaKind": "app",
     "githubUrl": null,
     "liveUrl": null
   },
@@ -150,8 +204,8 @@
     "title": "SwipeStocks",
     "titleEn": "SwipeStocks",
     "slug": "swipe-stocks",
-    "description": "Expo-Finanz-App mit Firebase, Zustand, React Native Paper, Gesten + Reanimated-Stacks, MMKV sowie Jest/Testing Library.",
-    "descriptionEn": "Expo finance-style app with Firebase, Zustand, React Native Paper, gesture + reanimated stacks, MMKV, and Jest/Testing Library.",
+    "description": "Expo-Finanz-Demo mit Firebase, Zustand und React Native Paper: Karten-Stacks mit Gesten und Reanimated, Persistenz mit MMKV und Tests mit Jest und Testing Library. Spielerische Oberfläche für Kurs- oder Watchlist-Inhalte.",
+    "descriptionEn": "Expo finance-style demo with Firebase, Zustand, and React Native Paper: card stacks with gestures and Reanimated, MMKV persistence, and Jest with Testing Library. A playful UI for quote or watchlist style content.",
     "tech": [
       "Expo",
       "TypeScript",
@@ -160,9 +214,18 @@
       "React Native Paper",
       "Jest"
     ],
-    "imageUrl": "/projects/swipe-stocks.webp",
-    "imageAltDe": "Screenshot der SwipeStocks-App mit Karten-UI",
-    "imageAltEn": "SwipeStocks app screenshot with card-based UI",
+    "media": [
+      {
+        "src": "/projects/swipe-stocks.webp",
+        "altDe": "SwipeStocks: Karten-Oberfläche",
+        "altEn": "SwipeStocks: card-based UI"
+      },
+      {
+        "src": "/projects/swipe-stocks-2.webp",
+        "altDe": "SwipeStocks: Splash oder Branding",
+        "altEn": "SwipeStocks: splash or branding"
+      }
+    ],
     "mediaKind": "app",
     "githubUrl": null,
     "liveUrl": null
@@ -172,15 +235,14 @@
     "title": "TripRender (Mapbox-Route SPA)",
     "titleEn": "TripRender (Mapbox route SPA)",
     "slug": "triprender-map",
-    "description": "Single-Page-Routenplanung: Ort A nach B auf einer Mapbox-Karte; statischer Build mit Token-Injection, deploybar auf GitHub Pages oder Netlify.",
-    "descriptionEn": "Single-page driving directions: place A to B on a Mapbox map; static build with token injection, deployable to GitHub Pages or Netlify.",
+    "description": "Statische Single-Page-Route mit Mapbox GL: Fahrt von A nach B auf einer Karte, Build mit Token-Injection für GitHub Pages oder Netlify. Klein, hostbar und leicht erweiterbar für Demos.",
+    "descriptionEn": "Static single-page route with Mapbox GL: driving directions from A to B on a map, built with token injection for GitHub Pages or Netlify. Small, easy to host, and simple to extend for demos.",
     "tech": [
       "Mapbox GL",
       "JavaScript",
       "Node.js",
       "GitHub Pages"
     ],
-    "imageUrl": null,
     "githubUrl": "https://github.com/HaDuve/mapbox-route-app",
     "liveUrl": "https://HaDuve.github.io/mapbox-route-app/"
   },
@@ -189,8 +251,8 @@
     "title": "ControlMe",
     "titleEn": "ControlMe",
     "slug": "controlme",
-    "description": "Multi-Tenant-SaaS-Vorlage: Next.js App Router, Supabase, Billing (Stripe/Lemon Squeezy), i18n, Feature-Packages in Turborepo; Playwright E2E.",
-    "descriptionEn": "Multi-tenant SaaS template: Next.js App Router, Supabase, billing (Stripe/Lemon Squeezy), i18n, feature packages in a Turborepo; Playwright E2E.",
+    "description": "Multi-Tenant-SaaS-Vorlage in einem Turborepo: Next.js App Router, Supabase, Abrechnung über Stripe oder Lemon Squeezy, i18n und Feature-Packages plus Playwright-E2E. Basis für SaaS-Produkte mit Teams, Auth und Billing.",
+    "descriptionEn": "Multi-tenant SaaS starter in a Turborepo: Next.js App Router, Supabase, billing via Stripe or Lemon Squeezy, i18n, feature packages, and Playwright E2E. A base for SaaS products with teams, auth, and billing.",
     "tech": [
       "Next.js",
       "TypeScript",
@@ -200,7 +262,19 @@
       "Playwright",
       "pnpm"
     ],
-    "imageUrl": null,
+    "media": [
+      {
+        "src": "/projects/controlme-dashboard.webp",
+        "altDe": "ControlMe Vorlage: Dashboard-Ansicht",
+        "altEn": "ControlMe template: dashboard view"
+      },
+      {
+        "src": "/projects/controlme-signin.webp",
+        "altDe": "ControlMe Vorlage: Anmeldung",
+        "altEn": "ControlMe template: sign-in"
+      }
+    ],
+    "mediaKind": "web",
     "githubUrl": null,
     "liveUrl": null
   },
@@ -209,8 +283,8 @@
     "title": "Ondojo",
     "titleEn": "Ondojo",
     "slug": "ondojo",
-    "description": "Große Expo-App auf AWS Amplify: AppSync/GraphQL, viele Lambda-Funktionen, EAS-CI für TestFlight/Production, Jest + Maestro E2E, Analytics.",
-    "descriptionEn": "Large Expo app on AWS Amplify: AppSync/GraphQL, many Lambda functions, EAS CI for TestFlight/production, Jest + Maestro E2E, analytics integrations.",
+    "description": "Große Expo-App auf AWS Amplify mit AppSync und GraphQL, vielen Lambda-Funktionen und EAS-CI für TestFlight und Produktion. Qualitätssicherung mit Jest und Maestro, Analytics-Anbindungen und kontinuierliche Releases.",
+    "descriptionEn": "Large Expo app on AWS Amplify with AppSync and GraphQL, many Lambda functions, and EAS CI for TestFlight and production. Quality with Jest and Maestro, analytics integrations, and continuous releases.",
     "tech": [
       "Expo",
       "AWS Amplify",
@@ -225,15 +299,16 @@
     "imageAltEn": "Ondojo app screenshot",
     "mediaKind": "app",
     "githubUrl": null,
-    "liveUrl": null
+    "liveUrl": "https://apps.apple.com/app/ondojo/id1669772088",
+    "playStoreUrl": "https://play.google.com/store/apps/details?id=de.ondojo.app"
   },
   {
     "id": "10",
     "title": "Mobile Battlegrounds",
     "titleEn": "Mobile Battlegrounds",
     "slug": "mobile-battlegrounds",
-    "description": "Mobiles Kartenspiel: React Native (Expo), Firebase Auth & Firestore, Cloud Functions, Zustand-State.",
-    "descriptionEn": "Mobile card battle game: React Native (Expo), Firebase Auth & Firestore, Cloud Functions, Zustand state.",
+    "description": "Mobiles Kartenspiel-Prototyp mit Expo, Firebase Auth und Firestore, Cloud Functions für serverseitige Logik und Zustand für Client-State. Ausgelegt für Echtzeit-Matches und erweiterbare Kartendecks.",
+    "descriptionEn": "Mobile card battle prototype with Expo, Firebase Auth and Firestore, Cloud Functions for server logic, and Zustand for client state. Structured for realtime matches and extensible card decks.",
     "tech": [
       "Expo",
       "React Native",
@@ -242,7 +317,10 @@
       "TypeScript",
       "Zustand"
     ],
-    "imageUrl": null,
+    "imageUrl": "/projects/mobile-battlegrounds.webp",
+    "imageAltDe": "Mobile Battlegrounds: App-Icon",
+    "imageAltEn": "Mobile Battlegrounds: app icon",
+    "mediaKind": "app",
     "githubUrl": null,
     "liveUrl": null
   },
@@ -251,8 +329,8 @@
     "title": "StreamApp",
     "titleEn": "StreamApp",
     "slug": "stream-app",
-    "description": "Twitch-inspiriertes Expo-MVP: Stream-Feed, Kategorien und natives Video mit Expo Video und React Navigation.",
-    "descriptionEn": "Twitch-inspired Expo MVP: stream feed, categories, and native video playback with Expo Video and React Navigation.",
+    "description": "Twitch-inspiriertes Expo-MVP mit Stream-Feed, Kategorien und nativer Videowiedergabe (Expo Video) sowie React Navigation. Gedacht als technische Spielwiese für Video-Listen und Navigation.",
+    "descriptionEn": "Twitch-inspired Expo MVP with a stream feed, categories, and native video playback using Expo Video plus React Navigation. Built as a technical playground for video lists and navigation.",
     "tech": [
       "Expo",
       "React Native",
@@ -260,8 +338,38 @@
       "Expo Video",
       "React Navigation"
     ],
-    "imageUrl": null,
+    "imageUrl": "/projects/stream-app.webp",
+    "imageAltDe": "StreamApp: App-Icon",
+    "imageAltEn": "StreamApp: app icon",
+    "mediaKind": "app",
     "githubUrl": null,
     "liveUrl": null
+  },
+  {
+    "id": "14",
+    "title": "Stage:Cool (Musikmedizin Freiburg)",
+    "titleEn": "Stage:Cool (Freiburg Institute of Music Medicine)",
+    "slug": "stage-cool",
+    "description": "Xamarin- und .NET-App mit SQLite für das Institut für Musikmedizin Freiburg: gemeinsame Entwicklung mit Medizin, Physik und Design, Full-Stack-Verantwortung auf dem Gerät. Heute im App Store unter Stage:Cool für Nachweise und Inspiration.",
+    "descriptionEn": "Xamarin and .NET app with SQLite for the Freiburg Institute of Music Medicine: built together with clinicians, physics, and design, with full on-device responsibility. Available on the App Store as Stage:Cool for reference and inspiration.",
+    "tech": [
+      "Xamarin",
+      ".NET",
+      "C#",
+      "SQLite"
+    ],
+    "media": [
+      {
+        "src": "/projects/stage-cool-1.webp",
+        "altDe": "Stage:Cool: Portfolio-Auszug mit App-Darstellung",
+        "altEn": "Stage:Cool: portfolio excerpt showing the app"
+      }
+    ],
+    "mediaKind": "web",
+    "githubUrl": null,
+    "liveUrl": "https://apps.apple.com/de/app/stage-cool/id151992533",
+    "year": "2019-2020",
+    "role": "Mobile App Developer",
+    "roleEn": "Mobile app developer"
   }
 ]

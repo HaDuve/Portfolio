@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
 import { useRef } from "react";
 import type { Profile } from "@/types/content";
@@ -21,6 +22,7 @@ export function Hero({ profile, introDone, locale }: Props) {
   const location = showEnglish ? profile.locationEn : profile.locationDe;
   const ctaPrimary = showEnglish ? "Book a call" : "Gespräch buchen";
   const ctaSecondary = showEnglish ? "Contact" : "Kontakt";
+  const portrait = profile.portraitSrc ?? "/profile.jpg";
 
   return (
     <section
@@ -50,7 +52,29 @@ export function Hero({ profile, introDone, locale }: Props) {
       </div>
 
       <div className="relative z-10 mx-auto max-w-6xl pb-24 pt-16 pl-4 pe-[clamp(1.25rem,min(38vw,22rem))] sm:pb-32 sm:pt-20 sm:pl-6 sm:pe-[clamp(1.25rem,min(34vw,28rem))]">
-        <div className="grid items-center gap-12">
+        <div className="grid items-start gap-10 lg:grid-cols-[minmax(200px,280px)_minmax(0,1fr)] lg:gap-14">
+          <motion.div
+            className="mx-auto flex w-full max-w-[280px] justify-center lg:mx-0 lg:max-w-none lg:justify-start"
+            initial={reduce ? false : { opacity: 0, y: 12 }}
+            animate={
+              showContent
+                ? { opacity: 1, y: 0 }
+                : { opacity: 0, y: 12 }
+            }
+            transition={{ duration: 0.45, ease }}
+          >
+            <div className="relative aspect-square w-full max-w-[280px] overflow-hidden rounded-2xl border border-border bg-card shadow-sm ring-1 ring-border/60">
+              <Image
+                src={portrait}
+                alt={profile.name}
+                width={560}
+                height={560}
+                priority
+                className="h-full w-full object-cover object-top"
+                sizes="(max-width: 1024px) 280px, 280px"
+              />
+            </div>
+          </motion.div>
           <div className="min-w-0 max-w-3xl rounded-xl border border-border bg-background p-6 sm:p-8">
             {/* Eyebrow + H1 stay out of opacity-0 motion so LCP can paint while the intro overlay runs. */}
             <p className="font-mono text-xs font-medium uppercase tracking-[0.2em] text-accent">

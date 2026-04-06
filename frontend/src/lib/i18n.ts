@@ -75,6 +75,6 @@ export const siteCopy = {
 
 /** Second line inside the hero `<h1>` — complements the name with target keywords. */
 export const heroH1Subtitle = {
-  de: "App entwickeln, Web & Mobile — Freelancer für KMU im DACH-Raum",
-  en: "App development, web & mobile — freelance for SMEs (DACH & EU)",
+  de: "App entwickeln, Web und Mobile: Freelancer für KMU im DACH-Raum",
+  en: "App development, web and mobile: freelance for SMEs (DACH & EU)",
 } as const;

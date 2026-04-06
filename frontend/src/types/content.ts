@@ -20,6 +20,8 @@ export type Project = {
   mediaKind?: "app" | "web";
   githubUrl: string | null;
   liveUrl: string | null;
+  /** Google Play or secondary store link (shown when set) */
+  playStoreUrl?: string | null;
   /** When true, shown as the large featured block above the grid */
   featured?: boolean;
   year?: string;
@@ -57,6 +59,14 @@ export type Profile = {
   email: string;
   /** Cal.com / Calendly / etc. — shown as primary CTA */
   schedulingUrl: string;
+  /** Public headshot under /public (e.g. /profile.jpg) */
+  portraitSrc?: string;
+  phone?: string;
+  addressDe?: string;
+  addressEn?: string;
+  /** Short ballpark rates for freelancers (HTML-free plain text) */
+  ratesDe?: string;
+  ratesEn?: string;
   social: {
     label: string;
     href: string;

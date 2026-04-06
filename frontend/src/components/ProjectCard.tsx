@@ -44,8 +44,8 @@ export function ProjectCard({ project, locale, variant = "default" }: Props) {
   const showAppBadge = mediaKind === "app";
 
   const regionAriaLabel = showEnglish
-    ? `Images — ${title}`
-    : `Bilder — ${title}`;
+    ? `Images: ${title}`
+    : `Bilder: ${title}`;
 
   const frameClass = isFeatured
     ? "relative aspect-[21/9] overflow-hidden bg-gradient-to-br from-accent/15 via-card to-stone-300/30 dark:from-accent/10 dark:via-card dark:to-stone-800/50 sm:aspect-[2.4/1]"
@@ -167,6 +167,16 @@ export function ProjectCard({ project, locale, variant = "default" }: Props) {
               className="text-sm font-medium text-accent underline-offset-4 transition hover:underline"
             >
               {liveLabel}
+            </a>
+          ) : null}
+          {project.playStoreUrl ? (
+            <a
+              href={project.playStoreUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-medium text-accent underline-offset-4 transition hover:underline"
+            >
+              Play Store
             </a>
           ) : null}
         </div>

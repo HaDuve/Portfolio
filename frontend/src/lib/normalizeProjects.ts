@@ -29,6 +29,7 @@ export function normalizeProject(raw: RawProject): Project {
     mediaKind: raw.mediaKind,
     githubUrl: raw.githubUrl,
     liveUrl: raw.liveUrl,
+    playStoreUrl: raw.playStoreUrl ?? null,
     featured: raw.featured,
     year: raw.year,
     role: raw.role,
