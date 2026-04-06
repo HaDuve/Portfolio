@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useSyncExternalStore } from "react";
+import { useLayoutEffect, useState, useSyncExternalStore } from "react";
 import { Hero } from "@/components/Hero";
 import { IntroSequence } from "@/components/IntroSequence";
 import { LenisProvider } from "@/components/LenisProvider";
@@ -23,6 +23,32 @@ function subscribeReducedMotion(cb: () => void) {
 
 function getReducedMotionSnapshot() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+/** After the intro finishes, do not show it again for this many ms (per-tab “session” feel via localStorage). */
+const INTRO_BLOCK_MS = 10 * 60 * 1000;
+const INTRO_STORAGE_KEY = "portfolioIntroBlockedUntil";
+
+function readIntroBlockedUntil(): number | null {
+  try {
+    const raw = localStorage.getItem(INTRO_STORAGE_KEY);
+    if (!raw) return null;
+    const n = parseInt(raw, 10);
+    return Number.isFinite(n) ? n : null;
+  } catch {
+    return null;
+  }
+}
+
+function writeIntroBlockedUntil(): void {
+  try {
+    localStorage.setItem(
+      INTRO_STORAGE_KEY,
+      String(Date.now() + INTRO_BLOCK_MS),
+    );
+  } catch {
+    /* quota / private mode */
+  }
 }
 
 type SkillsData = {
@@ -54,6 +80,14 @@ export function PortfolioHome({
     getReducedMotionSnapshot,
     () => false,
   );
+
+  useLayoutEffect(() => {
+    if (prefersReducedMotion) return;
+    const until = readIntroBlockedUntil();
+    if (until !== null && Date.now() < until) {
+      setIntroPhase("done");
+    }
+  }, [prefersReducedMotion]);
 
   /** Hero motion: unblock when intro fade starts (not only when DOM unmounts). */
   const introDone = prefersReducedMotion || introPhase !== "playing";
@@ -528,7 +562,10 @@ export function PortfolioHome({
           <IntroSequence
             fullName={profile.name}
             onFadeStart={() => setIntroPhase("fading")}
-            onComplete={() => setIntroPhase("done")}
+            onComplete={() => {
+              writeIntroBlockedUntil();
+              setIntroPhase("done");
+            }}
           />
         ) : null}
       </div>
