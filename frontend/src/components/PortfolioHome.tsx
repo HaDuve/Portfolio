@@ -8,7 +8,12 @@ import { LenisProvider } from "@/components/LenisProvider";
 import { ProjectCard } from "@/components/ProjectCard";
 import { SectionHeading } from "@/components/SectionHeading";
 import type { Profile, Project } from "@/types/content";
-import { datenschutzPath, impressumPath, type Locale } from "@/lib/i18n";
+import {
+  datenschutzPath,
+  impressumPath,
+  localePath,
+  type Locale,
+} from "@/lib/i18n";
 
 function subscribeReducedMotion(cb: () => void) {
   const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -41,22 +46,25 @@ export function PortfolioHome({
   const featured = projects.find((p) => p.featured);
   const rest = projects.filter((p) => !p.featured);
 
-  const [introFinished, setIntroFinished] = useState(false);
+  const [introPhase, setIntroPhase] = useState<"playing" | "fading" | "done">(
+    "playing",
+  );
   const prefersReducedMotion = useSyncExternalStore(
     subscribeReducedMotion,
     getReducedMotionSnapshot,
     () => false,
   );
 
-  const introDone = prefersReducedMotion || introFinished;
-  const showIntro = !prefersReducedMotion && !introFinished;
+  /** Hero motion: unblock when intro fade starts (not only when DOM unmounts). */
+  const introDone = prefersReducedMotion || introPhase !== "playing";
+  const showIntro = !prefersReducedMotion && introPhase !== "done";
 
   return (
     <LenisProvider enabled={false}>
       <div id="top" className="relative flex flex-1 flex-col">
         <div
-          className={`flex flex-1 flex-col ${introDone ? "" : "pointer-events-none"}`}
-          aria-hidden={!introDone}
+          className={`flex flex-1 flex-col ${introPhase === "playing" && !prefersReducedMotion ? "pointer-events-none" : ""}`}
+          aria-hidden={introPhase === "playing" && !prefersReducedMotion}
         >
           <Hero profile={profile} introDone={introDone} locale={locale} />
 
@@ -71,6 +79,31 @@ export function PortfolioHome({
                     : "Web, Mobile und Full-Stack — von MVP bis produktionsreif."
                 }
               />
+              <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted">
+                {showEnglish ? (
+                  <>
+                    More on{" "}
+                    <Link
+                      href={localePath(locale, "app-entwickeln-freelancer")}
+                      className="font-medium text-accent underline-offset-4 hover:underline"
+                    >
+                      freelance app development & how to engage
+                    </Link>
+                    — process, stack, and FAQs.
+                  </>
+                ) : (
+                  <>
+                    Mehr zu{" "}
+                    <Link
+                      href={localePath(locale, "app-entwickeln-freelancer")}
+                      className="font-medium text-accent underline-offset-4 hover:underline"
+                    >
+                      App entwickeln und als Freelancer beauftragen
+                    </Link>
+                    — Ablauf, Stack und häufige Fragen.
+                  </>
+                )}
+              </p>
               <div className="mt-10 grid gap-6 sm:grid-cols-2">
                 <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
                   <h3 className="font-display text-xl font-normal text-foreground">
@@ -393,7 +426,8 @@ export function PortfolioHome({
         {showIntro ? (
           <IntroSequence
             fullName={profile.name}
-            onComplete={() => setIntroFinished(true)}
+            onFadeStart={() => setIntroPhase("fading")}
+            onComplete={() => setIntroPhase("done")}
           />
         ) : null}
       </div>

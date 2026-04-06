@@ -57,6 +57,9 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${displaySerif.variable} h-full antialiased`}
       suppressHydrationWarning
     >
+      <head>
+        <link rel="preload" href="/fan-object.png" as="image" type="image/png" />
+      </head>
       <body className="flex min-h-full flex-col bg-background text-foreground">
         <Script id="lang-init" strategy="beforeInteractive">
           {langInit}

@@ -9,6 +9,8 @@ const INTRO_FAN_SRC = "/fan-object.png";
 
 type Props = {
   fullName: string;
+  /** Fires when the outro fade begins — unblock main content for LCP/INP while overlay finishes. */
+  onFadeStart?: () => void;
   onComplete: () => void;
 };
 
@@ -84,16 +86,21 @@ const rootOverlayStyle: CSSProperties = {
   backgroundColor: "var(--background, Canvas)",
 };
 
-export function IntroSequence({ fullName, onComplete }: Props) {
+export function IntroSequence({ fullName, onFadeStart, onComplete }: Props) {
   const rootRef = useRef<HTMLDivElement>(null);
   const l1Ref = useRef<HTMLDivElement>(null);
   const l2Ref = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
   const onCompleteRef = useRef(onComplete);
+  const onFadeStartRef = useRef(onFadeStart);
 
   useLayoutEffect(() => {
     onCompleteRef.current = onComplete;
   }, [onComplete]);
+
+  useLayoutEffect(() => {
+    onFadeStartRef.current = onFadeStart;
+  }, [onFadeStart]);
 
   const { c1, c2 } = useMemo(() => normalizeInitials(fullName), [fullName]);
 
@@ -156,14 +163,13 @@ export function IntroSequence({ fullName, onComplete }: Props) {
 
       const tl = gsap.timeline({
         defaults: { ease: "power2.inOut" },
-        onComplete: finish,
       });
 
       tl.to(l1, {
         left: LAYOUT.l1MeetLeft,
         y: 0,
         opacity: 1,
-        duration: 0.88,
+        duration: 0.68,
         ease: meetEase,
       })
         .to(
@@ -172,25 +178,25 @@ export function IntroSequence({ fullName, onComplete }: Props) {
             left: LAYOUT.l2MeetLeft,
             y: 0,
             opacity: 1,
-            duration: 0.88,
+            duration: 0.68,
             ease: meetEase,
           },
-          "<0.06",
+          "<0.05",
         )
         .to(
           l1,
           {
             left: LAYOUT.l1SplitLeft,
-            duration: 1.05,
+            duration: 0.82,
             ease: splitEase,
           },
-          "+=0.12",
+          "+=0.08",
         )
         .to(
           l2,
           {
             left: LAYOUT.l2SplitLeft,
-            duration: 1.05,
+            duration: 0.82,
             ease: splitEase,
           },
           "<",
@@ -202,15 +208,19 @@ export function IntroSequence({ fullName, onComplete }: Props) {
             rotation: 0,
             opacity: 1,
             scale: 1,
-            duration: 1.05,
+            duration: 0.82,
             ease: splitEase,
           },
           "<",
         )
         .to(root, {
           opacity: 0,
-          duration: 0.98,
+          duration: 0.72,
           ease: "power2.inOut",
+          onStart: () => {
+            onFadeStartRef.current?.();
+          },
+          onComplete: finish,
         });
     }, root);
 

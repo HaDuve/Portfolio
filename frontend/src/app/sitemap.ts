@@ -32,6 +32,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       images: homeImages,
     },
     {
+      url: `${BASE}/de/app-entwickeln-freelancer/`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
+      url: `${BASE}/en/app-entwickeln-freelancer/`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
       url: `${BASE}/de/impressum/`,
       lastModified: now,
       changeFrequency: "yearly",

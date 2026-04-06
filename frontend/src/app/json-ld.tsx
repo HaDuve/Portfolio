@@ -27,7 +27,9 @@ export function JsonLd({ locale }: { locale: Locale }) {
   const serviceTypes = isEn
     ? [
         "Web development",
+        "Website development",
         "Mobile app development",
+        "Backend development",
         "Full-stack development",
         "React",
         "Next.js",
@@ -36,7 +38,10 @@ export function JsonLd({ locale }: { locale: Locale }) {
       ]
     : [
         "Webentwicklung",
+        "Website erstellen",
+        "App-Entwicklung",
         "Mobile App Entwicklung",
+        "Backend-Entwicklung",
         "Full-Stack-Entwicklung",
         "React",
         "Next.js",

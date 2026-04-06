@@ -54,14 +54,20 @@ export function absoluteUrl(path: string): string {
 export const siteCopy = {
   de: {
     title:
-      "Hannes Duve — Freelance Full-Stack & Mobile (Web, Apps, DACH)",
+      "App entwickeln & Full-Stack — Freelancer Hannes Duve (DACH)",
     description:
-      "Senior Freelancer für Webapps, Mobile Apps (React Native/Expo) und Full-Stack — Next.js, Cloud, APIs. Für KMU in DE, AT & CH: flexibel, senior-nah, remote.",
+      "App entwickeln, Webapps und Backends bauen: Senior-Freelancer (Next.js, React Native/Expo, Node, Cloud). App beauftragen — remote für KMU in DE, AT & CH.",
   },
   en: {
     title:
-      "Hannes Duve — Freelance Full-Stack & Mobile (Web, Apps, DACH)",
+      "Freelance app & full-stack developer — Hannes Duve (DACH & EU)",
     description:
-      "Senior freelance engineer for web apps, mobile (React Native/Expo), and full-stack — Next.js, cloud, APIs. For SMEs in Germany, Austria & Switzerland: flexible, senior-level, remote.",
+      "Hire a freelance app developer for web apps, mobile (React Native/Expo), and backends — Next.js, Node, cloud. Remote for SMEs in Germany, Austria, Switzerland, and beyond.",
   },
+} as const;
+
+/** Second line inside the hero `<h1>` — complements the name with target keywords. */
+export const heroH1Subtitle = {
+  de: "App entwickeln, Web & Mobile — Freelancer für KMU im DACH-Raum",
+  en: "App development, web & mobile — freelance for SMEs (DACH & EU)",
 } as const;
