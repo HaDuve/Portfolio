@@ -17,6 +17,13 @@ export function getAlternateLocalePath(pathname: string, target: Locale): string
     return `/${target}/`;
   }
   const sub = parts.slice(1);
+  // Landing slug mapping: DE uses `/app-entwickeln-freelancer/`, EN uses `/freelance-app-development/`.
+  if (sub[0] === "app-entwickeln-freelancer" && target === "en") {
+    return "/en/freelance-app-development/";
+  }
+  if (sub[0] === "freelance-app-development" && target === "de") {
+    return "/de/app-entwickeln-freelancer/";
+  }
   if (sub[0] === "datenschutz" && target === "en") {
     return "/en/privacy/";
   }

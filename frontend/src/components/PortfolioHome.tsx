@@ -150,6 +150,107 @@ export function PortfolioHome({
               </div>
             </section>
 
+            <section id="app-entwickeln" className="mt-24 scroll-mt-28">
+              <SectionHeading
+                eyebrow={showEnglish ? "App development" : "App entwickeln"}
+                title={
+                  showEnglish
+                    ? "Hire a freelance app developer"
+                    : "App entwickeln lassen (Freelancer)"
+                }
+                description={
+                  showEnglish
+                    ? "From idea to shipped app: scope, stack, delivery, and a clear handover."
+                    : "Von Idee bis Go-Live: Scope, Stack, Umsetzung und saubere Übergabe."
+                }
+              />
+              <div className="mt-10 max-w-3xl space-y-4 text-base leading-relaxed text-stone-600 dark:text-stone-400">
+                {showEnglish ? (
+                  <>
+                    <p>
+                      If you are thinking “I want an app”, the fastest path is
+                      usually a short discovery: users, core flows, platforms,
+                      and what the backend needs to do. From that we define an
+                      MVP that is realistic in budget and timeline.
+                    </p>
+                    <p>
+                      Typical setup: React Native/Expo for iOS and Android, a
+                      Next.js web app or marketing site where it helps, and a
+                      lean backend (Node + Postgres/Supabase) for auth, data and
+                      integrations. One coherent stack keeps maintenance
+                      predictable.
+                    </p>
+                    <p>
+                      If you want to commission a freelancer for an app project,
+                      this page collects the process, FAQs, and concrete next
+                      steps.
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <p>
+                      Wenn du denkst „Ich will eine App“: Der schnellste Weg ist
+                      fast immer ein kurzes Discovery — Nutzer, Kern-Flows,
+                      Plattformen (iOS/Android) und was das Backend leisten muss.
+                      Daraus entsteht ein MVP, das in Budget und Timeline
+                      realistisch bleibt.
+                    </p>
+                    <p>
+                      Typisch: React Native/Expo für iOS und Android, optional
+                      eine Next.js Web-App oder Website, plus ein schlankes
+                      Backend (Node + Postgres/Supabase) für Auth, Daten und
+                      Integrationen. Ein konsistenter Stack macht Wartung
+                      planbar.
+                    </p>
+                    <p>
+                      Wenn du einen App-Auftrag vergeben und einen Freelancer
+                      beauftragen willst, findest du hier Ablauf, FAQs und die
+                      nächsten Schritte.
+                    </p>
+                  </>
+                )}
+              </div>
+              <div className="mt-10 grid gap-4 sm:grid-cols-3">
+                <Link
+                  href={localePath(locale, "app-entwickeln-freelancer")}
+                  className="rounded-2xl border border-border bg-card p-5 shadow-sm transition hover:border-accent/40 hover:bg-accent/5"
+                >
+                  <p className="font-mono text-xs uppercase tracking-widest text-muted">
+                    {showEnglish ? "Landing" : "Landing"}
+                  </p>
+                  <p className="mt-2 text-sm font-medium text-foreground">
+                    {showEnglish
+                      ? "Process, stack, and engagement"
+                      : "Ablauf, Stack und Zusammenarbeit"}
+                  </p>
+                </Link>
+                <Link
+                  href={localePath(locale, "app-entwickeln-freelancer/#faq")}
+                  className="rounded-2xl border border-border bg-card p-5 shadow-sm transition hover:border-accent/40 hover:bg-accent/5"
+                >
+                  <p className="font-mono text-xs uppercase tracking-widest text-muted">
+                    FAQ
+                  </p>
+                  <p className="mt-2 text-sm font-medium text-foreground">
+                    {showEnglish
+                      ? "How to get an app built"
+                      : "Wie lasse ich eine App machen?"}
+                  </p>
+                </Link>
+                <Link
+                  href={localePath(locale, "#contact")}
+                  className="rounded-2xl border border-border bg-card p-5 shadow-sm transition hover:border-accent/40 hover:bg-accent/5"
+                >
+                  <p className="font-mono text-xs uppercase tracking-widest text-muted">
+                    {showEnglish ? "Next step" : "Nächster Schritt"}
+                  </p>
+                  <p className="mt-2 text-sm font-medium text-foreground">
+                    {showEnglish ? "Request a quote" : "Projekt anfragen"}
+                  </p>
+                </Link>
+              </div>
+            </section>
+
             <section id="zusammenarbeit" className="mt-24 scroll-mt-28">
               <SectionHeading
                 eyebrow={showEnglish ? "SMEs & teams" : "KMU & Teams"}

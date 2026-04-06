@@ -5,7 +5,6 @@ import { FaqJsonLd } from "@/components/FaqJsonLd";
 import profile from "@/data/profile.json";
 import {
   appEntwickelnFreelancerFaq,
-  appEntwickelnFreelancerMeta,
   appEntwickelnSections,
 } from "@/data/appEntwickelnFreelancer";
 import { isLocale, localePath, type Locale } from "@/lib/i18n";
@@ -18,31 +17,24 @@ type Props = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale: l } = await params;
-  if (!isLocale(l)) {
+  if (!isLocale(l) || l !== "en") {
     return {};
   }
-  const locale = l;
-  const isEn = locale === "en";
-  const meta = isEn
-    ? appEntwickelnFreelancerMeta.en
-    : appEntwickelnFreelancerMeta.de;
 
-  const canonical = isEn
-    ? "/en/freelance-app-development/"
-    : "/de/app-entwickeln-freelancer/";
+  const title = "Freelance app development (web, mobile, backend) · DACH";
+  const description =
+    "Hire a senior freelance developer for app development: React Native/Expo, Next.js, and backends. Remote for SMEs in Germany, Austria, and Switzerland.";
 
   return {
-    title: meta.title,
-    description: meta.description,
-    robots: isEn
-      ? {
-          index: false,
-          follow: true,
-          googleBot: { index: false, follow: true },
-        }
-      : undefined,
+    title,
+    description,
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: { index: true, follow: true },
+    },
     alternates: {
-      canonical,
+      canonical: "/en/freelance-app-development/",
       languages: {
         "de-DE": "/de/app-entwickeln-freelancer/",
         en: "/en/freelance-app-development/",
@@ -50,31 +42,32 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     },
     openGraph: {
-      title: meta.title,
-      description: meta.description,
-      url: `${BASE}${canonical}`,
-      locale: isEn ? "en_US" : "de_DE",
+      title,
+      description,
+      url: `${BASE}/en/freelance-app-development/`,
+      locale: "en_US",
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
-      title: meta.title,
-      description: meta.description,
+      title,
+      description,
     },
   };
 }
 
-export default async function AppEntwickelnFreelancerPage({ params }: Props) {
+export default async function FreelanceAppDevelopmentPage({ params }: Props) {
   const { locale: l } = await params;
   if (!isLocale(l)) {
     notFound();
   }
+  if (l !== "en") {
+    notFound();
+  }
+
   const locale = l as Locale;
-  const isEn = locale === "en";
-  const copy = isEn ? appEntwickelnSections.en : appEntwickelnSections.de;
-  const faq = isEn
-    ? appEntwickelnFreelancerFaq.en
-    : appEntwickelnFreelancerFaq.de;
+  const copy = appEntwickelnSections.en;
+  const faq = appEntwickelnFreelancerFaq.en;
 
   return (
     <>
@@ -84,7 +77,7 @@ export default async function AppEntwickelnFreelancerPage({ params }: Props) {
           href={localePath(locale)}
           className="font-mono text-sm text-muted underline-offset-4 transition hover:text-foreground hover:underline"
         >
-          {isEn ? "← Home" : "← Start"}
+          ← Home
         </Link>
         <h1 className="font-display mt-8 text-3xl tracking-tight text-foreground sm:text-4xl">
           {copy.h1}
@@ -93,14 +86,12 @@ export default async function AppEntwickelnFreelancerPage({ params }: Props) {
           {copy.lead}
         </p>
         <h2 className="font-display mt-14 text-2xl text-foreground">
-          {isEn ? "Stack & services" : "Stack & Leistung"}
+          Stack & services
         </h2>
         <p className="mt-4 text-base leading-relaxed text-stone-600 dark:text-stone-400">
           {copy.stack}
         </p>
-        <h2 className="font-display mt-14 text-2xl text-foreground">
-          {isEn ? "Good fit" : "Passt das zu euch?"}
-        </h2>
+        <h2 className="font-display mt-14 text-2xl text-foreground">Good fit</h2>
         <p className="mt-4 text-base leading-relaxed text-stone-600 dark:text-stone-400">
           {copy.fit}
         </p>
@@ -150,7 +141,7 @@ export default async function AppEntwickelnFreelancerPage({ params }: Props) {
               rel="noopener noreferrer"
               className="inline-flex w-fit rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-white hover:opacity-90 dark:text-stone-950"
             >
-              {isEn ? "Book a 30-minute call" : "Gespräch buchen (30 Min.)"}
+              Book a 30-minute call
             </a>
           </div>
         </section>
@@ -158,3 +149,4 @@ export default async function AppEntwickelnFreelancerPage({ params }: Props) {
     </>
   );
 }
+

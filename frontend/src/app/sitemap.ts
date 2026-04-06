@@ -38,7 +38,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
-      url: `${BASE}/en/app-entwickeln-freelancer/`,
+      url: `${BASE}/en/freelance-app-development/`,
       lastModified: now,
       changeFrequency: "monthly",
       priority: 0.9,
