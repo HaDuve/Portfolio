@@ -1,16 +1,21 @@
 import type { MetadataRoute } from "next";
 import projectsData from "@/data/projects.json";
-import type { Project } from "@/types/content";
+import { normalizeProjects } from "@/lib/normalizeProjects";
+import type { RawProject } from "@/types/content";
 
 export const dynamic = "force-static";
 
 const BASE = "https://hannesduve.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const projects = projectsData as Project[];
-  const imageUrls = projects
-    .map((p) => (p.imageUrl ? new URL(p.imageUrl, BASE).href : null))
-    .filter(Boolean) as string[];
+  const projects = normalizeProjects(projectsData as RawProject[]);
+  const imageUrls = [
+    ...new Set(
+      projects.flatMap((p) =>
+        p.media.map((m) => new URL(m.src, BASE).href),
+      ),
+    ),
+  ];
 
   const now = new Date();
 

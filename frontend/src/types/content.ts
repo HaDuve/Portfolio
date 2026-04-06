@@ -1,3 +1,9 @@
+export type ProjectMediaItem = {
+  src: string;
+  altDe?: string;
+  altEn?: string;
+};
+
 export type Project = {
   id: string;
   /** Primary (German) title */
@@ -8,7 +14,8 @@ export type Project = {
   description: string;
   descriptionEn?: string;
   tech: string[];
-  imageUrl: string | null;
+  /** One or more images; carousel in the card when length > 1 */
+  media: ProjectMediaItem[];
   /** App screenshots (portrait phone) vs web; drives image fit and framing in the card */
   mediaKind?: "app" | "web";
   githubUrl: string | null;
@@ -19,7 +26,12 @@ export type Project = {
   /** Shown as secondary line (German preferred) */
   role?: string;
   roleEn?: string;
-  /** Image alt text for SEO / a11y (German primary) */
+};
+
+/** Shape of `projects.json` before normalization (legacy `imageUrl` + optional `media`) */
+export type RawProject = Omit<Project, "media"> & {
+  media?: ProjectMediaItem[];
+  imageUrl?: string | null;
   imageAltDe?: string;
   imageAltEn?: string;
 };

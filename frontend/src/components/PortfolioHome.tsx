@@ -85,7 +85,9 @@ export function PortfolioHome({
     if (prefersReducedMotion) return;
     const until = readIntroBlockedUntil();
     if (until !== null && Date.now() < until) {
-      setIntroPhase("done");
+      queueMicrotask(() => {
+        setIntroPhase("done");
+      });
     }
   }, [prefersReducedMotion]);
 

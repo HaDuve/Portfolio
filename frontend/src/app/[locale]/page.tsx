@@ -2,11 +2,12 @@ import { PortfolioHome } from "@/components/PortfolioHome";
 import profile from "@/data/profile.json";
 import projectsData from "@/data/projects.json";
 import skillsData from "@/data/skills.json";
+import { normalizeProjects } from "@/lib/normalizeProjects";
 import { isLocale, type Locale } from "@/lib/i18n";
-import type { Profile, Project } from "@/types/content";
+import type { Profile, RawProject } from "@/types/content";
 import { notFound } from "next/navigation";
 
-const projects = projectsData as Project[];
+const projects = normalizeProjects(projectsData as RawProject[]);
 const profileTyped = profile as Profile;
 
 type Props = { params: Promise<{ locale: string }> };

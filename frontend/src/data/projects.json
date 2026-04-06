@@ -15,9 +15,18 @@
       "React Navigation",
       "i18n"
     ],
-    "imageUrl": "/projects/budget-for-nomads.webp",
-    "imageAltDe": "Screenshot der App Budget for Nomads: Reisebudget und Ausgabenübersicht",
-    "imageAltEn": "Budget for Nomads app screenshot showing trip budget and spending overview",
+    "media": [
+      {
+        "src": "/projects/budget-for-nomads.webp",
+        "altDe": "Screenshot der App Budget for Nomads: Reisebudget und Ausgabenübersicht",
+        "altEn": "Budget for Nomads app screenshot showing trip budget and spending overview"
+      },
+      {
+        "src": "/projects/budget-for-nomads.webp",
+        "altDe": "Budget for Nomads: Kategorien und Ausgabenliste",
+        "altEn": "Budget for Nomads: categories and expense list"
+      }
+    ],
     "mediaKind": "app",
     "githubUrl": "https://github.com/HaDuve/TravelCostNative",
     "liveUrl": "https://apps.apple.com/app/budget-for-nomads/id6446042796",

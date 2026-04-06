@@ -13,6 +13,8 @@ type Props = {
   frameClassName: string;
   /** App screenshots: centered, 90% frame height × 1.5 scale, contain (web uses full-bleed cover) */
   mediaKind?: "app" | "web";
+  /** When false, skip scroll-linked parallax (e.g. inside a carousel). Default true. */
+  parallax?: boolean;
 };
 
 const webImgClass =
@@ -27,8 +29,10 @@ export function ParallaxMedia({
   priority,
   frameClassName,
   mediaKind = "web",
+  parallax = true,
 }: Props) {
   const reduce = useReducedMotion();
+  const enableParallax = parallax && !reduce;
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -53,7 +57,7 @@ export function ParallaxMedia({
       </div>
     );
 
-    if (reduce) {
+    if (!enableParallax) {
       return (
         <div ref={ref} className={frameClassName}>
           {appContent}
@@ -73,7 +77,7 @@ export function ParallaxMedia({
     );
   }
 
-  if (reduce) {
+  if (!enableParallax) {
     return (
       <div ref={ref} className={frameClassName}>
         <Image

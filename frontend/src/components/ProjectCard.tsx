@@ -2,8 +2,10 @@
 
 import type { Project } from "@/types/content";
 import type { Locale } from "@/lib/i18n";
+import { resolveProjectImageAlt } from "@/lib/projectMedia";
 import { ParallaxLetter } from "@/components/ParallaxLetter";
 import { ParallaxMedia } from "@/components/ParallaxMedia";
+import { ProjectMediaCarousel } from "@/components/ProjectMediaCarousel";
 
 type Props = {
   project: Project;
@@ -37,15 +39,13 @@ export function ProjectCard({ project, locale, variant = "default" }: Props) {
       ? "App Store"
       : "Live";
 
-  const imageAltDe =
-    project.imageAltDe?.trim() || project.title || "Projektscreenshot";
-  const imageAltEn =
-    project.imageAltEn?.trim() ||
-    project.imageAltDe?.trim() ||
-    project.titleEn ||
-    project.title ||
-    "Project screenshot";
-  const imageAlt = showEnglish ? imageAltEn : imageAltDe;
+  const media = project.media;
+  const mediaKind = project.mediaKind ?? "web";
+  const showAppBadge = mediaKind === "app";
+
+  const regionAriaLabel = showEnglish
+    ? `Images — ${title}`
+    : `Bilder — ${title}`;
 
   const frameClass = isFeatured
     ? "relative aspect-[21/9] overflow-hidden bg-gradient-to-br from-accent/15 via-card to-stone-300/30 dark:from-accent/10 dark:via-card dark:to-stone-800/50 sm:aspect-[2.4/1]"
@@ -63,17 +63,29 @@ export function ProjectCard({ project, locale, variant = "default" }: Props) {
   return (
     <article className={cardClass}>
       <div className="relative">
-        {project.imageUrl ? (
+        {media.length === 0 ? (
+          <ParallaxLetter
+            letter={title.slice(0, 1)}
+            frameClassName={frameClass}
+            isFeatured={isFeatured}
+          />
+        ) : media.length === 1 ? (
           <>
             <ParallaxMedia
-              imageUrl={project.imageUrl}
-              alt={imageAlt}
+              imageUrl={media[0].src}
+              alt={resolveProjectImageAlt(
+                media[0],
+                project,
+                locale,
+                0,
+                1,
+              )}
               sizes={sizes}
               priority={isFeatured}
               frameClassName={frameClass}
-              mediaKind={project.mediaKind ?? "web"}
+              mediaKind={mediaKind}
             />
-            {project.mediaKind === "app" ? (
+            {showAppBadge ? (
               <span
                 className="pointer-events-none absolute left-3 top-3 z-20 rounded-md border border-border bg-background/90 px-2 py-1 text-[10px] font-mono uppercase tracking-wider text-muted shadow-sm backdrop-blur-sm"
                 aria-hidden
@@ -83,13 +95,20 @@ export function ProjectCard({ project, locale, variant = "default" }: Props) {
             ) : null}
           </>
         ) : (
-          <ParallaxLetter
-            letter={title.slice(0, 1)}
+          <ProjectMediaCarousel
+            project={project}
+            items={media}
+            locale={locale}
+            mediaKind={mediaKind}
             frameClassName={frameClass}
+            sizes={sizes}
+            priority={isFeatured}
+            showAppBadge={showAppBadge}
+            regionAriaLabel={regionAriaLabel}
             isFeatured={isFeatured}
           />
         )}
-        {isFeatured ? (
+        {isFeatured && media.length <= 1 ? (
           <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-background/80 via-transparent to-transparent dark:from-background/90" />
         ) : null}
       </div>
