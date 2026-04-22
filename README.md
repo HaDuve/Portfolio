@@ -28,6 +28,15 @@ npm run build
 
 Assumptions: Ubuntu 22.04, Docker Engine + Docker Compose v2, ports 80 and 443 open, DNS A record for `hannesduve.com` points to this server’s public IP.
 
+If you already have the repo set up on the server (in `REMOTE_DIR`), you can deploy from your local machine via:
+
+```bash
+# optional:
+# export REMOTE_DIR=/opt/Portfolio
+# export DEPLOY_BRANCH=main
+./scripts/deploy-remote.sh
+```
+
 1. Clone this repo on the server and `cd` into the project root (where `docker-compose.yml` lives).
 
 2. Build static files into the Docker volume and start Caddy:

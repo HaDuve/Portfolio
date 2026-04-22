@@ -17,14 +17,34 @@
     ],
     "media": [
       {
-        "src": "/projects/budget-for-nomads.webp",
-        "altDe": "Budget for Nomads: Übersicht Reisebudget und Ausgaben",
-        "altEn": "Budget for Nomads: trip budget and spending overview"
+        "src": "/assets/Frame%20294.png",
+        "altDe": "Budget for Nomads: Tagesübersicht und Ausgabenliste",
+        "altEn": "Budget for Nomads: daily overview and expense list"
       },
       {
-        "src": "/projects/budget-for-nomads-2.webp",
-        "altDe": "Budget for Nomads: Splash mit Nomaden-Branding",
-        "altEn": "Budget for Nomads: splash screen with nomad branding"
+        "src": "/assets/Frame%20295.png",
+        "altDe": "Budget for Nomads: Reisebudget im Überblick",
+        "altEn": "Budget for Nomads: trip budget overview"
+      },
+      {
+        "src": "/assets/Frame%20296.png",
+        "altDe": "Budget for Nomads: Ausgaben nach Kategorie",
+        "altEn": "Budget for Nomads: expenses by category"
+      },
+      {
+        "src": "/assets/Frame%20297.png",
+        "altDe": "Budget for Nomads: neue Ausgabe erfassen",
+        "altEn": "Budget for Nomads: add new expense"
+      },
+      {
+        "src": "/assets/Frame%20298.png",
+        "altDe": "Budget for Nomads: Statistiken und Diagramme",
+        "altEn": "Budget for Nomads: stats and charts"
+      },
+      {
+        "src": "/assets/Frame%20299.png",
+        "altDe": "Budget for Nomads: Einstellungen oder Währungen",
+        "altEn": "Budget for Nomads: settings or currencies"
       }
     ],
     "mediaKind": "app",
@@ -50,6 +70,9 @@
       "Branch.io",
       "CI/CD"
     ],
+    "imageUrl": "/assets/Wikifolio.jpg",
+    "imageAltDe": "Screenshot der wikifolio App",
+    "imageAltEn": "Screenshot of the wikifolio app",
     "githubUrl": null,
     "liveUrl": "https://apps.apple.com/de/app/wikifolio/id6476974452",
     "year": "2024-2025",
@@ -70,9 +93,9 @@
       "Docker",
       "Caddy"
     ],
-    "imageUrl": "/projects/portfolio.webp",
-    "imageAltDe": "Screenshot der Portfolio-Website mit Projekten und Kontakt",
-    "imageAltEn": "Portfolio website screenshot showing projects and contact section",
+    "imageUrl": "/assets/Portfolio.jpg",
+    "imageAltDe": "Screenshot der Portfolio-Website",
+    "imageAltEn": "Screenshot of the portfolio website",
     "mediaKind": "web",
     "githubUrl": null,
     "liveUrl": "https://hannesduve.com",
@@ -249,18 +272,6 @@
       "Playwright",
       "pnpm"
     ],
-    "media": [
-      {
-        "src": "/projects/controlme-dashboard.webp",
-        "altDe": "ControlMe Vorlage: Dashboard-Ansicht",
-        "altEn": "ControlMe template: dashboard view"
-      },
-      {
-        "src": "/projects/controlme-signin.webp",
-        "altDe": "ControlMe Vorlage: Anmeldung",
-        "altEn": "ControlMe template: sign-in"
-      }
-    ],
     "mediaKind": "web",
     "githubUrl": null,
     "liveUrl": null
@@ -281,9 +292,9 @@
       "Jest",
       "Maestro"
     ],
-    "imageUrl": "/projects/ondojo.webp",
-    "imageAltDe": "Screenshot der Ondojo-App",
-    "imageAltEn": "Ondojo app screenshot",
+    "imageUrl": "/assets/Ondojo.jpg",
+    "imageAltDe": "Screenshot der Ondojo App",
+    "imageAltEn": "Screenshot of the Ondojo app",
     "mediaKind": "app",
     "githubUrl": null,
     "liveUrl": "https://apps.apple.com/app/ondojo/id1669772088",
@@ -304,9 +315,6 @@
       "TypeScript",
       "Zustand"
     ],
-    "imageUrl": "/projects/mobile-battlegrounds.webp",
-    "imageAltDe": "Mobile Battlegrounds: App-Icon",
-    "imageAltEn": "Mobile Battlegrounds: app icon",
     "mediaKind": "app",
     "githubUrl": null,
     "liveUrl": null
@@ -325,9 +333,6 @@
       "Expo Video",
       "React Navigation"
     ],
-    "imageUrl": "/projects/stream-app.webp",
-    "imageAltDe": "StreamApp: App-Icon",
-    "imageAltEn": "StreamApp: app icon",
     "mediaKind": "app",
     "githubUrl": null,
     "liveUrl": null
@@ -344,13 +349,6 @@
       ".NET",
       "C#",
       "SQLite"
-    ],
-    "media": [
-      {
-        "src": "/projects/stage-cool-1.webp",
-        "altDe": "Stage:Cool: Portfolio-Auszug mit App-Darstellung",
-        "altEn": "Stage:Cool: portfolio excerpt showing the app"
-      }
     ],
     "mediaKind": "web",
     "githubUrl": null,
