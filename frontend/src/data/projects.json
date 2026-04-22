@@ -51,7 +51,7 @@
     "githubUrl": "https://github.com/HaDuve/TravelCostNative",
     "liveUrl": "https://apps.apple.com/app/budget-for-nomads/id6446042796",
     "featured": true,
-    "year": "2022",
+    "year": "2022-2024",
     "role": "Freelance · Konzept & Umsetzung",
     "roleEn": "Freelance · design & build"
   },
@@ -298,7 +298,8 @@
     "mediaKind": "app",
     "githubUrl": null,
     "liveUrl": "https://apps.apple.com/app/ondojo/id1669772088",
-    "playStoreUrl": "https://play.google.com/store/apps/details?id=de.ondojo.app"
+    "playStoreUrl": "https://play.google.com/store/apps/details?id=de.ondojo.app",
+    "year": "2025-present"
   },
   {
     "id": "10",

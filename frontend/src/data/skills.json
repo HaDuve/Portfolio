@@ -9,8 +9,10 @@
         "React Native",
         "Expo",
         "TypeScript",
+        "React Navigation",
         "Expo Router",
         "Zustand",
+        "Deep Linking (Branch.io)",
         "Expo Dev Client (Development Builds)",
         "EAS Build",
         "EAS Submit",
@@ -30,6 +32,7 @@
         "React",
         "TypeScript",
         "Tailwind CSS",
+        "UI/UX Implementation",
         "i18n (localization)",
         "shadcn/ui",
         "Mapbox GL",
@@ -43,19 +46,29 @@
       "introEn": "APIs, auth, and data models for mobile apps — with PostgreSQL/Prisma or Supabase, plus CI/CD and automated tests for reliable releases.",
       "items": [
         "Node.js",
+        "REST APIs",
+        "GraphQL",
         "PostgreSQL",
         "Prisma",
         "Supabase",
+        "SQL",
+        "SQLite",
         "Auth.js",
         "Stripe",
         "AWS (Lambda, CDK, S3)",
-        "REST APIs",
         "Playwright",
         "Jest",
         "CI/CD",
         "Performance",
         "Security basics"
       ]
+    },
+    {
+      "nameDe": "Zusätzlich",
+      "nameEn": "Additional",
+      "introDe": "Weitere Erfahrung aus Projekten – hilfreich je nach Bestandssystem und Tech-Stack.",
+      "introEn": "Additional project experience — useful depending on legacy systems and stack constraints.",
+      "items": [".NET", "C#", "Xamarin", "Python", "App Store Optimization"]
     }
   ]
 }
