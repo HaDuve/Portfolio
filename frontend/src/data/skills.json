@@ -1,36 +1,46 @@
 {
   "categories": [
     {
+      "nameDe": "Mobile App Entwicklung",
+      "nameEn": "Mobile app development",
+      "introDe": "React Native Apps entwickeln (iOS & Android) mit Expo/TypeScript – inkl. sauberem Release-Prozess für App Store & Google Play (EAS Build/Submit) und stabilen Updates.",
+      "introEn": "React Native apps for iOS & Android with Expo/TypeScript — including an app-store-ready release process (EAS Build/Submit) and stable updates.",
+      "items": [
+        "React Native",
+        "Expo",
+        "TypeScript",
+        "Expo Router",
+        "Zustand",
+        "Expo Dev Client (Development Builds)",
+        "EAS Build",
+        "EAS Submit",
+        "App Store & Google Play Release",
+        "Firebase",
+        "AWS Amplify",
+        "Maestro (Mobile E2E Tests)"
+      ]
+    },
+    {
       "nameDe": "Web & UI",
       "nameEn": "Web & UI",
+      "introDe": "Web-Oberflächen, Landing Pages und Dashboards als Ergänzung zur App – schnell, responsive und barrierearm (Accessibility), mit i18n und klarer Performance-Basis.",
+      "introEn": "Web UIs, landing pages, and dashboards as a complement to the app — fast, responsive, accessible, with i18n and a solid performance baseline.",
       "items": [
         "Next.js",
         "React",
         "TypeScript",
         "Tailwind CSS",
-        "i18n",
-        "Shadcn UI",
+        "i18n (localization)",
+        "shadcn/ui",
         "Mapbox GL",
-        "Accessibility"
-      ]
-    },
-    {
-      "nameDe": "Mobile",
-      "nameEn": "Mobile",
-      "items": [
-        "React Native",
-        "Expo",
-        "Zustand",
-        "Expo Router",
-        "EAS Build",
-        "React Navigation",
-        "Firebase",
-        "AWS Amplify"
+        "Accessibility (a11y)"
       ]
     },
     {
       "nameDe": "Backend & Betrieb",
       "nameEn": "Backend & operations",
+      "introDe": "APIs, Auth und Datenmodelle für mobile Apps – mit PostgreSQL/Prisma oder Supabase sowie CI/CD und automatisierten Tests für verlässliche Releases.",
+      "introEn": "APIs, auth, and data models for mobile apps — with PostgreSQL/Prisma or Supabase, plus CI/CD and automated tests for reliable releases.",
       "items": [
         "Node.js",
         "PostgreSQL",
@@ -42,7 +52,6 @@
         "REST APIs",
         "Playwright",
         "Jest",
-        "Maestro",
         "CI/CD",
         "Performance",
         "Security basics"

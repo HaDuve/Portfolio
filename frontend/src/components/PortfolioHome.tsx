@@ -52,7 +52,13 @@ function writeIntroBlockedUntil(): void {
 }
 
 type SkillsData = {
-  categories: { nameDe: string; nameEn: string; items: string[] }[];
+  categories: {
+    nameDe: string;
+    nameEn: string;
+    items: string[];
+    introDe?: string;
+    introEn?: string;
+  }[];
 };
 
 type Props = {
@@ -459,8 +465,8 @@ export function PortfolioHome({
                 title="Skills"
                 description={
                   showEnglish
-                    ? "Grouped by focus area."
-                    : "Gruppiert nach Schwerpunkten."
+                    ? "Mobile-first: React Native & Expo, iOS/Android releases, plus web and backend."
+                    : "Mobile-first: React Native & Expo, iOS/Android Release (App Store/Google Play), plus Web & Backend."
                 }
               />
               <div className="mt-10 space-y-10 border-t border-border pt-10">
@@ -469,6 +475,11 @@ export function PortfolioHome({
                     <h3 className="font-mono text-xs font-medium uppercase tracking-widest text-muted">
                       {showEnglish ? cat.nameEn : cat.nameDe}
                     </h3>
+                    {cat.introDe || cat.introEn ? (
+                      <p className="mt-3 max-w-3xl text-sm text-muted">
+                        {showEnglish ? cat.introEn : cat.introDe}
+                      </p>
+                    ) : null}
                     <ul className="mt-4 flex flex-wrap gap-2">
                       {cat.items.map((item) => (
                         <li
