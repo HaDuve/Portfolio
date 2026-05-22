@@ -2,7 +2,7 @@ import type { FaqItem } from "./appEntwickelnFreelancer";
 
 export const coachingMeta = {
   de: {
-    title: "Programmieren lernen mit KI — Vibe Coding Coach (DE)",
+    title: "Programmieren lernen mit KI — Vibe Coding Coach",
     description:
       "Lerne Programmieren mit KI-Unterstützung: Cursor, Claude und Vibe Coding für Einsteiger. 1:1 Coaching — 60 € / 60 Min., kostenloses Erstgespräch.",
   },
@@ -21,10 +21,11 @@ export const coachingSections = {
     toolsTitle: "Werkzeuge & Ansatz",
     tools:
       "Wir arbeiten mit Cursor als KI-Editor und Claude als Underlying Model. Kein Setup-Stress: Ich führe dich durch die Einrichtung, wenn nötig. Der Fokus liegt auf deinem Projekt — nicht auf abstrakter Theorie.",
+    fitTitle: "Für wen ist das?",
     fit:
-      "Besonders sinnvoll für nicht-technische oder semi-technische Gründer und Einsteiger, die eigene Ideen umsetzen wollen, und für Software-Engineers, die KI systematisch in ihren Workflow integrieren wollen.",
+      "Besonders sinnvoll für nicht-technische oder semi-technische Gründer und Einsteiger, die eigene Ideen mit Cursor und Claude umsetzen wollen — ohne Vorkenntnisse in einer bestimmten Programmiersprache.",
     alsoFit:
-      "Auch passend für Software-Engineers, die KI-gestütztes Coding (Vibe Coding) als Workflow etablieren und ihren Output mit AI-Tools skalieren wollen.",
+      "Auch passend für Software-Engineers, die bereits produktiv coden und Agent-Workflows, Debugging und Code-Reviews mit KI-Tools professionalisieren wollen — statt jedes Mal von vorn zu prompten.",
     processTitle: "Ablauf",
     processSteps: [
       "Kostenloses 30-Min.-Erstgespräch: Dein Projekt, dein Stand, deine Ziele",
@@ -44,10 +45,11 @@ export const coachingSections = {
     toolsTitle: "Tools & approach",
     tools:
       "We work with Cursor as the AI editor and Claude as the underlying model. No setup frustration: I'll walk you through configuration if needed. The focus is always on your project — not abstract theory.",
+    fitTitle: "Who is this for?",
     fit:
-      "A great fit for non-technical and semi-technical founders and beginners who want to ship their own ideas, and for software engineers who want to integrate AI systematically into their workflow.",
+      "A great fit for non-technical and semi-technical founders and beginners who want to ship their own ideas with Cursor and Claude — without needing prior experience in a specific programming language.",
     alsoFit:
-      "Also a fit for software engineers who want to establish AI-assisted coding (Vibe Coding) as a workflow and scale their output with AI tools.",
+      "Also a fit for software engineers who already ship code and want to professionalize agent workflows, debugging, and code review with AI tools — instead of re-prompting from scratch every time.",
     processTitle: "Process",
     processSteps: [
       "Free 30-minute intro call: your project, your current level, your goals",

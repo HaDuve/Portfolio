@@ -10,7 +10,9 @@ const REQUIRED_SECTION_KEYS = [
   "lead",
   "toolsTitle",
   "tools",
+  "fitTitle",
   "fit",
+  "alsoFit",
   "processTitle",
   "processSteps",
   "price",
@@ -51,4 +53,24 @@ describe("coachingMeta shape", () => {
       expect(coachingMeta[locale]).toHaveProperty("description");
     });
   }
+
+  it("de title does not use redundant (DE) suffix", () => {
+    expect(coachingMeta.de.title).not.toMatch(/\(DE\)/);
+  });
+});
+
+describe("coachingSections audience copy", () => {
+  it("de fit focuses on beginners; alsoFit covers engineers without repeating fit", () => {
+    const { fit, alsoFit } = coachingSections.de;
+    expect(fit).not.toMatch(/Software-Engineer/i);
+    expect(alsoFit).toMatch(/Software-Engineer/i);
+    expect(fit).not.toEqual(alsoFit);
+  });
+
+  it("en fit focuses on beginners; alsoFit covers engineers without repeating fit", () => {
+    const { fit, alsoFit } = coachingSections.en;
+    expect(fit).not.toMatch(/software engineer/i);
+    expect(alsoFit).toMatch(/software engineer/i);
+    expect(fit).not.toEqual(alsoFit);
+  });
 });

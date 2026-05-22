@@ -14,6 +14,12 @@ import type { Profile } from "@/types/content";
 const BASE = "https://hannesduve.com";
 const p = profile as Profile;
 
+export const dynamic = "force-static";
+
+export function generateStaticParams() {
+  return [{ locale: "en" }];
+}
+
 type Props = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -86,7 +92,7 @@ export default async function VibeCodingCoachPage({ params }: Props) {
           {copy.tools}
         </p>
         <h2 className="font-display mt-14 text-2xl text-foreground">
-          Who is this for?
+          {copy.fitTitle}
         </h2>
         <p className="mt-4 text-base leading-relaxed text-stone-600 dark:text-stone-400">
           {copy.fit}

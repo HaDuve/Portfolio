@@ -8,6 +8,7 @@ import { LenisProvider } from "@/components/LenisProvider";
 import { ProjectCard } from "@/components/ProjectCard";
 import { SectionHeading } from "@/components/SectionHeading";
 import type { Profile, Project } from "@/types/content";
+import { homeHubCopy, homeHubPaths } from "@/data/homeHub";
 import {
   datenschutzPath,
   devLandingPath,
@@ -76,6 +77,8 @@ export function PortfolioHome({
   skillsData,
 }: Props) {
   const showEnglish = locale === "en";
+  const hubCopy = homeHubCopy[locale];
+  const hubPaths = homeHubPaths(locale);
   const featured = projects.find((p) => p.featured);
   const rest = projects.filter((p) => !p.featured);
 
@@ -112,7 +115,40 @@ export function PortfolioHome({
           <Hero profile={profile} introDone={introDone} locale={locale} />
 
           <main className="mx-auto w-full max-w-6xl flex-1 px-4 pb-24 pt-16 sm:px-6 sm:pt-20">
-            <section id="leistungen" className="scroll-mt-28">
+            <section id="hub" className="scroll-mt-28">
+              <div className="grid gap-4 sm:grid-cols-2">
+                <Link
+                  href={hubPaths.dev}
+                  className="rounded-2xl border border-border bg-card p-6 shadow-sm transition hover:border-accent/40 hover:bg-accent/5"
+                >
+                  <p className="font-mono text-xs uppercase tracking-widest text-muted">
+                    {hubCopy.dev.eyebrow}
+                  </p>
+                  <h2 className="font-display mt-3 text-2xl text-foreground">
+                    {hubCopy.dev.headline}
+                  </h2>
+                  <p className="mt-2 text-sm text-stone-600 dark:text-stone-400">
+                    {hubCopy.dev.description}
+                  </p>
+                </Link>
+                <Link
+                  href={hubPaths.coaching}
+                  className="rounded-2xl border border-border bg-card p-6 shadow-sm transition hover:border-accent/40 hover:bg-accent/5"
+                >
+                  <p className="font-mono text-xs uppercase tracking-widest text-muted">
+                    {hubCopy.coaching.eyebrow}
+                  </p>
+                  <h2 className="font-display mt-3 text-2xl text-foreground">
+                    {hubCopy.coaching.headline}
+                  </h2>
+                  <p className="mt-2 text-sm text-stone-600 dark:text-stone-400">
+                    {hubCopy.coaching.description}
+                  </p>
+                </Link>
+              </div>
+            </section>
+
+            <section id="leistungen" className="mt-24 scroll-mt-28">
               <SectionHeading
                 eyebrow={showEnglish ? "Services" : "Angebot"}
                 title={showEnglish ? "Services" : "Leistungen"}
@@ -200,107 +236,6 @@ export function PortfolioHome({
                       : "Tests (Jest, Playwright, Maestro), CI/CD, Performance und pragmatische Security-Basics — damit ihr nicht nur launcht, sondern wartet."}
                   </p>
                 </div>
-              </div>
-            </section>
-
-            <section id="app-entwickeln" className="mt-24 scroll-mt-28">
-              <SectionHeading
-                eyebrow={showEnglish ? "App development" : "App entwickeln"}
-                title={
-                  showEnglish
-                    ? "Hire a freelance app developer"
-                    : "App entwickeln lassen (Freelancer)"
-                }
-                description={
-                  showEnglish
-                    ? "From idea to shipped app: scope, stack, delivery, and a clear handover."
-                    : "Von Idee bis Go-Live: Scope, Stack, Umsetzung und saubere Übergabe."
-                }
-              />
-              <div className="mt-10 max-w-3xl space-y-4 text-base leading-relaxed text-stone-600 dark:text-stone-400">
-                {showEnglish ? (
-                  <>
-                    <p>
-                      If you are thinking “I want an app”, the fastest path is
-                      usually a short discovery: users, core flows, platforms,
-                      and what the backend needs to do. From that we define an
-                      MVP that is realistic in budget and timeline.
-                    </p>
-                    <p>
-                      Typical setup: React Native/Expo for iOS and Android, a
-                      Next.js web app or marketing site where it helps, and a
-                      lean backend (Node + Postgres/Supabase) for auth, data and
-                      integrations. One coherent stack keeps maintenance
-                      predictable.
-                    </p>
-                    <p>
-                      If you want to commission a freelancer for an app project,
-                      this page collects the process, FAQs, and concrete next
-                      steps.
-                    </p>
-                  </>
-                ) : (
-                  <>
-                    <p>
-                      Wenn du denkst „Ich will eine App“: Der schnellste Weg ist
-                      fast immer ein kurzes Discovery — Nutzer, Kern-Flows,
-                      Plattformen (iOS/Android) und was das Backend leisten muss.
-                      Daraus entsteht ein MVP, das in Budget und Timeline
-                      realistisch bleibt.
-                    </p>
-                    <p>
-                      Typisch: React Native/Expo für iOS und Android, optional
-                      eine Next.js Web-App oder Website, plus ein schlankes
-                      Backend (Node + Postgres/Supabase) für Auth, Daten und
-                      Integrationen. Ein konsistenter Stack macht Wartung
-                      planbar.
-                    </p>
-                    <p>
-                      Wenn du einen App-Auftrag vergeben und einen Freelancer
-                      beauftragen willst, findest du hier Ablauf, FAQs und die
-                      nächsten Schritte.
-                    </p>
-                  </>
-                )}
-              </div>
-              <div className="mt-10 grid gap-4 sm:grid-cols-3">
-                <Link
-                  href={devLandingPath(locale)}
-                  className="rounded-2xl border border-border bg-card p-5 shadow-sm transition hover:border-accent/40 hover:bg-accent/5"
-                >
-                  <p className="font-mono text-xs uppercase tracking-widest text-muted">
-                    {showEnglish ? "Landing" : "Landing"}
-                  </p>
-                  <p className="mt-2 text-sm font-medium text-foreground">
-                    {showEnglish
-                      ? "Process, stack, and engagement"
-                      : "Ablauf, Stack und Zusammenarbeit"}
-                  </p>
-                </Link>
-                <Link
-                  href={devLandingPath(locale) + "#faq"}
-                  className="rounded-2xl border border-border bg-card p-5 shadow-sm transition hover:border-accent/40 hover:bg-accent/5"
-                >
-                  <p className="font-mono text-xs uppercase tracking-widest text-muted">
-                    FAQ
-                  </p>
-                  <p className="mt-2 text-sm font-medium text-foreground">
-                    {showEnglish
-                      ? "How to get an app built"
-                      : "Wie lasse ich eine App machen?"}
-                  </p>
-                </Link>
-                <Link
-                  href={localePath(locale, "#contact")}
-                  className="rounded-2xl border border-border bg-card p-5 shadow-sm transition hover:border-accent/40 hover:bg-accent/5"
-                >
-                  <p className="font-mono text-xs uppercase tracking-widest text-muted">
-                    {showEnglish ? "Next step" : "Nächster Schritt"}
-                  </p>
-                  <p className="mt-2 text-sm font-medium text-foreground">
-                    {showEnglish ? "Request a quote" : "Projekt anfragen"}
-                  </p>
-                </Link>
               </div>
             </section>
 
