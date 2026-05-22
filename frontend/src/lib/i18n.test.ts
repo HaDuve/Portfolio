@@ -1,5 +1,9 @@
 import { describe, it, expect } from "vitest";
-import { getAlternateLocalePath, devLandingPath } from "./i18n";
+import {
+  coachingLandingPath,
+  devLandingPath,
+  getAlternateLocalePath,
+} from "./i18n";
 
 describe("getAlternateLocalePath — coaching page pair", () => {
   it("maps DE coaching slug to EN", () => {
@@ -44,11 +48,11 @@ describe("getAlternateLocalePath — legal pages", () => {
 });
 
 describe("getAlternateLocalePath — root paths", () => {
-  it("maps /de/ root to /en/", () => {
+  it("maps DE home root to EN home root", () => {
     expect(getAlternateLocalePath("/de/", "en")).toBe("/en/");
   });
 
-  it("maps /en/ root to /de/", () => {
+  it("maps EN home root to DE home root", () => {
     expect(getAlternateLocalePath("/en/", "de")).toBe("/de/");
   });
 });
@@ -74,5 +78,15 @@ describe("devLandingPath", () => {
 
   it("returns EN slug for en locale", () => {
     expect(devLandingPath("en")).toBe("/en/freelance-app-development/");
+  });
+});
+
+describe("coachingLandingPath", () => {
+  it("returns DE coaching slug for de locale", () => {
+    expect(coachingLandingPath("de")).toBe("/de/programmieren-lernen-mit-ki/");
+  });
+
+  it("returns EN coaching slug for en locale", () => {
+    expect(coachingLandingPath("en")).toBe("/en/vibe-coding-coach/");
   });
 });
