@@ -1,7 +1,12 @@
 # Portfolio on VM1: Caddy serves static Next.js export from shared volume.
 # First deploy / content updates:
 #   docker compose run --build --rm frontend
-#   docker compose up -d caddy
+#   docker compose up -d caddy analytics
+#
+# Server-only env (create .env on the VM, never commit):
+#   ANALYTICS_INGEST_SECRET=...
+#   ANALYTICS_IP_HASH_SALT=...
+# Optional: ANALYTICS_ALLOWED_ORIGINS=https://hannesduve.com
 
 services:
   caddy:
@@ -15,11 +20,29 @@ services:
       - site_data:/var/www/html
       - caddy_data:/data
       - caddy_config:/config
+      - caddy_logs:/var/log/caddy
+    depends_on:
+      - analytics
+
+  analytics:
+    build:
+      context: ./analytics
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      ANALYTICS_INGEST_SECRET: ${ANALYTICS_INGEST_SECRET:?set on server}
+      ANALYTICS_IP_HASH_SALT: ${ANALYTICS_IP_HASH_SALT:?set on server}
+      ANALYTICS_DB_PATH: /data/clicks.sqlite
+      ANALYTICS_ALLOWED_ORIGINS: ${ANALYTICS_ALLOWED_ORIGINS:-https://hannesduve.com}
+    volumes:
+      - analytics_data:/data
 
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_ANALYTICS_INGEST_KEY: ${ANALYTICS_INGEST_SECRET:?set on server}
     restart: "no"
     volumes:
       - site_data:/site
@@ -30,3 +53,5 @@ volumes:
   site_data:
   caddy_data:
   caddy_config:
+  caddy_logs:
+  analytics_data:

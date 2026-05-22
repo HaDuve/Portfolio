@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FaqJsonLd } from "@/components/FaqJsonLd";
+import { SchedulingLink } from "@/components/SchedulingLink";
 import profile from "@/data/profile.json";
 import {
   appEntwickelnFreelancerFaq,
@@ -138,14 +139,14 @@ export default async function AppEntwickelnFreelancerPage({ params }: Props) {
             {copy.ctaBody}
           </p>
           <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center">
-            <a
+            <SchedulingLink
               href={p.schedulingUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+              placement="cta"
+              locale={locale}
               className="inline-flex w-fit rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-white hover:opacity-90 dark:text-stone-950"
             >
               {isEn ? "Book a 30-minute call" : "Gespräch buchen (30 Min.)"}
-            </a>
+            </SchedulingLink>
           </div>
         </section>
       </main>

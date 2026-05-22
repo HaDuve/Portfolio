@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useLayoutEffect, useState, useSyncExternalStore } from "react";
 import { Hero } from "@/components/Hero";
+import { SchedulingLink } from "@/components/SchedulingLink";
 import { HubBlock } from "@/components/HubBlock";
 import { IntroSequence } from "@/components/IntroSequence";
 import { LenisProvider } from "@/components/LenisProvider";
@@ -233,14 +234,14 @@ export function PortfolioHome({
                   <p className="font-mono text-xs uppercase tracking-widest text-muted">
                     {showEnglish ? "Schedule" : "Termin"}
                   </p>
-                  <a
+                  <SchedulingLink
                     href={profile.schedulingUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    placement="contact"
+                    locale={locale}
                     className="mt-2 inline-flex rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-white transition hover:opacity-90 dark:text-stone-950"
                   >
                     {showEnglish ? "Book a call" : "Gespräch buchen"}
-                  </a>
+                  </SchedulingLink>
                   <p className="mt-2 text-xs text-stone-500">
                     {showEnglish
                       ? "30-minute call (Calendly)"

@@ -5,6 +5,7 @@ import { useRef } from "react";
 import type { Profile } from "@/types/content";
 import { heroH1Subtitle, type Locale } from "@/lib/i18n";
 import { HeroFan } from "./HeroFan";
+import { SchedulingLink } from "./SchedulingLink";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -112,14 +113,14 @@ export function Hero({ profile, introDone, locale }: Props) {
                   },
                 }}
               >
-                <a
+                <SchedulingLink
                   href={profile.schedulingUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  placement="hero"
+                  locale={locale}
                   className="inline-flex items-center justify-center rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:opacity-90 dark:text-stone-950"
                 >
                   {ctaPrimary}
-                </a>
+                </SchedulingLink>
                 <a
                   href={`/${locale}/#contact`}
                   className="inline-flex items-center justify-center rounded-full border border-border px-6 py-3 text-sm font-medium transition hover:border-accent/40 hover:bg-accent/5"
