@@ -3,8 +3,23 @@ hannesduve.com {
 	root * /var/www/html
 	encode gzip zstd
 
+	log {
+		output file /var/log/caddy/access.log {
+			roll_size 50mb
+			roll_keep 12
+			roll_keep_for 8760h
+		}
+		format json
+	}
+
 	@root path /
 	redir @root /de/ 308
 
-	file_server
+	handle /api/* {
+		reverse_proxy analytics:3000
+	}
+
+	handle {
+		file_server
+	}
 }
