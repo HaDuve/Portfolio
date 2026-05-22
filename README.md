@@ -28,7 +28,7 @@ npm run build
 
 Assumptions: Ubuntu 22.04, Docker Engine + Docker Compose v2, ports 80 and 443 open, DNS A record for `hannesduve.com` points to this server’s public IP.
 
-From your laptop (Docker on the server is enough — no manual clone/.env steps if you use the script):
+From your laptop, **after the PR is merged to `main`** on GitHub (Docker on the server is enough — no manual clone/.env steps):
 
 ```bash
 cp scripts/deploy-remote.example.sh scripts/deploy-remote.sh   # once
@@ -37,7 +37,7 @@ chmod +x scripts/deploy-remote.sh
 ./scripts/deploy-remote.sh
 ```
 
-The script will, on first run: clone into `REMOTE_DIR` (default `/opt/Portfolio`), create `.env` with analytics secrets if missing, `git pull`, build the static site into the volume, and start `caddy` + `analytics`. Unpushed local changes: `SYNC_LOCAL=1 ./scripts/deploy-remote.sh` (rsync instead of `git pull`).
+The script clones into `REMOTE_DIR` (default `/opt/Portfolio`) on first run, creates `.env` with analytics secrets if missing, `git pull origin main`, builds the static site into the volume, and starts `caddy` + `analytics`. It does not rsync local trees or deploy feature branches.
 
 1. Clone this repo on the server and `cd` into the project root (where `docker-compose.yml` lives).
 
