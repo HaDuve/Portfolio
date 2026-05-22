@@ -10,8 +10,8 @@ export function HubBlock({ locale }: Props) {
   const tiles = hubTiles(locale);
 
   return (
-    <section aria-label={locale === "en" ? "Explore services" : "Angebote entdecken"}>
-      <div className="grid gap-6 sm:grid-cols-2">
+    <section id="hub" className="scroll-mt-28" aria-label={locale === "en" ? "Explore services" : "Angebote entdecken"}>
+      <div className="grid gap-4 sm:grid-cols-2">
         {tiles.map((tile) => (
           <Link
             key={tile.href}

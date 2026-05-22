@@ -13,7 +13,6 @@ import { homeServiceCards } from "@/lib/homeServices";
 import {
   datenschutzPath,
   impressumPath,
-  localePath,
   type Locale,
 } from "@/lib/i18n";
 
