@@ -110,13 +110,24 @@ chmod +x scripts/funnel-report-remote.sh
 ./scripts/funnel-report-remote.sh 2026-05-01 2026-05-31
 PLACEMENT_BREAKDOWN=1 ./scripts/funnel-report-remote.sh 2026-05-01 2026-05-31
 
-# Copy access.log + clicks.sqlite for offline / local Vitest-style runs:
+# Copy rolled access logs + clicks.sqlite for offline / local Vitest-style runs:
 GRAB_RAW=1 ./scripts/funnel-report-remote.sh 2026-05-01 2026-05-31
 ```
 
 The script runs `funnel-report-cli` on the server, saves tab-separated output under `.local/funnel-reports/`, and with `GRAB_RAW=1` also downloads snapshots to `analytics/.remote-data/` (both paths are gitignored).
 
-**Access log on the server:** inside the Caddy container at `/var/log/caddy/access.log` (Docker volume `caddy_logs`, JSON one object per line).
+**Access log on the server:** inside the Caddy container under `/var/log/caddy/` (Docker volume `caddy_logs`, JSON one object per line). The active file is `access.log`; Caddy also keeps rolled segments named like `access-<timestamp>-<reason>.log` (see [Caddy log rolling](https://caddyserver.com/docs/caddyfile/directives/log)).
+
+By default, `funnel-report-remote` and the CLI read only the **current** `access.log`. Date ranges that span rolled files can **undercount** with no warning. For a full range, pass a glob (repeatable `--log` is also supported):
+
+```bash
+docker compose run --rm \
+  -v portfolio_caddy_logs:/var/log/caddy:ro \
+  analytics node dist/funnel-report-cli.js \
+  --from 2026-01-01 \
+  --to 2026-05-31 \
+  --log '/var/log/caddy/access*.log'
+```
 
 **Click store:** `/data/clicks.sqlite` on the `analytics_data` volume (same DB as ingest).
 

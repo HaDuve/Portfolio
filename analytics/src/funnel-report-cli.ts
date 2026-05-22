@@ -1,24 +1,36 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { countLoggedPageViews } from "./access-log-parser.js";
+import {
+  countLoggedPageViewsFromFile,
+  mergeLoggedPageViewCounts,
+} from "./access-log-parser.js";
 import { ClickStore } from "./click-store.js";
 import { buildFunnelReport, formatFunnelReport } from "./funnel-report.js";
 
 export type FunnelReportCliArgs = {
-  logPath: string;
+  logPaths: string[];
   dbPath: string;
   from: string;
   to: string;
   placementBreakdown: boolean;
 };
 
-export function parseFunnelReportArgv(argv: string[]): FunnelReportCliArgs | null {
-  let logPath = "/var/log/caddy/access.log";
+export type ParseFunnelReportArgvResult = {
+  args: FunnelReportCliArgs | null;
+  unknownFlags: string[];
+};
+
+const VALUE_FLAGS = new Set(["--log", "--db", "--from", "--to"]);
+const KNOWN_FLAGS = new Set([...VALUE_FLAGS, "--placement-breakdown"]);
+
+export function parseFunnelReportArgv(argv: string[]): ParseFunnelReportArgvResult {
+  const logPaths: string[] = [];
   let dbPath = process.env.ANALYTICS_DB_PATH ?? "/data/clicks.sqlite";
   let from: string | undefined;
   let to: string | undefined;
   let placementBreakdown = false;
+  const unknownFlags: string[] = [];
 
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i];
@@ -26,10 +38,14 @@ export function parseFunnelReportArgv(argv: string[]): FunnelReportCliArgs | nul
       placementBreakdown = true;
       continue;
     }
+    if (arg.startsWith("--") && !KNOWN_FLAGS.has(arg)) {
+      unknownFlags.push(arg);
+      continue;
+    }
     const value = argv[i + 1];
     if (!value) continue;
     if (arg === "--log") {
-      logPath = value;
+      logPaths.push(value);
       i++;
     } else if (arg === "--db") {
       dbPath = value;
@@ -44,17 +60,61 @@ export function parseFunnelReportArgv(argv: string[]): FunnelReportCliArgs | nul
   }
 
   if (!from || !to || !/^\d{4}-\d{2}-\d{2}$/.test(from) || !/^\d{4}-\d{2}-\d{2}$/.test(to)) {
-    return null;
+    return { args: null, unknownFlags };
   }
 
-  return { logPath, dbPath, from, to, placementBreakdown };
+  const resolvedLogPaths =
+    logPaths.length > 0 ? logPaths : ["/var/log/caddy/access.log"];
+
+  return {
+    args: {
+      logPaths: resolvedLogPaths,
+      dbPath,
+      from,
+      to,
+      placementBreakdown,
+    },
+    unknownFlags,
+  };
 }
 
-export function runFunnelReportCli(args: FunnelReportCliArgs): string {
-  const logText = fs.readFileSync(args.logPath, "utf8");
-  const { fromDate, toDate, fromIso, toIso } = dayRangeToBounds(args.from, args.to);
+export function resolveFunnelLogPaths(logPath: string): string[] {
+  if (!logPath.includes("*") && !logPath.includes("?")) {
+    return [logPath];
+  }
+  const dir = path.dirname(logPath);
+  const pattern = path.basename(logPath);
+  const re = globPatternToRegExp(pattern);
+  return fs
+    .readdirSync(dir)
+    .filter((name) => re.test(name))
+    .map((name) => path.join(dir, name))
+    .sort();
+}
 
-  const views = countLoggedPageViews(logText, { from: fromDate, to: toDate });
+function globPatternToRegExp(pattern: string): RegExp {
+  const escaped = pattern
+    .replace(/[.+^${}()|[\]\\]/g, "\\$&")
+    .replace(/\*/g, ".*")
+    .replace(/\?/g, ".");
+  return new RegExp(`^${escaped}$`);
+}
+
+export async function runFunnelReportCli(args: FunnelReportCliArgs): Promise<string> {
+  const { fromDate, toDate, fromIso, toIso } = dayRangeToBounds(args.from, args.to);
+  const countOptions = { from: fromDate, to: toDate };
+
+  const resolvedPaths = args.logPaths.flatMap(resolveFunnelLogPaths);
+  if (resolvedPaths.length === 0) {
+    throw new Error(`No access log files matched: ${args.logPaths.join(", ")}`);
+  }
+
+  let views: Awaited<ReturnType<typeof countLoggedPageViewsFromFile>> = new Map();
+  for (const logPath of resolvedPaths) {
+    const fileCounts = await countLoggedPageViewsFromFile(logPath, countOptions);
+    views = mergeLoggedPageViewCounts(views, fileCounts);
+  }
+
   const store = new ClickStore(args.dbPath);
   try {
     const clicks = store.aggregateByPathPlacementInRange(fromIso, toIso);
@@ -82,10 +142,16 @@ function printUsage(): void {
   console.error(`Usage: funnel-report --from YYYY-MM-DD --to YYYY-MM-DD [options]
 
 Options:
-  --log PATH              Caddy access log (default: /var/log/caddy/access.log)
+  --log PATH              Caddy access log (repeatable; globs supported, e.g. /var/log/caddy/access*.log)
   --db PATH               Click store SQLite (default: ANALYTICS_DB_PATH or /data/clicks.sqlite)
   --placement-breakdown   Hero vs contact clicks on Home paths (/de/, /en/)
 `);
+}
+
+function warnUnknownFlags(flags: string[]): void {
+  for (const flag of flags) {
+    console.error(`funnel-report: ignoring unknown option ${flag}`);
+  }
 }
 
 const isMain =
@@ -93,10 +159,19 @@ const isMain =
   fileURLToPath(import.meta.url) === path.resolve(process.argv[1]);
 
 if (isMain) {
-  const parsed = parseFunnelReportArgv(process.argv.slice(2));
-  if (!parsed) {
+  const { args, unknownFlags } = parseFunnelReportArgv(process.argv.slice(2));
+  if (!args) {
     printUsage();
     process.exit(1);
   }
-  process.stdout.write(runFunnelReportCli(parsed));
+  warnUnknownFlags(unknownFlags);
+  runFunnelReportCli(args)
+    .then((output) => {
+      process.stdout.write(output);
+    })
+    .catch((err: unknown) => {
+      const message = err instanceof Error ? err.message : String(err);
+      console.error(`funnel-report: ${message}`);
+      process.exit(1);
+    });
 }

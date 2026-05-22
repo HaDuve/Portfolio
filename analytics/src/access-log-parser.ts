@@ -1,3 +1,5 @@
+import { createReadStream } from "node:fs";
+import readline from "node:readline";
 import { canonicalFunnelPath, type FunnelContentPath } from "./content-paths.js";
 
 export type PageViewCount = Map<FunnelContentPath, number>;
@@ -10,26 +12,58 @@ export type CountLoggedPageViewsOptions = {
 const BOT_UA =
   /bot\b|spider|crawl|slurp|wget|curl\/|python-requests|go-http-client|headlesschrome/i;
 
+export function mergeLoggedPageViewCounts(
+  a: PageViewCount,
+  b: PageViewCount,
+): PageViewCount {
+  const merged = new Map(a);
+  for (const [path, count] of b) {
+    merged.set(path, (merged.get(path) ?? 0) + count);
+  }
+  return merged;
+}
+
 export function countLoggedPageViews(
   logText: string,
   options: CountLoggedPageViewsOptions = {},
 ): PageViewCount {
   const counts = new Map<FunnelContentPath, number>();
   for (const line of logText.split("\n")) {
-    const trimmed = line.trim();
-    if (!trimmed) continue;
-    let entry: CaddyAccessEntry;
-    try {
-      entry = JSON.parse(trimmed) as CaddyAccessEntry;
-    } catch {
-      continue;
-    }
-    if (!isCountableAccessEntry(entry, options)) continue;
-    const path = canonicalFunnelPath(entry.request?.uri ?? "");
-    if (!path) continue;
-    counts.set(path, (counts.get(path) ?? 0) + 1);
+    addLoggedPageViewLine(counts, line, options);
   }
   return counts;
+}
+
+export async function countLoggedPageViewsFromFile(
+  logPath: string,
+  options: CountLoggedPageViewsOptions = {},
+): Promise<PageViewCount> {
+  const counts = new Map<FunnelContentPath, number>();
+  const input = createReadStream(logPath);
+  const rl = readline.createInterface({ input, crlfDelay: Infinity });
+  for await (const line of rl) {
+    addLoggedPageViewLine(counts, line, options);
+  }
+  return counts;
+}
+
+function addLoggedPageViewLine(
+  counts: PageViewCount,
+  line: string,
+  options: CountLoggedPageViewsOptions,
+): void {
+  const trimmed = line.trim();
+  if (!trimmed) return;
+  let entry: CaddyAccessEntry;
+  try {
+    entry = JSON.parse(trimmed) as CaddyAccessEntry;
+  } catch {
+    return;
+  }
+  if (!isCountableAccessEntry(entry, options)) return;
+  const path = canonicalFunnelPath(entry.request?.uri ?? "");
+  if (!path) return;
+  counts.set(path, (counts.get(path) ?? 0) + 1);
 }
 
 type CaddyAccessEntry = {

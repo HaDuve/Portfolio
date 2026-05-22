@@ -80,9 +80,9 @@ if [[ "\${GRAB_RAW}" == "1" ]]; then
   docker compose run --rm --no-deps \
     -v "\${LOG_VOL}:/var/log/caddy:ro" \
     -v "\${SNAP}:/out" \
-    analytics sh -c 'cp /var/log/caddy/access.log /out/access.log 2>/dev/null || :; cp /data/clicks.sqlite /out/clicks.sqlite 2>/dev/null || :'
-  if [[ ! -f "\${SNAP}/access.log" ]]; then
-    echo "Could not copy access.log — check Caddy log path on the server." >&2
+    analytics sh -c 'cp /var/log/caddy/access*.log /out/ 2>/dev/null || :; cp /data/clicks.sqlite /out/clicks.sqlite 2>/dev/null || :'
+  if ! compgen -G "\${SNAP}/access"*.log >/dev/null 2>&1; then
+    echo "Could not copy access logs — check Caddy log path on the server." >&2
     exit 1
   fi
   if [[ ! -f "\${SNAP}/clicks.sqlite" ]]; then
@@ -101,7 +101,7 @@ docker compose run --rm --no-deps \
   analytics node dist/funnel-report-cli.js \
   --from "\${FUNNEL_FROM}" \
   --to "\${FUNNEL_TO}" \
-  --log /var/log/caddy/access.log \
+  --log '/var/log/caddy/access*.log' \
   \${PLACEMENT_FLAG}
 REMOTE
   >"$REPORT_FILE"
@@ -110,14 +110,15 @@ echo "Saved report: ${REPORT_FILE}"
 cat "$REPORT_FILE"
 
 if [[ "$GRAB_RAW" == "1" ]]; then
-  echo "Grabbing access.log and clicks.sqlite…"
-  scp "${SSH_TARGET}:${REMOTE_DIR}/.funnel-snapshot/access.log" \
-    "${LOCAL_DATA_DIR}/access.log"
+  echo "Grabbing access logs and clicks.sqlite…"
+  mkdir -p "${LOCAL_DATA_DIR}/caddy-logs"
+  scp "${SSH_TARGET}:${REMOTE_DIR}/.funnel-snapshot/access*.log" \
+    "${LOCAL_DATA_DIR}/caddy-logs/"
   scp "${SSH_TARGET}:${REMOTE_DIR}/.funnel-snapshot/clicks.sqlite" \
     "${LOCAL_DATA_DIR}/clicks.sqlite"
   ssh "$SSH_TARGET" "rm -rf ${REMOTE_DIR}/.funnel-snapshot"
   echo "Raw data: ${LOCAL_DATA_DIR}/"
   echo "Local report: cd analytics && npm run build && npm run funnel-report -- \\"
   echo "  --from ${FUNNEL_FROM} --to ${FUNNEL_TO} \\"
-  echo "  --log ../${LOCAL_DATA_DIR}/access.log --db ../${LOCAL_DATA_DIR}/clicks.sqlite"
+  echo "  --log '../${LOCAL_DATA_DIR}/caddy-logs/access*.log' --db ../${LOCAL_DATA_DIR}/clicks.sqlite"
 fi

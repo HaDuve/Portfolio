@@ -22,6 +22,8 @@ describe("countLoggedPageViews", () => {
     const counts = countLoggedPageViews(readFixture());
     expect(counts.get("/de/")).toBe(2);
     expect(counts.get("/de/app-entwickeln-freelancer/")).toBe(1);
+    expect(counts.has("/favicon.ico")).toBe(false);
+    expect(counts.get("/en/")).toBe(1);
   });
 
   it("normalizes URIs without a trailing slash", () => {
