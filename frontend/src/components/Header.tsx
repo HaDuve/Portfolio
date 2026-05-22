@@ -38,8 +38,8 @@ export function Header({ locale }: Props) {
     "shrink-0 text-sm font-medium text-foreground transition hover:text-accent focus-visible:rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
   const sectionLinkClass = (isActive: boolean) =>
     isActive
-      ? "shrink-0 text-sm font-normal text-foreground/75 transition"
-      : "shrink-0 text-sm font-normal text-muted transition hover:text-foreground/75";
+      ? "shrink-0 text-sm font-normal text-foreground/75 transition focus-visible:rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground/40"
+      : "shrink-0 text-sm font-normal text-muted transition hover:text-foreground/75 focus-visible:rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground/40";
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/80 bg-background/75 backdrop-blur-md">
@@ -55,7 +55,12 @@ export function Header({ locale }: Props) {
           aria-label={navLabel}
         >
           {serviceLinks.map((item) => (
-            <Link key={item.href} href={item.href} className={serviceLinkClass}>
+            <Link
+              key={item.href}
+              href={item.href}
+              className={serviceLinkClass}
+              aria-label={item.ariaLabel}
+            >
               {item.label}
             </Link>
           ))}

@@ -8,7 +8,11 @@ export type HubTile = {
   href: string;
 };
 
-export type HubHeaderNavItem = { label: string; href: string };
+export type HubHeaderNavItem = {
+  label: string;
+  href: string;
+  ariaLabel: string;
+};
 
 export function hubTiles(locale: Locale): [HubTile, HubTile] {
   const copy = homeHubCopy[locale];
@@ -19,9 +23,17 @@ export function hubTiles(locale: Locale): [HubTile, HubTile] {
   ];
 }
 
-export function hubHeaderNavItems(locale: Locale): HubHeaderNavItem[] {
-  return hubTiles(locale).map(({ eyebrow, href }) => ({
-    label: eyebrow,
-    href,
-  }));
+function hubHeaderNavItem(tile: HubTile): HubHeaderNavItem {
+  return {
+    label: tile.eyebrow,
+    href: tile.href,
+    ariaLabel: `${tile.eyebrow}: ${tile.headline}`,
+  };
+}
+
+export function hubHeaderNavItems(
+  locale: Locale,
+): [HubHeaderNavItem, HubHeaderNavItem] {
+  const [dev, coaching] = hubTiles(locale);
+  return [hubHeaderNavItem(dev), hubHeaderNavItem(coaching)];
 }

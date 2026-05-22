@@ -25,6 +25,20 @@ describe("hubHeaderNavItems", () => {
       );
     }
   });
+
+  it("gives DE service links aria-labels that combine eyebrow and headline", () => {
+    const nav = hubHeaderNavItems("de");
+    const tiles = hubTiles("de");
+    expect(nav[0].ariaLabel).toBe(`${tiles[0].eyebrow}: ${tiles[0].headline}`);
+    expect(nav[1].ariaLabel).toBe(`${tiles[1].eyebrow}: ${tiles[1].headline}`);
+  });
+
+  it("gives EN service links aria-labels that combine eyebrow and headline", () => {
+    const nav = hubHeaderNavItems("en");
+    const tiles = hubTiles("en");
+    expect(nav[0].ariaLabel).toBe(`${tiles[0].eyebrow}: ${tiles[0].headline}`);
+    expect(nav[1].ariaLabel).toBe(`${tiles[1].eyebrow}: ${tiles[1].headline}`);
+  });
 });
 
 describe("hubTiles — dev tile", () => {
