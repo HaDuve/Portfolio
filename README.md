@@ -96,6 +96,64 @@ Example monthly cron on the server (`crontab -e`):
 
 Caddy access logs used for page-view funnel analysis are rotated in `caddy/Caddyfile` (`roll_keep_for 8760h` ≈ 12 months).
 
+### Lead funnel report (operator)
+
+The **Funnel report** joins **Logged page views** (parsed from the Caddy **access log** on demand) with **Scheduling clicks** from the **click store** (SQLite). Run over SSH on VM1 after deploy; not a public dashboard. See [ADR-0003](docs/adr/0003-app-server-analytics.md) and `CONTEXT.md` (Measurement).
+
+**From your laptop** (same SSH target as deploy; local script is gitignored):
+
+```bash
+cp scripts/funnel-report-remote.example.sh scripts/funnel-report-remote.sh   # once
+chmod +x scripts/funnel-report-remote.sh
+# optional: export SSH_TARGET=root@YOUR_IP REMOTE_DIR=/opt/Portfolio
+
+./scripts/funnel-report-remote.sh 2026-05-01 2026-05-31
+PLACEMENT_BREAKDOWN=1 ./scripts/funnel-report-remote.sh 2026-05-01 2026-05-31
+
+# Copy access.log + clicks.sqlite for offline / local Vitest-style runs:
+GRAB_RAW=1 ./scripts/funnel-report-remote.sh 2026-05-01 2026-05-31
+```
+
+The script runs `funnel-report-cli` on the server, saves tab-separated output under `.local/funnel-reports/`, and with `GRAB_RAW=1` also downloads snapshots to `analytics/.remote-data/` (both paths are gitignored).
+
+**Access log on the server:** inside the Caddy container at `/var/log/caddy/access.log` (Docker volume `caddy_logs`, JSON one object per line).
+
+**Click store:** `/data/clicks.sqlite` on the `analytics_data` volume (same DB as ingest).
+
+Manual run on the server (`/opt/Portfolio` or your `REMOTE_DIR`):
+
+```bash
+# Mount Caddy logs read-only for a one-off report (volume name may be portfolio_caddy_logs)
+docker compose run --rm \
+  -v portfolio_caddy_logs:/var/log/caddy:ro \
+  analytics node dist/funnel-report-cli.js \
+  --from 2026-05-01 \
+  --to 2026-05-31 \
+  --log /var/log/caddy/access.log
+
+# Home page: hero vs contact placement breakdown
+docker compose run --rm \
+  -v portfolio_caddy_logs:/var/log/caddy:ro \
+  analytics node dist/funnel-report-cli.js \
+  --from 2026-05-01 \
+  --to 2026-05-31 \
+  --placement-breakdown
+```
+
+Output is tab-separated: `path`, `views`, `clicks`, `click_rate` (percent). Paths match the Lead funnel allowlist (Home `/de/`, `/en/` and the four Landing Page slug pairs in `CONTEXT.md`).
+
+**Retention:** **Analytics retention** is **12 months** for both the click store (monthly `prune-clicks` above) and access logs (`roll_keep_for 8760h` in `caddy/Caddyfile`). Funnel queries should use date ranges within that window.
+
+Local (after `cd analytics && npm run build`):
+
+```bash
+npm run funnel-report -- --from 2026-05-22 --to 2026-05-22 \
+  --log fixtures/access-sample.jsonl \
+  --db /path/to/clicks.sqlite
+```
+
+Parser and report logic are covered by Vitest in `analytics/` (`access-log-parser`, `funnel-report`, `funnel-report-cli`).
+
 ### Optional `www`
 
 Add a CNAME from `www` to `hannesduve.com`, then add a site block in `caddy/Caddyfile` for `www.hannesduve.com` with `redir` to the apex or duplicate `root` / `file_server`.

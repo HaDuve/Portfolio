@@ -43,14 +43,33 @@ export class ClickStore {
   }
 
   aggregateByPathPlacement(): PathPlacementCount[] {
+    return this.aggregateByPathPlacementInRange();
+  }
+
+  aggregateByPathPlacementInRange(
+    fromIso?: string,
+    toIso?: string,
+  ): PathPlacementCount[] {
+    const clauses: string[] = [];
+    const params: string[] = [];
+    if (fromIso) {
+      clauses.push("received_at >= ?");
+      params.push(fromIso);
+    }
+    if (toIso) {
+      clauses.push("received_at <= ?");
+      params.push(toIso);
+    }
+    const where = clauses.length ? `WHERE ${clauses.join(" AND ")}` : "";
     return this.db
       .prepare(
         `SELECT path, placement, COUNT(*) AS count
          FROM scheduling_clicks
+         ${where}
          GROUP BY path, placement
          ORDER BY path, placement`,
       )
-      .all() as PathPlacementCount[];
+      .all(...params) as PathPlacementCount[];
   }
 
   /** Deletes rows with received_at before cutoff minus months. Returns rows removed. */

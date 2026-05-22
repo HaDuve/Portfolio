@@ -13,3 +13,8 @@ runbook.md
 
 # Local deploy script (contains server IP)
 scripts/deploy-remote.sh
+scripts/funnel-report-remote.sh
+
+# Funnel report output and VM1 analytics snapshots (grab script)
+.local/
+analytics/.remote-data/
