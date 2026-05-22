@@ -1,5 +1,31 @@
 import { describe, it, expect } from "vitest";
-import { hubTiles } from "./homeHub";
+import { hubHeaderNavItems, hubTiles } from "./homeHub";
+
+describe("hubHeaderNavItems", () => {
+  it("routes DE visitors to the same landing pages as hub tiles", () => {
+    const nav = hubHeaderNavItems("de");
+    const tiles = hubTiles("de");
+    expect(nav).toHaveLength(2);
+    expect(nav.map((item) => item.href)).toEqual(tiles.map((t) => t.href));
+  });
+
+  it("routes EN visitors to the same landing pages as hub tiles", () => {
+    const nav = hubHeaderNavItems("en");
+    const tiles = hubTiles("en");
+    expect(nav).toHaveLength(2);
+    expect(nav.map((item) => item.href)).toEqual(tiles.map((t) => t.href));
+  });
+
+  it("uses hub tile eyebrow labels for short header nav copy", () => {
+    for (const locale of ["de", "en"] as const) {
+      const nav = hubHeaderNavItems(locale);
+      const tiles = hubTiles(locale);
+      expect(nav.map((item) => item.label)).toEqual(
+        tiles.map((t) => t.eyebrow),
+      );
+    }
+  });
+});
 
 describe("hubTiles — dev tile", () => {
   it("links DE visitors to the app-dev landing page", () => {

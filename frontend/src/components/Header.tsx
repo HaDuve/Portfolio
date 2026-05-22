@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ThemeToggle } from "./ThemeToggle";
 import { LocaleSwitcher } from "./LocaleSwitcher";
+import { hubHeaderNavItems } from "@/lib/homeHub";
 import { HOME_NAV_SECTIONS } from "@/lib/homeSections";
 import type { Locale } from "@/lib/i18n";
 import { localePath } from "@/lib/i18n";
@@ -32,6 +33,13 @@ export function Header({ locale }: Props) {
   }, []);
 
   const navLabel = locale === "en" ? "Main navigation" : "Hauptnavigation";
+  const serviceLinks = hubHeaderNavItems(locale);
+  const serviceLinkClass =
+    "shrink-0 text-sm font-medium text-foreground transition hover:text-accent focus-visible:rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+  const sectionLinkClass = (isActive: boolean) =>
+    isActive
+      ? "shrink-0 text-sm font-normal text-foreground/75 transition"
+      : "shrink-0 text-sm font-normal text-muted transition hover:text-foreground/75";
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/80 bg-background/75 backdrop-blur-md">
@@ -43,18 +51,23 @@ export function Header({ locale }: Props) {
           HD
         </Link>
         <nav
-          className="mr-2 flex flex-1 items-center justify-end gap-3 overflow-x-auto px-1 sm:gap-5"
+          className="mr-2 flex flex-1 items-center justify-end gap-3 overflow-x-auto px-1 sm:gap-4"
           aria-label={navLabel}
         >
+          {serviceLinks.map((item) => (
+            <Link key={item.href} href={item.href} className={serviceLinkClass}>
+              {item.label}
+            </Link>
+          ))}
+          <span
+            className="mx-0.5 hidden h-4 w-px shrink-0 bg-border sm:block"
+            aria-hidden
+          />
           {HOME_NAV_SECTIONS.slice(1).map((item) => (
             <a
               key={item.hash}
               href={`${base}#${item.hash}`}
-              className={
-                active === item.id
-                  ? "shrink-0 text-sm font-medium text-foreground transition"
-                  : "shrink-0 text-sm text-muted transition hover:text-foreground"
-              }
+              className={sectionLinkClass(active === item.id)}
             >
               {locale === "en" ? item.labelEn : item.labelDe}
             </a>

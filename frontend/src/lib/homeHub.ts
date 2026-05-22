@@ -8,6 +8,8 @@ export type HubTile = {
   href: string;
 };
 
+export type HubHeaderNavItem = { label: string; href: string };
+
 export function hubTiles(locale: Locale): [HubTile, HubTile] {
   const copy = homeHubCopy[locale];
   const paths = homeHubPaths(locale);
@@ -15,4 +17,11 @@ export function hubTiles(locale: Locale): [HubTile, HubTile] {
     { ...copy.dev, href: paths.dev },
     { ...copy.coaching, href: paths.coaching },
   ];
+}
+
+export function hubHeaderNavItems(locale: Locale): HubHeaderNavItem[] {
+  return hubTiles(locale).map(({ eyebrow, href }) => ({
+    label: eyebrow,
+    href,
+  }));
 }
