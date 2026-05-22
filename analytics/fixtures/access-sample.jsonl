@@ -1,0 +1,6 @@
+{"level":"info","ts":1779436800,"logger":"http.log.access","msg":"handled request","request":{"method":"GET","uri":"/de/","headers":{"User-Agent":["Mozilla/5.0"]}},"status":200}
+{"level":"info","ts":1779436900,"logger":"http.log.access","msg":"handled request","request":{"method":"GET","uri":"/de/","headers":{"User-Agent":["Mozilla/5.0"]}},"status":200}
+{"level":"info","ts":1779437000,"logger":"http.log.access","msg":"handled request","request":{"method":"GET","uri":"/favicon.ico","headers":{"User-Agent":["Mozilla/5.0"]}},"status":200}
+{"level":"info","ts":1779437100,"logger":"http.log.access","msg":"handled request","request":{"method":"GET","uri":"/de/app-entwickeln-freelancer/","headers":{"User-Agent":["Mozilla/5.0"]}},"status":200}
+{"level":"info","ts":1779437200,"logger":"http.log.access","msg":"handled request","request":{"method":"GET","uri":"/de/","headers":{"User-Agent":["Googlebot/2.1"]}},"status":200}
+{"level":"info","ts":1735689600,"logger":"http.log.access","msg":"handled request","request":{"method":"GET","uri":"/en/","headers":{"User-Agent":["Mozilla/5.0"]}},"status":200}

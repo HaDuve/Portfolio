@@ -47,6 +47,49 @@ describe("ClickStore", () => {
     expect(rows).toHaveLength(2);
   });
 
+  it("aggregates clicks within a received_at range", () => {
+    store.insertSchedulingClick({
+      path: "/de/",
+      placement: "hero",
+      locale: "de",
+      visitorKey: "k1",
+      receivedAt: "2026-05-20T10:00:00.000Z",
+    });
+    store.insertSchedulingClick({
+      path: "/de/",
+      placement: "hero",
+      locale: "de",
+      visitorKey: "k2",
+      receivedAt: "2026-05-22T12:00:00.000Z",
+    });
+    store.insertSchedulingClick({
+      path: "/de/",
+      placement: "contact",
+      locale: "de",
+      visitorKey: "k3",
+      receivedAt: "2026-05-22T18:00:00.000Z",
+    });
+    store.insertSchedulingClick({
+      path: "/de/",
+      placement: "contact",
+      locale: "de",
+      visitorKey: "k4",
+      receivedAt: "2026-05-25T10:00:00.000Z",
+    });
+
+    const inRange = store.aggregateByPathPlacementInRange(
+      "2026-05-22T00:00:00.000Z",
+      "2026-05-22T23:59:59.999Z",
+    );
+    expect(inRange).toEqual(
+      expect.arrayContaining([
+        { path: "/de/", placement: "hero", count: 1 },
+        { path: "/de/", placement: "contact", count: 1 },
+      ]),
+    );
+    expect(inRange).toHaveLength(2);
+  });
+
   it("prunes rows older than 12 months", () => {
     store.insertSchedulingClick({
       path: "/en/",

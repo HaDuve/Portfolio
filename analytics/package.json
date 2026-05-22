@@ -8,7 +8,8 @@
     "test:watch": "vitest",
     "start": "node dist/server.js",
     "build": "tsc",
-    "prune-clicks": "node dist/prune-clicks.js"
+    "prune-clicks": "node dist/prune-clicks.js",
+    "funnel-report": "node dist/funnel-report-cli.js"
   },
   "dependencies": {
     "better-sqlite3": "^12.6.2"
