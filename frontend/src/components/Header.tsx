@@ -4,38 +4,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ThemeToggle } from "./ThemeToggle";
 import { LocaleSwitcher } from "./LocaleSwitcher";
+import { HOME_NAV_SECTIONS } from "@/lib/homeSections";
 import type { Locale } from "@/lib/i18n";
 import { localePath } from "@/lib/i18n";
-
-const sections = [
-  { hash: "hero", labelDe: "Start", labelEn: "Start", id: "hero" as const },
-  {
-    hash: "leistungen",
-    labelDe: "Leistungen",
-    labelEn: "Services",
-    id: "leistungen" as const,
-  },
-  {
-    hash: "zusammenarbeit",
-    labelDe: "Team",
-    labelEn: "Team",
-    id: "zusammenarbeit" as const,
-  },
-  { hash: "ablauf", labelDe: "Ablauf", labelEn: "Process", id: "ablauf" as const },
-  {
-    hash: "projects",
-    labelDe: "Projekte",
-    labelEn: "Projects",
-    id: "projects" as const,
-  },
-  { hash: "skills", labelDe: "Stack", labelEn: "Stack", id: "skills" as const },
-  {
-    hash: "contact",
-    labelDe: "Kontakt",
-    labelEn: "Contact",
-    id: "contact" as const,
-  },
-];
 
 type Props = { locale: Locale };
 
@@ -47,7 +18,7 @@ export function Header({ locale }: Props) {
     const onScroll = () => {
       const y = window.scrollY + 100;
       let current = "hero";
-      for (const { id } of sections) {
+      for (const { id } of HOME_NAV_SECTIONS) {
         const el = document.getElementById(id);
         if (!el) continue;
         if (el.offsetTop <= y) current = id;
@@ -75,7 +46,7 @@ export function Header({ locale }: Props) {
           className="mr-2 flex flex-1 items-center justify-end gap-3 overflow-x-auto px-1 sm:gap-5"
           aria-label={navLabel}
         >
-          {sections.slice(1).map((item) => (
+          {HOME_NAV_SECTIONS.slice(1).map((item) => (
             <a
               key={item.hash}
               href={`${base}#${item.hash}`}
