@@ -24,6 +24,12 @@ export function getAlternateLocalePath(pathname: string, target: Locale): string
   if (sub[0] === "freelance-app-development" && target === "de") {
     return "/de/app-entwickeln-freelancer/";
   }
+  if (sub[0] === "programmieren-lernen-mit-ki" && target === "en") {
+    return "/en/vibe-coding-coach/";
+  }
+  if (sub[0] === "vibe-coding-coach" && target === "de") {
+    return "/de/programmieren-lernen-mit-ki/";
+  }
   if (sub[0] === "datenschutz" && target === "en") {
     return "/en/privacy/";
   }
@@ -51,6 +57,11 @@ export function impressumPath(locale: Locale): string {
 /** DE: /de/datenschutz/ · EN: /en/privacy/ */
 export function datenschutzPath(locale: Locale): string {
   return locale === "en" ? "/en/privacy/" : "/de/datenschutz/";
+}
+
+/** DE: /de/app-entwickeln-freelancer/ · EN: /en/freelance-app-development/ */
+export function devLandingPath(locale: Locale): string {
+  return locale === "en" ? "/en/freelance-app-development/" : "/de/app-entwickeln-freelancer/";
 }
 
 export function absoluteUrl(path: string): string {
