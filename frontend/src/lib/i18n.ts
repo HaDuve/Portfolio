@@ -50,6 +50,13 @@ export function devLandingPath(locale: Locale): string {
     : "/de/app-entwickeln-freelancer/";
 }
 
+/** Locale-aware path to the AI coaching landing page. */
+export function coachingLandingPath(locale: Locale): string {
+  return locale === "en"
+    ? "/en/vibe-coding-coach/"
+    : "/de/programmieren-lernen-mit-ki/";
+}
+
 export function localePath(locale: Locale, subPath = ""): string {
   const p = subPath.replace(/^\//, "").replace(/\/$/, "");
   if (!p) {
