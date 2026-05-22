@@ -75,6 +75,26 @@ describe("IngestService", () => {
     expect(result).toMatchObject({ ok: false, status: 403 });
   });
 
+  it("rejects referer hostnames that only prefix-match the allowlist", () => {
+    const result = ingest.handle(
+      req({
+        origin: undefined,
+        referer: "https://hannesduve.com.evil.example/de/",
+      }),
+    );
+    expect(result).toMatchObject({ ok: false, status: 403 });
+  });
+
+  it("accepts referer-only requests when referer origin matches allowlist", () => {
+    const result = ingest.handle(
+      req({
+        origin: undefined,
+        referer: "https://hannesduve.com/en/freelance-app-development/",
+      }),
+    );
+    expect(result).toEqual({ ok: true, status: 204 });
+  });
+
   it("rejects missing or invalid ingest credentials", () => {
     expect(ingest.handle(req({ ingestKey: undefined }))).toMatchObject({
       ok: false,

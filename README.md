@@ -14,9 +14,11 @@ Build static export locally:
 
 ```bash
 cd frontend
-npm run build
+npm run build -- --webpack
 # output: frontend/out
 ```
+
+On Apple Silicon, `next build` without `--webpack` may fail (Turbopack native bindings). CI uses `--webpack`; match that flag locally.
 
 ## Edit content
 

@@ -1,6 +1,9 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { IngestService, type IngestRequest } from "./ingest.js";
 
+/** Public ingest JSON bodies are tiny; cap abuse surface on oversized payloads. */
+export const MAX_INGEST_BODY_BYTES = 8192;
+
 export function createHttpHandler(ingest: IngestService) {
   return async (req: IncomingMessage, res: ServerResponse) => {
     const url = new URL(req.url ?? "/", "http://localhost");
@@ -10,8 +13,15 @@ export function createHttpHandler(ingest: IngestService) {
     }
 
     const chunks: Buffer[] = [];
+    let bodyBytes = 0;
     for await (const chunk of req) {
-      chunks.push(chunk as Buffer);
+      const buf = chunk as Buffer;
+      bodyBytes += buf.length;
+      if (bodyBytes > MAX_INGEST_BODY_BYTES) {
+        res.writeHead(413).end();
+        return;
+      }
+      chunks.push(buf);
     }
     let body: unknown = null;
     const raw = Buffer.concat(chunks).toString("utf8");

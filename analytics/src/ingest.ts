@@ -30,6 +30,7 @@ type RateBucket = { count: number; windowStart: number };
 
 export class IngestService {
   private readonly config: IngestServiceConfig;
+  /** Per-IP windows only reset on new traffic; stale IPs are not evicted (fine at portfolio scale). */
   private readonly rateBuckets = new Map<string, RateBucket>();
 
   constructor(config: IngestServiceConfig) {
@@ -84,14 +85,14 @@ export class IngestService {
   }
 
   private isTrustedSiteRequest(request: IngestRequest): boolean {
-    const { allowedOrigins } = this.config;
-    const origin = request.origin?.replace(/\/$/, "");
-    if (origin && allowedOrigins.some((o) => o.replace(/\/$/, "") === origin)) {
-      return true;
-    }
-    const referer = request.referer;
-    if (!referer) return false;
-    return allowedOrigins.some((o) => referer.startsWith(o));
+    const allowed = this.config.allowedOrigins
+      .map(siteOriginFromAllowed)
+      .filter((o): o is string => o !== null);
+    const requestOrigin =
+      siteOriginFromHeader(request.origin) ??
+      siteOriginFromReferer(request.referer);
+    if (!requestOrigin) return false;
+    return allowed.includes(requestOrigin);
   }
 
   private allowRequestForIp(ip: string): boolean {
@@ -125,4 +126,30 @@ function parseSchedulingClick(
 
 function isContentPath(path: string): boolean {
   return /^\/(de|en)\//.test(path);
+}
+
+function siteOriginFromAllowed(allowed: string): string | null {
+  try {
+    return new URL(allowed.replace(/\/+$/, "") || allowed).origin;
+  } catch {
+    return null;
+  }
+}
+
+function siteOriginFromHeader(origin: string | undefined): string | null {
+  if (!origin) return null;
+  try {
+    return new URL(origin).origin;
+  } catch {
+    return null;
+  }
+}
+
+function siteOriginFromReferer(referer: string | undefined): string | null {
+  if (!referer) return null;
+  try {
+    return new URL(referer).origin;
+  } catch {
+    return null;
+  }
 }
