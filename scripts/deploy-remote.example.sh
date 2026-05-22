@@ -6,8 +6,10 @@
 #   chmod +x scripts/deploy-remote.sh
 #   # edit SSH_TARGET if needed (default below)
 #
-# Usage (after PR is merged to main):
+# Usage (after PR is merged to main on GitHub):
 #   ./scripts/deploy-remote.sh
+#
+# Optional — delete scheduling-click rows older than 12 months (run monthly, not every deploy):
 #   PRUNE_CLICKS=1 ./scripts/deploy-remote.sh
 #
 # Env: SSH_TARGET, REMOTE_DIR, REPO_URL, PRUNE_CLICKS
