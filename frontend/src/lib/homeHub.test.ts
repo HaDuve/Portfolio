@@ -31,4 +31,10 @@ describe("hubTiles — copy", () => {
     expect(dev.headline).toBe("App & Web entwickeln lassen");
     expect(coaching.headline).toBe("Mit KI programmieren lernen");
   });
+
+  it("uses CONTEXT.md headlines for EN hub tiles", () => {
+    const [dev, coaching] = hubTiles("en");
+    expect(dev.headline).toBe("App & web development");
+    expect(coaching.headline).toBe("Learn to build with AI");
+  });
 });
