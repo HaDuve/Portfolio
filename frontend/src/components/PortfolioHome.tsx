@@ -10,6 +10,7 @@ import { SectionHeading } from "@/components/SectionHeading";
 import type { Profile, Project } from "@/types/content";
 import {
   datenschutzPath,
+  devLandingPath,
   impressumPath,
   localePath,
   type Locale,
@@ -126,7 +127,7 @@ export function PortfolioHome({
                   <>
                     More on{" "}
                     <Link
-                      href={localePath(locale, "app-entwickeln-freelancer")}
+                      href={devLandingPath(locale)}
                       className="font-medium text-accent underline-offset-4 hover:underline"
                     >
                       freelance app development & how to engage
@@ -137,7 +138,7 @@ export function PortfolioHome({
                   <>
                     Mehr zu{" "}
                     <Link
-                      href={localePath(locale, "app-entwickeln-freelancer")}
+                      href={devLandingPath(locale)}
                       className="font-medium text-accent underline-offset-4 hover:underline"
                     >
                       App entwickeln und als Freelancer beauftragen
@@ -264,7 +265,7 @@ export function PortfolioHome({
               </div>
               <div className="mt-10 grid gap-4 sm:grid-cols-3">
                 <Link
-                  href={localePath(locale, "app-entwickeln-freelancer")}
+                  href={devLandingPath(locale)}
                   className="rounded-2xl border border-border bg-card p-5 shadow-sm transition hover:border-accent/40 hover:bg-accent/5"
                 >
                   <p className="font-mono text-xs uppercase tracking-widest text-muted">
@@ -277,7 +278,7 @@ export function PortfolioHome({
                   </p>
                 </Link>
                 <Link
-                  href={localePath(locale, "app-entwickeln-freelancer/#faq")}
+                  href={devLandingPath(locale) + "#faq"}
                   className="rounded-2xl border border-border bg-card p-5 shadow-sm transition hover:border-accent/40 hover:bg-accent/5"
                 >
                   <p className="font-mono text-xs uppercase tracking-widest text-muted">
