@@ -118,7 +118,7 @@ The script runs `funnel-report-cli` on the server, saves tab-separated output un
 
 **Access log on the server:** inside the Caddy container under `/var/log/caddy/` (Docker volume `caddy_logs`, JSON one object per line). The active file is `access.log`; Caddy also keeps rolled segments named like `access-<timestamp>-<reason>.log` (see [Caddy log rolling](https://caddyserver.com/docs/caddyfile/directives/log)).
 
-By default, `funnel-report-remote` and the CLI read only the **current** `access.log`. Date ranges that span rolled files can **undercount** with no warning. For a full range, pass a glob (repeatable `--log` is also supported):
+**Which log files are read:** `funnel-report-remote` passes `--log '/var/log/caddy/access*.log'` so the active file and rolled segments are included. The CLI alone defaults to `/var/log/caddy/access.log` (current file only); long date ranges then **undercount** with no warning unless you pass a glob or repeat `--log`.
 
 ```bash
 docker compose run --rm \
@@ -134,13 +134,13 @@ docker compose run --rm \
 Manual run on the server (`/opt/Portfolio` or your `REMOTE_DIR`):
 
 ```bash
-# Mount Caddy logs read-only for a one-off report (volume name may be portfolio_caddy_logs)
+# Mount Caddy logs read-only (volume name may be portfolio_caddy_logs)
 docker compose run --rm \
   -v portfolio_caddy_logs:/var/log/caddy:ro \
   analytics node dist/funnel-report-cli.js \
   --from 2026-05-01 \
   --to 2026-05-31 \
-  --log /var/log/caddy/access.log
+  --log '/var/log/caddy/access*.log'
 
 # Home page: hero vs contact placement breakdown
 docker compose run --rm \
@@ -148,6 +148,7 @@ docker compose run --rm \
   analytics node dist/funnel-report-cli.js \
   --from 2026-05-01 \
   --to 2026-05-31 \
+  --log '/var/log/caddy/access*.log' \
   --placement-breakdown
 ```
 
