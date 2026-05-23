@@ -121,22 +121,27 @@ The script runs `funnel-report-cli` on the server, saves tab-separated output un
 **Which log files are read:** `funnel-report-remote` passes `--log '/var/log/caddy/access*.log'` so the active file and rolled segments are included. The CLI alone defaults to `/var/log/caddy/access.log` (current file only); long date ranges then **undercount** with no warning unless you pass a glob or repeat `--log`.
 
 ```bash
+# Volume names may be prefixed with the compose project (e.g. portfolio_caddy_logs).
 docker compose run --rm \
   -v portfolio_caddy_logs:/var/log/caddy:ro \
+  -v portfolio_analytics_data:/data:ro \
   analytics node dist/funnel-report-cli.js \
   --from 2026-01-01 \
   --to 2026-05-31 \
   --log '/var/log/caddy/access*.log'
 ```
 
-**Click store:** `/data/clicks.sqlite` on the `analytics_data` volume (same DB as ingest).
+**Click store:** `/data/clicks.sqlite` on the `analytics_data` volume (same DB as ingest). The one-off `docker compose run` container must mount that volume read-only; otherwise the CLI opens an empty SQLite file and **clicks are always zero**.
+
+**Caddy access logs:** after changing `caddy/Caddyfile` (e.g. adding `log { output file … }`), restart Caddy so the running process picks up the config (`docker compose restart caddy` — deploy script does this). Until then, the `caddy_logs` volume may stay empty and **views stay zero** even with traffic.
 
 Manual run on the server (`/opt/Portfolio` or your `REMOTE_DIR`):
 
 ```bash
-# Mount Caddy logs read-only (volume name may be portfolio_caddy_logs)
+# Mount Caddy logs + click store read-only (volume names may be portfolio_*)
 docker compose run --rm \
   -v portfolio_caddy_logs:/var/log/caddy:ro \
+  -v portfolio_analytics_data:/data:ro \
   analytics node dist/funnel-report-cli.js \
   --from 2026-05-01 \
   --to 2026-05-31 \
@@ -145,6 +150,7 @@ docker compose run --rm \
 # Home page: hero vs contact placement breakdown
 docker compose run --rm \
   -v portfolio_caddy_logs:/var/log/caddy:ro \
+  -v portfolio_analytics_data:/data:ro \
   analytics node dist/funnel-report-cli.js \
   --from 2026-05-01 \
   --to 2026-05-31 \

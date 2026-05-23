@@ -2,7 +2,10 @@ import { describe, it, expect } from "vitest";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { countLoggedPageViews } from "./access-log-parser.js";
+import {
+  countLoggedPageViews,
+  isCaddyAccessLogger,
+} from "./access-log-parser.js";
 
 const fixtureDir = path.dirname(fileURLToPath(import.meta.url));
 const fixturePath = path.join(fixtureDir, "../fixtures/access-sample.jsonl");
@@ -49,5 +52,29 @@ describe("countLoggedPageViews", () => {
     });
     expect(counts.get("/de/")).toBe(2);
     expect(counts.get("/en/")).toBeUndefined();
+  });
+
+  it("counts site-block Caddy loggers such as http.log.access.log0", () => {
+    const line = JSON.stringify({
+      level: "info",
+      ts: 1779436800,
+      logger: "http.log.access.log0",
+      request: {
+        method: "GET",
+        uri: "/de/",
+        headers: { "User-Agent": ["Mozilla/5.0"] },
+      },
+      status: 200,
+    });
+    const counts = countLoggedPageViews(`${line}\n`);
+    expect(counts.get("/de/")).toBe(1);
+  });
+});
+
+describe("isCaddyAccessLogger", () => {
+  it("accepts default and site-block logger names", () => {
+    expect(isCaddyAccessLogger("http.log.access")).toBe(true);
+    expect(isCaddyAccessLogger("http.log.access.log0")).toBe(true);
+    expect(isCaddyAccessLogger("http.log.error")).toBe(false);
   });
 });

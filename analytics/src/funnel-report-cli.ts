@@ -4,9 +4,11 @@ import { fileURLToPath } from "node:url";
 import {
   countLoggedPageViewsFromFile,
   mergeLoggedPageViewCounts,
+  scanAccessLogFile,
+  type AccessLogScanStats,
 } from "./access-log-parser.js";
 import { ClickStore } from "./click-store.js";
-import { buildFunnelReport, formatFunnelReport } from "./funnel-report.js";
+import { buildFunnelReport, formatFunnelReport, type FunnelRow } from "./funnel-report.js";
 
 export type FunnelReportCliArgs = {
   logPaths: string[];
@@ -100,6 +102,59 @@ function globPatternToRegExp(pattern: string): RegExp {
   return new RegExp(`^${escaped}$`);
 }
 
+export type FunnelReportDiagnostics = {
+  logFiles: number;
+  logStats: AccessLogScanStats;
+  clickRows: number;
+  totalViews: number;
+  totalClicks: number;
+};
+
+export function mergeAccessLogScanStats(
+  a: AccessLogScanStats,
+  b: AccessLogScanStats,
+): AccessLogScanStats {
+  return {
+    totalLines: a.totalLines + b.totalLines,
+    jsonLines: a.jsonLines + b.jsonLines,
+    accessLogLines: a.accessLogLines + b.accessLogLines,
+    funnelLines: a.funnelLines + b.funnelLines,
+  };
+}
+
+export function formatAllZeroWarning(diagnostics: FunnelReportDiagnostics): string {
+  const { logFiles, logStats, clickRows } = diagnostics;
+  const lines = [
+    "funnel-report: warning — all funnel paths are zero for this date range.",
+    `  log files: ${logFiles}`,
+    `  log lines: ${logStats.totalLines} total, ${logStats.jsonLines} json, ${logStats.accessLogLines} access-log, ${logStats.funnelLines} funnel-eligible`,
+    `  click rows in range: ${clickRows}`,
+  ];
+  if (logStats.totalLines === 0) {
+    lines.push(
+      "  hint: Caddy access log may be empty — confirm `log { output file … }` in caddy/Caddyfile and restart Caddy after deploy.",
+    );
+  } else if (logStats.accessLogLines === 0 && logStats.jsonLines > 0) {
+    lines.push(
+      "  hint: JSON lines found but none matched Caddy access loggers (expected http.log.access or http.log.access.*).",
+    );
+  } else if (logStats.funnelLines === 0 && logStats.accessLogLines > 0) {
+    lines.push(
+      "  hint: access log traffic exists but no funnel paths in range — check date range or GET 2xx hits on /de/, /en/, landing pages.",
+    );
+  }
+  if (clickRows === 0) {
+    lines.push(
+      "  hint: no scheduling clicks in SQLite — confirm analytics_data volume is mounted, ingest returns 204, and NEXT_PUBLIC_ANALYTICS_INGEST_KEY matches server .env.",
+    );
+  }
+  return lines.join("\n");
+}
+
+export function isAllZeroFunnelReport(rows: FunnelRow[]): boolean {
+  return rows.every((row) => row.views === 0 && row.clicks === 0);
+}
+
 export async function runFunnelReportCli(args: FunnelReportCliArgs): Promise<string> {
   const { fromDate, toDate, fromIso, toIso } = dayRangeToBounds(args.from, args.to);
   const countOptions = { from: fromDate, to: toDate };
@@ -110,17 +165,41 @@ export async function runFunnelReportCli(args: FunnelReportCliArgs): Promise<str
   }
 
   let views: Awaited<ReturnType<typeof countLoggedPageViewsFromFile>> = new Map();
+  let logStats: AccessLogScanStats = {
+    totalLines: 0,
+    jsonLines: 0,
+    accessLogLines: 0,
+    funnelLines: 0,
+  };
   for (const logPath of resolvedPaths) {
     const fileCounts = await countLoggedPageViewsFromFile(logPath, countOptions);
     views = mergeLoggedPageViewCounts(views, fileCounts);
+    logStats = mergeAccessLogScanStats(
+      logStats,
+      await scanAccessLogFile(logPath, countOptions),
+    );
   }
 
   const store = new ClickStore(args.dbPath);
   try {
     const clicks = store.aggregateByPathPlacementInRange(fromIso, toIso);
+    const clickRows = store.countSchedulingClicksInRange(fromIso, toIso);
     const rows = buildFunnelReport(views, clicks, {
       placementBreakdown: args.placementBreakdown,
     });
+    const totalViews = rows.reduce((sum, row) => sum + row.views, 0);
+    const totalClicks = rows.reduce((sum, row) => sum + row.clicks, 0);
+    if (isAllZeroFunnelReport(rows)) {
+      console.error(
+        formatAllZeroWarning({
+          logFiles: resolvedPaths.length,
+          logStats,
+          clickRows,
+          totalViews,
+          totalClicks,
+        }),
+      );
+    }
     return formatFunnelReport(rows, {
       placementBreakdown: args.placementBreakdown,
     });

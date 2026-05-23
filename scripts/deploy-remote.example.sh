@@ -73,6 +73,8 @@ deploy_compose() {
   cd "\${REMOTE_DIR}"
   docker compose run --build --rm frontend
   docker compose up -d --build caddy analytics
+  # Caddyfile is bind-mounted; restart so log/output changes apply without a stale process.
+  docker compose restart caddy
   if [[ "\${PRUNE_CLICKS}" == "1" ]]; then
     docker compose run --rm analytics node dist/prune-clicks.js
   fi

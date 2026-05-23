@@ -1,10 +1,12 @@
-import { describe, it, expect, beforeEach, afterEach } from "vitest";
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   dayRangeToBounds,
+  formatAllZeroWarning,
+  isAllZeroFunnelReport,
   parseFunnelReportArgv,
   resolveFunnelLogPaths,
   runFunnelReportCli,
@@ -118,6 +120,30 @@ describe("runFunnelReportCli", () => {
       fs.rmSync(dir, { recursive: true });
     }
   });
+
+  it("warns on stderr when every funnel row is zero", async () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "funnel-empty-"));
+    const emptyLog = path.join(dir, "empty.jsonl");
+    fs.writeFileSync(emptyLog, "");
+    const emptyDb = path.join(dir, "empty.sqlite");
+    new ClickStore(emptyDb).close();
+    const stderrSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+    try {
+      await runFunnelReportCli({
+        logPaths: [emptyLog],
+        dbPath: emptyDb,
+        from: "2026-05-22",
+        to: "2026-05-22",
+        placementBreakdown: false,
+      });
+      expect(stderrSpy).toHaveBeenCalledWith(
+        expect.stringContaining("all funnel paths are zero"),
+      );
+    } finally {
+      stderrSpy.mockRestore();
+      fs.rmSync(dir, { recursive: true });
+    }
+  });
 });
 
 describe("resolveFunnelLogPaths", () => {
@@ -144,5 +170,39 @@ describe("dayRangeToBounds", () => {
       fromIso: "2026-05-01T00:00:00.000Z",
       toIso: "2026-05-31T23:59:59.999Z",
     });
+  });
+});
+
+describe("all-zero diagnostics", () => {
+  it("detects all-zero funnel rows", () => {
+    expect(
+      isAllZeroFunnelReport([
+        { path: "/de/", views: 0, clicks: 0, clickRate: null },
+      ]),
+    ).toBe(true);
+    expect(
+      isAllZeroFunnelReport([
+        { path: "/de/", views: 1, clicks: 0, clickRate: 0 },
+      ]),
+    ).toBe(false);
+  });
+
+  it("includes log and click counts in the warning", () => {
+    const warning = formatAllZeroWarning({
+      logFiles: 2,
+      logStats: {
+        totalLines: 10,
+        jsonLines: 8,
+        accessLogLines: 0,
+        funnelLines: 0,
+      },
+      clickRows: 0,
+      totalViews: 0,
+      totalClicks: 0,
+    });
+    expect(warning).toContain("log files: 2");
+    expect(warning).toContain("10 total, 8 json, 0 access-log");
+    expect(warning).toContain("click rows in range: 0");
+    expect(warning).toContain("http.log.access");
   });
 });

@@ -72,6 +72,12 @@ if [[ -z "\${LOG_VOL}" ]]; then
   exit 1
 fi
 
+ANALYTICS_VOL="\$(docker volume ls -q --filter name=analytics_data | head -1)"
+if [[ -z "\${ANALYTICS_VOL}" ]]; then
+  echo "No analytics_data volume found — is the analytics service deployed?" >&2
+  exit 1
+fi
+
 SNAP="\${REMOTE_DIR}/.funnel-snapshot"
 rm -rf "\${SNAP}"
 mkdir -p "\${SNAP}"
@@ -79,6 +85,7 @@ mkdir -p "\${SNAP}"
 if [[ "\${GRAB_RAW}" == "1" ]]; then
   docker compose run --rm --no-deps \
     -v "\${LOG_VOL}:/var/log/caddy:ro" \
+    -v "\${ANALYTICS_VOL}:/data:ro" \
     -v "\${SNAP}:/out" \
     analytics sh -c 'cp /var/log/caddy/access*.log /out/ 2>/dev/null || :; cp /data/clicks.sqlite /out/clicks.sqlite 2>/dev/null || :'
   if ! compgen -G "\${SNAP}/access"*.log >/dev/null 2>&1; then
@@ -98,6 +105,7 @@ fi
 
 docker compose run --rm --no-deps \
   -v "\${LOG_VOL}:/var/log/caddy:ro" \
+  -v "\${ANALYTICS_VOL}:/data:ro" \
   analytics node dist/funnel-report-cli.js \
   --from "\${FUNNEL_FROM}" \
   --to "\${FUNNEL_TO}" \
