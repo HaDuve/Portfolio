@@ -107,6 +107,7 @@ cp scripts/funnel-report-remote.example.sh scripts/funnel-report-remote.sh   # o
 chmod +x scripts/funnel-report-remote.sh
 # optional: export SSH_TARGET=root@YOUR_IP REMOTE_DIR=/opt/Portfolio
 
+./scripts/funnel-report-remote.sh                    # last 12 months → CSV under .local/funnel-reports/
 ./scripts/funnel-report-remote.sh 2026-05-01 2026-05-31
 PLACEMENT_BREAKDOWN=1 ./scripts/funnel-report-remote.sh 2026-05-01 2026-05-31
 
@@ -114,7 +115,7 @@ PLACEMENT_BREAKDOWN=1 ./scripts/funnel-report-remote.sh 2026-05-01 2026-05-31
 GRAB_RAW=1 ./scripts/funnel-report-remote.sh 2026-05-01 2026-05-31
 ```
 
-The script runs `funnel-report-cli` on the server, saves tab-separated output under `.local/funnel-reports/`, and with `GRAB_RAW=1` also downloads snapshots to `analytics/.remote-data/` (both paths are gitignored).
+The script runs `funnel-report-cli` on the server, saves comma-separated output under `.local/funnel-reports/` (e.g. `funnel-2025-05-23_2026-05-23.csv`), and with `GRAB_RAW=1` also downloads snapshots to `analytics/.remote-data/` (both paths are gitignored).
 
 **Access log on the server:** inside the Caddy container under `/var/log/caddy/` (Docker volume `caddy_logs`, JSON one object per line). The active file is `access.log`; Caddy also keeps rolled segments named like `access-<timestamp>-<reason>.log` (see [Caddy log rolling](https://caddyserver.com/docs/caddyfile/directives/log)).
 

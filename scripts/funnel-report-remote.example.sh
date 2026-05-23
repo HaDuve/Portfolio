@@ -7,6 +7,7 @@
 #   # edit SSH_TARGET if needed (default below)
 #
 # Usage:
+#   ./scripts/funnel-report-remote.sh                    # last 12 months → .local/funnel-reports/*.csv
 #   ./scripts/funnel-report-remote.sh 2026-05-01 2026-05-31
 #   PLACEMENT_BREAKDOWN=1 ./scripts/funnel-report-remote.sh 2026-05-01 2026-05-31
 #
@@ -24,8 +25,34 @@ PLACEMENT_BREAKDOWN="${PLACEMENT_BREAKDOWN:-0}"
 LOCAL_REPORT_DIR="${LOCAL_REPORT_DIR:-.local/funnel-reports}"
 LOCAL_DATA_DIR="${LOCAL_DATA_DIR:-analytics/.remote-data}"
 
-FUNNEL_FROM="${1:-${FUNNEL_FROM:-}}"
-FUNNEL_TO="${2:-${FUNNEL_TO:-}}"
+default_funnel_dates() {
+  if date -v-12m >/dev/null 2>&1; then
+    FUNNEL_TO="$(date +%Y-%m-%d)"
+    FUNNEL_FROM="$(date -v-12m +%Y-%m-%d)"
+  else
+    FUNNEL_TO="$(date +%Y-%m-%d)"
+    FUNNEL_FROM="$(date -d '12 months ago' +%Y-%m-%d)"
+  fi
+}
+
+case $# in
+  0)
+    FUNNEL_FROM="${FUNNEL_FROM:-}"
+    FUNNEL_TO="${FUNNEL_TO:-}"
+    if [[ -z "$FUNNEL_FROM" || -z "$FUNNEL_TO" ]]; then
+      default_funnel_dates
+      echo "No date range given — using last 12 months (${FUNNEL_FROM} … ${FUNNEL_TO})"
+    fi
+    ;;
+  2)
+    FUNNEL_FROM="$1"
+    FUNNEL_TO="$2"
+    ;;
+  *)
+    echo "Usage: $0 [FROM_DATE TO_DATE]   (YYYY-MM-DD; omit both for last 12 months)" >&2
+    exit 1
+    ;;
+esac
 
 if [[ "$SSH_TARGET" == *"YOUR_SERVER_IP"* ]]; then
   echo "Set SSH_TARGET (e.g. export SSH_TARGET=root@188.245.242.141) or edit this script." >&2
@@ -34,11 +61,11 @@ fi
 
 if [[ ! "$FUNNEL_FROM" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]] ||
   [[ ! "$FUNNEL_TO" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
-  echo "Usage: $0 FROM_DATE TO_DATE   (YYYY-MM-DD)" >&2
+  echo "Invalid dates — use YYYY-MM-DD for FROM and TO." >&2
   exit 1
 fi
 
-REPORT_FILE="${LOCAL_REPORT_DIR}/funnel-${FUNNEL_FROM}_${FUNNEL_TO}.tsv"
+REPORT_FILE="${LOCAL_REPORT_DIR}/funnel-${FUNNEL_FROM}_${FUNNEL_TO}.csv"
 mkdir -p "$LOCAL_REPORT_DIR"
 if [[ "$GRAB_RAW" == "1" ]]; then
   mkdir -p "$LOCAL_DATA_DIR"
@@ -112,7 +139,7 @@ docker compose run --rm --no-deps \
   --log '/var/log/caddy/access*.log' \
   \${PLACEMENT_FLAG}
 REMOTE
-  >"$REPORT_FILE"
+  | sed 's/\t/,/g' >"$REPORT_FILE"
 
 echo "Saved report: ${REPORT_FILE}"
 cat "$REPORT_FILE"
