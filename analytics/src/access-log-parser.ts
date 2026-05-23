@@ -12,6 +12,59 @@ export type CountLoggedPageViewsOptions = {
 const BOT_UA =
   /bot\b|spider|crawl|slurp|wget|curl\/|python-requests|go-http-client|headlesschrome/i;
 
+/** Caddy site-block `log {}` uses auto names like http.log.access.log0 (see Caddy log directive). */
+export function isCaddyAccessLogger(logger: string | undefined): boolean {
+  return logger === "http.log.access" || logger?.startsWith("http.log.access.") === true;
+}
+
+export type AccessLogScanStats = {
+  totalLines: number;
+  jsonLines: number;
+  accessLogLines: number;
+  funnelLines: number;
+};
+
+export async function scanAccessLogFile(
+  logPath: string,
+  options: CountLoggedPageViewsOptions = {},
+): Promise<AccessLogScanStats> {
+  const stats: AccessLogScanStats = {
+    totalLines: 0,
+    jsonLines: 0,
+    accessLogLines: 0,
+    funnelLines: 0,
+  };
+  const input = createReadStream(logPath);
+  const rl = readline.createInterface({ input, crlfDelay: Infinity });
+  for await (const line of rl) {
+    scanAccessLogLine(stats, line, options);
+  }
+  return stats;
+}
+
+export function scanAccessLogLine(
+  stats: AccessLogScanStats,
+  line: string,
+  options: CountLoggedPageViewsOptions = {},
+): void {
+  const trimmed = line.trim();
+  if (!trimmed) return;
+  stats.totalLines += 1;
+  let entry: CaddyAccessEntry;
+  try {
+    entry = JSON.parse(trimmed) as CaddyAccessEntry;
+  } catch {
+    return;
+  }
+  stats.jsonLines += 1;
+  if (!isCaddyAccessLogger(entry.logger)) return;
+  stats.accessLogLines += 1;
+  if (!isCountableAccessEntry(entry, options)) return;
+  const path = canonicalFunnelPath(entry.request?.uri ?? "");
+  if (!path) return;
+  stats.funnelLines += 1;
+}
+
 export function mergeLoggedPageViewCounts(
   a: PageViewCount,
   b: PageViewCount,
@@ -81,7 +134,7 @@ function isCountableAccessEntry(
   entry: CaddyAccessEntry,
   options: CountLoggedPageViewsOptions,
 ): boolean {
-  if (entry.logger !== "http.log.access") return false;
+  if (!isCaddyAccessLogger(entry.logger)) return false;
   if (entry.request?.method !== "GET") return false;
   const status = entry.status ?? 0;
   if (status < 200 || status >= 300) return false;

@@ -72,6 +72,24 @@ export class ClickStore {
       .all(...params) as PathPlacementCount[];
   }
 
+  countSchedulingClicksInRange(fromIso?: string, toIso?: string): number {
+    const clauses: string[] = [];
+    const params: string[] = [];
+    if (fromIso) {
+      clauses.push("received_at >= ?");
+      params.push(fromIso);
+    }
+    if (toIso) {
+      clauses.push("received_at <= ?");
+      params.push(toIso);
+    }
+    const where = clauses.length ? `WHERE ${clauses.join(" AND ")}` : "";
+    const row = this.db
+      .prepare(`SELECT COUNT(*) AS count FROM scheduling_clicks ${where}`)
+      .get(...params) as { count: number };
+    return row.count;
+  }
+
   /** Deletes rows with received_at before cutoff minus months. Returns rows removed. */
   pruneOlderThanMonths(months: number, nowIso: string): number {
     const cutoff = subtractMonthsIso(nowIso, months);
