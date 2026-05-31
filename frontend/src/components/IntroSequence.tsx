@@ -4,6 +4,7 @@ import gsap from "gsap";
 import Image from "next/image";
 import type { CSSProperties } from "react";
 import { useLayoutEffect, useMemo, useRef } from "react";
+import { INTRO_TIMELINE } from "@/lib/motionBudget";
 
 const INTRO_FAN_SRC = "/fan-object.png";
 
@@ -165,11 +166,20 @@ export function IntroSequence({ fullName, onFadeStart, onComplete }: Props) {
         defaults: { ease: "power2.inOut" },
       });
 
+      const {
+        letterMeet,
+        letterMeetOverlap,
+        splitPause,
+        split,
+        fade,
+        fadeOverlapWithSplit,
+      } = INTRO_TIMELINE;
+
       tl.to(l1, {
         left: LAYOUT.l1MeetLeft,
         y: 0,
         opacity: 1,
-        duration: 0.68,
+        duration: letterMeet,
         ease: meetEase,
       })
         .to(
@@ -178,25 +188,28 @@ export function IntroSequence({ fullName, onFadeStart, onComplete }: Props) {
             left: LAYOUT.l2MeetLeft,
             y: 0,
             opacity: 1,
-            duration: 0.68,
+            duration: letterMeet,
             ease: meetEase,
           },
-          "<0.05",
+          `<${letterMeetOverlap}`,
         )
         .to(
           l1,
           {
             left: LAYOUT.l1SplitLeft,
-            duration: 0.82,
+            duration: split,
             ease: splitEase,
+            onStart: () => {
+              onFadeStartRef.current?.();
+            },
           },
-          "+=0.08",
+          `+=${splitPause}`,
         )
         .to(
           l2,
           {
             left: LAYOUT.l2SplitLeft,
-            duration: 0.82,
+            duration: split,
             ease: splitEase,
           },
           "<",
@@ -208,20 +221,21 @@ export function IntroSequence({ fullName, onFadeStart, onComplete }: Props) {
             rotation: 0,
             opacity: 1,
             scale: 1,
-            duration: 0.82,
+            duration: split,
             ease: splitEase,
           },
           "<",
         )
-        .to(root, {
-          opacity: 0,
-          duration: 0.72,
-          ease: "power2.inOut",
-          onStart: () => {
-            onFadeStartRef.current?.();
+        .to(
+          root,
+          {
+            opacity: 0,
+            duration: fade,
+            ease: "power2.inOut",
+            onComplete: finish,
           },
-          onComplete: finish,
-        });
+          fadeOverlapWithSplit ? "<" : undefined,
+        );
     }, root);
 
     return () => {
@@ -267,7 +281,6 @@ export function IntroSequence({ fullName, onFadeStart, onComplete }: Props) {
               fill
               className="object-contain drop-shadow-[0_6px_20px_rgba(0,0,0,0.18)] dark:drop-shadow-[0_8px_28px_rgba(0,0,0,0.45)]"
               sizes="(max-width: 768px) 36vw, 8rem"
-              priority
             />
           </div>
         </div>

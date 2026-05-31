@@ -1,32 +1,39 @@
 "use client";
 
-import { useEffect } from "react";
-import Lenis from "lenis";
+import { ReactLenis, type LenisRef } from "lenis/react";
+import { cancelFrame, frame } from "motion/react";
+import { useEffect, useRef, type ReactNode } from "react";
+import { createLenisOptionsForMotion } from "@/lib/lenisMotionIntegration";
+import "lenis/dist/lenis.css";
 
 type Props = {
   children: React.ReactNode;
-  /** When true, starts Lenis. Leave false until Motion scroll + IO are integrated (Lenis can break whileInView). */
   enabled: boolean;
 };
 
 export function LenisProvider({ children, enabled }: Props) {
+  const lenisRef = useRef<LenisRef>(null);
+
   useEffect(() => {
     if (!enabled) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const lenis = new Lenis({ autoRaf: true });
-    let rafId = 0;
-    function raf(time: number) {
-      lenis.raf(time);
-      rafId = requestAnimationFrame(raf);
+    function update(data: { timestamp: number }) {
+      lenisRef.current?.lenis?.raf(data.timestamp);
     }
-    rafId = requestAnimationFrame(raf);
 
-    return () => {
-      cancelAnimationFrame(rafId);
-      lenis.destroy();
-    };
+    frame.update(update, true);
+
+    return () => cancelFrame(update);
   }, [enabled]);
 
-  return <>{children}</>;
+  if (!enabled) {
+    return <>{children}</>;
+  }
+
+  return (
+    <ReactLenis root options={createLenisOptionsForMotion()} ref={lenisRef}>
+      {children}
+    </ReactLenis>
+  );
 }

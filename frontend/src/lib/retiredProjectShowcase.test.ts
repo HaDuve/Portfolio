@@ -5,9 +5,11 @@ import { describe, it, expect } from "vitest";
 const componentsDir = path.join(__dirname, "../components");
 
 const RETIRED_PROJECT_SHOWCASE = [
+  "HeroFan.tsx",
   "ParallaxLetter.tsx",
   "ParallaxMedia.tsx",
   "ProjectMediaCarousel.tsx",
+  "ProjectCard.tsx",
 ] as const;
 
 describe("retired project showcase components", () => {
