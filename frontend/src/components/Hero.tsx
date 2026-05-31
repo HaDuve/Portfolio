@@ -29,7 +29,7 @@ export function Hero({ profile, introDone, locale }: Props) {
       />
       <div className="grain pointer-events-none absolute inset-0" aria-hidden />
 
-      <div className="relative z-10 mx-auto grid max-w-6xl items-end gap-12 px-4 pb-16 pt-16 sm:px-6 sm:pb-24 sm:pt-20 lg:grid-cols-[1fr_minmax(280px,420px)] lg:items-center lg:gap-16">
+      <div className="relative z-10 mx-auto grid max-w-6xl items-end gap-12 px-4 pb-16 pt-20 sm:px-6 sm:pb-24 sm:pt-24 lg:grid-cols-[1fr_minmax(280px,420px)] lg:items-center lg:gap-16 lg:pt-28">
         <div className="min-w-0 max-w-[38rem]">
           <p className="font-mono text-xs font-medium uppercase tracking-[0.2em] text-accent">
             {copy.eyebrow}
