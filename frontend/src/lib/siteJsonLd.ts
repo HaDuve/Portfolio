@@ -1,20 +1,16 @@
 import profile from "@/data/profile.json";
 import { coachingLandingPath, devLandingPath, type Locale } from "./i18n";
-import { offeringLadder, type OfferingTierId } from "./offeringLadder";
+import {
+  offeringBaselineEur,
+  offeringLadder,
+  offeringTier,
+  type OfferingTierId,
+} from "./offeringLadder";
 import type { Profile } from "@/types/content";
 
 export const SITE_JSON_LD_BASE = "https://hannesduve.com";
 
 export type JsonLdGraphNode = Record<string, unknown>;
-
-const TIER_BASE_PRICE_EUR: Record<OfferingTierId, number> = {
-  "micro-mvp": 1200,
-  mvp: 4800,
-  ongoing: 1200,
-};
-
-const HOURLY_RATE_EUR = 60;
-const COACHING_SESSION_EUR = 60;
 
 function schemaLanguage(locale: Locale): string {
   return locale === "en" ? "en" : "de-DE";
@@ -61,15 +57,16 @@ function coachingServiceCopy(locale: Locale) {
 
 function hourlyOffer(locale: Locale): JsonLdGraphNode {
   const ladder = offeringLadder(locale);
+  const price = offeringBaselineEur.hourly;
   return {
     "@type": "Offer",
     "@id": `${SITE_JSON_LD_BASE}/#offer-hourly`,
     name: ladder.hourlyRate,
-    price: String(HOURLY_RATE_EUR),
+    price: String(price),
     priceCurrency: "EUR",
     priceSpecification: {
       "@type": "UnitPriceSpecification",
-      price: String(HOURLY_RATE_EUR),
+      price: String(price),
       priceCurrency: "EUR",
       unitCode: "HUR",
       name: ladder.hourlyRate,
@@ -82,8 +79,8 @@ function tierOffer(
   tierId: OfferingTierId,
   serviceId: string,
 ): JsonLdGraphNode {
-  const tier = offeringLadder(locale).tiers.find((t) => t.id === tierId)!;
-  const price = TIER_BASE_PRICE_EUR[tierId];
+  const tier = offeringTier(locale, tierId);
+  const price = offeringBaselineEur.tiers[tierId];
   const isMonthly = tierId === "ongoing";
   return {
     "@type": "Offer",
@@ -96,33 +93,50 @@ function tierOffer(
       "@type": isMonthly ? "UnitPriceSpecification" : "PriceSpecification",
       price: String(price),
       priceCurrency: "EUR",
-      ...(isMonthly ? { unitCode: "MON", name: tier.price } : { minPrice: String(price), name: tier.price }),
+      ...(isMonthly
+        ? { unitCode: "MON", name: tier.price }
+        : { minPrice: String(price), name: tier.price }),
     },
   };
 }
 
 function coachingSessionOffer(locale: Locale, serviceId: string): JsonLdGraphNode {
   const isEn = locale === "en";
+  const price = offeringBaselineEur.coachingSession;
+  const priceLabel = isEn ? "60 € / 60 min" : "60 € / 60 Min.";
   return {
     "@type": "Offer",
     "@id": `${SITE_JSON_LD_BASE}/#offer-coaching-session`,
     name: isEn ? "60 min coaching session" : "60-Min.-Coaching-Session",
-    price: String(COACHING_SESSION_EUR),
+    price: String(price),
     priceCurrency: "EUR",
     itemOffered: { "@id": serviceId },
     priceSpecification: {
-      "@type": "UnitPriceSpecification",
-      price: String(COACHING_SESSION_EUR),
+      "@type": "PriceSpecification",
+      price: String(price),
       priceCurrency: "EUR",
-      unitCode: "MIN",
-      referenceQuantity: {
-        "@type": "QuantitativeValue",
-        value: 60,
-        unitCode: "MIN",
-      },
-      name: isEn ? "60 € / 60 min" : "60 € / 60 Min.",
+      name: priceLabel,
+      description: isEn ? "60-minute session" : "60-Minuten-Session",
     },
   };
+}
+
+/** Collects every `@id` in the site graph, including nested service offers. */
+export function collectSiteJsonLdIds(graph: JsonLdGraphNode[]): string[] {
+  const ids: string[] = [];
+  for (const node of graph) {
+    if (typeof node["@id"] === "string") {
+      ids.push(node["@id"]);
+    }
+    if (Array.isArray(node.offers)) {
+      for (const offer of node.offers as JsonLdGraphNode[]) {
+        if (typeof offer["@id"] === "string") {
+          ids.push(offer["@id"]);
+        }
+      }
+    }
+  }
+  return ids;
 }
 
 export function buildSiteJsonLdGraph(locale: Locale): JsonLdGraphNode[] {
@@ -146,6 +160,7 @@ export function buildSiteJsonLdGraph(locale: Locale): JsonLdGraphNode[] {
       url: `${SITE_JSON_LD_BASE}/${locale}/`,
       image: `${SITE_JSON_LD_BASE}/profile.jpg`,
       jobTitle: personJobTitle(locale),
+      inLanguage: lang,
       knowsLanguage: ["de", "en"],
       sameAs: p.social.map((s) => s.href),
     },
