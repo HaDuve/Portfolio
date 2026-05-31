@@ -5,6 +5,7 @@ import { useLayoutEffect, useState, useSyncExternalStore } from "react";
 import { Hero } from "@/components/Hero";
 import { CredibilityStrip } from "@/components/CredibilityStrip";
 import { FreelanceLane } from "@/components/FreelanceLane";
+import { CoachingLane } from "@/components/CoachingLane";
 import { SchedulingLink } from "@/components/SchedulingLink";
 import { HubBlock } from "@/components/HubBlock";
 import { IntroSequence } from "@/components/IntroSequence";
@@ -124,6 +125,13 @@ export function PortfolioHome({
                 locale={locale}
                 schedulingUrl={profile.schedulingUrl}
                 projects={projects}
+              />
+            </div>
+
+            <div className="mt-24">
+              <CoachingLane
+                locale={locale}
+                schedulingUrl={profile.schedulingUrl}
               />
             </div>
 
