@@ -1,35 +1,125 @@
 "use client";
 
-import { useState } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
+import {
+  animate,
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useTransform,
+} from "motion/react";
 import Image from "next/image";
 import type { Profile } from "@/types/content";
 import { heroCopy } from "@/lib/heroCopy";
-import { heroProofShots, type HeroProofShot } from "@/lib/heroProofShots";
+import {
+  browserXFromSeparation,
+  phoneXFromSeparation,
+  proofShotSeparationTransition,
+} from "@/lib/heroProofShotMotion";
+import {
+  createProofShotSwapController,
+  DEFAULT_FRONT_PROOF_SHOT,
+  isLgViewport,
+  proofShotFrontFromPointer,
+  type ProofShotSwapDeps,
+} from "@/lib/heroProofShotSwap";
+import { heroProofShots } from "@/lib/heroProofShots";
 import { type Locale } from "@/lib/i18n";
 import { SchedulingLink } from "./SchedulingLink";
 
 const ease = [0.16, 1, 0.3, 1] as const;
-const DEFAULT_FRONT_PROOF_SHOT: HeroProofShot["variant"] = "phone";
 
 type Props = { profile: Profile; introDone: boolean; locale: Locale };
 
-function proofShotFrontFromPointer(
-  clientX: number,
-  rect: DOMRect,
-): HeroProofShot["variant"] {
-  const ratio = (clientX - rect.left) / rect.width;
-  return ratio > 0.58 ? "phone" : "browser";
+function subscribeLgViewport(onStoreChange: () => void) {
+  const mq = window.matchMedia("(min-width: 1024px)");
+  mq.addEventListener("change", onStoreChange);
+  return () => mq.removeEventListener("change", onStoreChange);
+}
+
+function useLgLayout() {
+  return useSyncExternalStore(
+    subscribeLgViewport,
+    () => isLgViewport(),
+    () => false,
+  );
 }
 
 export function Hero({ profile, introDone, locale }: Props) {
   const copy = heroCopy(locale);
   const proofShots = heroProofShots(locale);
   const reduce = useReducedMotion();
+  const isLgLayout = useLgLayout();
   const showContent = reduce || introDone;
-  const [frontProofShot, setFrontProofShot] = useState<HeroProofShot["variant"]>(
-    DEFAULT_FRONT_PROOF_SHOT,
+  const [frontProofShot, setFrontProofShot] = useState(DEFAULT_FRONT_PROOF_SHOT);
+  const frontRef = useRef(frontProofShot);
+  const swapAbort = useRef<(() => void) | null>(null);
+  const separation = useMotionValue(0);
+  const phoneX = useTransform(separation, phoneXFromSeparation);
+  const browserX = useTransform(separation, browserXFromSeparation);
+
+  const animateSeparation = useCallback(
+    async (to: number) => {
+      swapAbort.current?.();
+      const controls = animate(separation, to, proofShotSeparationTransition());
+      swapAbort.current = () => controls.stop();
+      try {
+        await controls.finished;
+      } catch {
+        // Expected when a newer swap stops this tween.
+      } finally {
+        swapAbort.current = null;
+      }
+    },
+    [separation],
   );
+
+  const swapDepsRef = useRef<ProofShotSwapDeps>({
+    getSeparation: () => separation.get(),
+    animateSeparation,
+    abortAnimation: () => swapAbort.current?.(),
+    getFront: () => frontRef.current,
+    setFront: (variant) => {
+      frontRef.current = variant;
+      setFrontProofShot(variant);
+    },
+    shouldAnimate: () => !reduce && isLgViewport(),
+  });
+
+  swapDepsRef.current = {
+    getSeparation: () => separation.get(),
+    animateSeparation,
+    abortAnimation: () => swapAbort.current?.(),
+    getFront: () => frontRef.current,
+    setFront: (variant) => {
+      frontRef.current = variant;
+      setFrontProofShot(variant);
+    },
+    shouldAnimate: () => !reduce && isLgViewport(),
+  };
+
+  const swapControllerRef = useRef<ReturnType<
+    typeof createProofShotSwapController
+  > | null>(null);
+
+  if (!swapControllerRef.current) {
+    swapControllerRef.current = createProofShotSwapController({
+      getSeparation: () => swapDepsRef.current.getSeparation(),
+      animateSeparation: (to) => swapDepsRef.current.animateSeparation(to),
+      abortAnimation: () => swapDepsRef.current.abortAnimation(),
+      getFront: () => swapDepsRef.current.getFront(),
+      setFront: (variant) => swapDepsRef.current.setFront(variant),
+      shouldAnimate: () => swapDepsRef.current.shouldAnimate(),
+    });
+  }
+
+  const requestFront = useCallback((next: typeof frontProofShot) => {
+    void swapControllerRef.current?.requestFront(next);
+  }, []);
+
+  useEffect(() => {
+    return () => swapAbort.current?.();
+  }, []);
 
   return (
     <section
@@ -109,22 +199,31 @@ export function Hero({ profile, introDone, locale }: Props) {
 
         <div
           className="relative mx-auto w-full max-w-[420px] lg:mx-0 lg:min-h-[300px] lg:justify-self-end"
-          onPointerLeave={() => setFrontProofShot(DEFAULT_FRONT_PROOF_SHOT)}
+          onPointerLeave={() => requestFront(DEFAULT_FRONT_PROOF_SHOT)}
           onPointerMove={(e) => {
-            if (!window.matchMedia("(min-width: 1024px)").matches) return;
-            setFrontProofShot(proofShotFrontFromPointer(e.clientX, e.currentTarget.getBoundingClientRect()));
+            if (!isLgViewport()) return;
+            requestFront(
+              proofShotFrontFromPointer(
+                e.clientX,
+                e.currentTarget.getBoundingClientRect(),
+              ),
+            );
           }}
         >
           {proofShots.map((shot) => (
-            <figure
+            <motion.figure
               key={shot.variant}
               tabIndex={0}
-              onPointerEnter={() => setFrontProofShot(shot.variant)}
-              onFocus={() => setFrontProofShot(shot.variant)}
+              style={{
+                x: shot.variant === "phone" ? phoneX : browserX,
+                ...(isLgLayout ? { y: "-50%" } : {}),
+              }}
+              onPointerEnter={() => requestFront(shot.variant)}
+              onFocus={() => requestFront(shot.variant)}
               className={
                 shot.variant === "phone"
-                  ? `relative mx-auto w-[min(70%,220px)] overflow-hidden rounded-[1.75rem] border border-border bg-card shadow-lg sm:w-[min(55%,240px)] lg:absolute lg:-right-4 lg:top-1/2 lg:w-[min(68%,260px)] lg:-translate-y-1/2 ${frontProofShot === shot.variant ? "z-10 lg:shadow-lg" : "z-0"}`
-                  : `relative mt-4 w-full overflow-hidden rounded-xl border border-border bg-card shadow-md lg:absolute lg:left-0 lg:top-1/2 lg:mt-0 lg:w-full lg:-translate-x-12 lg:-translate-y-1/2 ${frontProofShot === shot.variant ? "z-10 lg:shadow-lg" : "z-0"}`
+                  ? `relative mx-auto w-[min(70%,220px)] overflow-hidden rounded-[1.75rem] border border-border bg-card shadow-lg sm:w-[min(55%,240px)] lg:absolute lg:-right-4 lg:top-1/2 lg:w-[min(68%,260px)] ${frontProofShot === shot.variant ? "z-10 lg:shadow-lg" : "z-0"}`
+                  : `relative mt-4 w-full overflow-hidden rounded-xl border border-border bg-card shadow-md lg:absolute lg:left-0 lg:top-1/2 lg:mt-0 lg:w-full ${frontProofShot === shot.variant ? "z-10 lg:shadow-lg" : "z-0"}`
               }
             >
               <Image
@@ -135,7 +234,7 @@ export function Hero({ profile, introDone, locale }: Props) {
                 className="h-auto w-full object-cover"
                 priority={shot.variant === "phone"}
               />
-            </figure>
+            </motion.figure>
           ))}
         </div>
       </div>
