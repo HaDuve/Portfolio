@@ -7,6 +7,8 @@ import { CredibilityStrip } from "@/components/CredibilityStrip";
 import { FreelanceLane } from "@/components/FreelanceLane";
 import { CoachingLane } from "@/components/CoachingLane";
 import { SchedulingLink } from "@/components/SchedulingLink";
+import { siteChromeCopy } from "@/lib/siteChromeCopy";
+import { skillsCompactTags, type SkillsCategory } from "@/lib/skillsCompactTags";
 import { HubBlock } from "@/components/HubBlock";
 import { IntroSequence } from "@/components/IntroSequence";
 import { LenisProvider } from "@/components/LenisProvider";
@@ -57,13 +59,7 @@ function writeIntroBlockedUntil(): void {
 }
 
 type SkillsData = {
-  categories: {
-    nameDe: string;
-    nameEn: string;
-    items: string[];
-    introDe?: string;
-    introEn?: string;
-  }[];
+  categories: SkillsCategory[];
 };
 
 type Props = {
@@ -80,6 +76,8 @@ export function PortfolioHome({
   skillsData,
 }: Props) {
   const showEnglish = locale === "en";
+  const chrome = siteChromeCopy(locale);
+  const skillTags = skillsCompactTags(skillsData.categories);
   const gridProjects = projectsForHomeGrid(projects);
   const featured = gridProjects.find((p) => p.featured);
   const rest = gridProjects.filter((p) => !p.featured);
@@ -167,77 +165,80 @@ export function PortfolioHome({
 
             <section id="skills" className="mt-24 scroll-mt-28">
               <SectionHeading
-                eyebrow="Stack"
-                title="Skills"
-                description={
-                  showEnglish
-                    ? "Mobile-first: React Native & Expo, iOS/Android releases, plus web and backend."
-                    : "Mobile-first: React Native & Expo, iOS/Android Release (App Store/Google Play), plus Web & Backend."
-                }
+                eyebrow={chrome.skills.eyebrow}
+                title={chrome.skills.title}
+                description={chrome.skills.description}
               />
-              <div className="mt-10 space-y-10 border-t border-border pt-10">
-                {skillsData.categories.map((cat) => (
-                  <div key={cat.nameDe}>
-                    <h3 className="font-mono text-xs font-medium uppercase tracking-widest text-muted">
-                      {showEnglish ? cat.nameEn : cat.nameDe}
-                    </h3>
-                    {cat.introDe || cat.introEn ? (
-                      <p className="mt-3 max-w-3xl text-sm text-muted">
-                        {showEnglish ? cat.introEn : cat.introDe}
-                      </p>
-                    ) : null}
-                    <ul className="mt-4 flex flex-wrap gap-2">
-                      {cat.items.map((item) => (
-                        <li
-                          key={item}
-                          className="rounded-lg border border-border bg-card px-3 py-1.5 text-sm text-foreground shadow-sm"
-                        >
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+              <ul className="mt-5 flex flex-wrap gap-2">
+                {skillTags.map((tag) => (
+                  <li
+                    key={tag}
+                    className="rounded-full border border-border bg-card px-3 py-1.5 text-[0.8125rem] text-foreground"
+                  >
+                    {tag}
+                  </li>
                 ))}
-              </div>
+              </ul>
             </section>
 
             <section id="contact" className="mt-28 scroll-mt-28">
               <SectionHeading
-                eyebrow={showEnglish ? "Contact" : "Kontakt"}
-                title={showEnglish ? "Start a project" : "Projekt anfragen"}
-                description={
-                  showEnglish
-                    ? "Pick a time directly. I will reply with concrete next steps. English enquiries are welcome end to end when you prefer."
-                    : "Direkt einen Termin wählen. Ich melde mich mit nächsten Schritten."
-                }
+                eyebrow={chrome.contact.eyebrow}
+                title={chrome.contact.title}
+                description={chrome.contact.description}
               />
-              <div className="mt-10 flex flex-col gap-8 rounded-2xl border border-border bg-card p-8 shadow-sm sm:flex-row sm:flex-wrap sm:items-start sm:justify-between">
-                <div>
-                  <p className="font-mono text-xs uppercase tracking-widest text-muted">
-                    {showEnglish ? "Schedule" : "Termin"}
+              <div className="mt-10 grid gap-5 sm:grid-cols-2">
+                <article className="flex flex-col rounded-2xl border border-border bg-card p-6 shadow-sm">
+                  <p className="font-mono text-xs font-medium uppercase tracking-widest text-accent">
+                    {chrome.contact.freelanceEyebrow}
+                  </p>
+                  <h3 className="mt-2 font-display text-xl tracking-tight text-foreground">
+                    {chrome.contact.freelanceLaneTitle}
+                  </h3>
+                  <p className="mt-2 flex-1 text-sm text-muted">
+                    {chrome.contact.freelanceDescription}
                   </p>
                   <SchedulingLink
                     href={profile.schedulingUrl}
-                    placement="contact-freelance"
+                    placement={chrome.contact.freelanceCta.placement}
                     locale={locale}
-                    className="mt-2 inline-flex rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-white transition hover:opacity-90 dark:text-stone-950"
+                    className="mt-6 inline-flex w-fit rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-white transition hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent dark:text-stone-950"
                   >
-                    {showEnglish ? "Book a call" : "Gespräch buchen"}
+                    {chrome.contact.freelanceCta.label}
                   </SchedulingLink>
-                  <p className="mt-2 text-xs text-stone-500">
-                    {showEnglish
-                      ? "30-minute call (Calendly)"
-                      : "30 Minuten (Calendly)"}
+                </article>
+                <article className="flex flex-col rounded-2xl border border-border bg-card p-6 shadow-sm">
+                  <p className="font-mono text-xs font-medium uppercase tracking-widest text-accent">
+                    {chrome.contact.coachingEyebrow}
                   </p>
-                </div>
-                <div className="flex flex-wrap gap-3 sm:w-full sm:justify-end">
+                  <h3 className="mt-2 font-display text-xl tracking-tight text-foreground">
+                    {chrome.contact.coachingLaneTitle}
+                  </h3>
+                  <p className="mt-2 flex-1 text-sm text-muted">
+                    {chrome.contact.coachingDescription}
+                  </p>
+                  <SchedulingLink
+                    href={profile.schedulingUrl}
+                    placement={chrome.contact.coachingCta.placement}
+                    locale={locale}
+                    className="mt-6 inline-flex w-fit rounded-full border border-border bg-transparent px-5 py-2.5 text-sm font-semibold text-foreground transition hover:border-accent/40 hover:bg-accent/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                  >
+                    {chrome.contact.coachingCta.label}
+                  </SchedulingLink>
+                </article>
+              </div>
+              <div className="mt-8">
+                <p className="font-mono text-xs font-medium uppercase tracking-widest text-accent">
+                  {chrome.contact.socialEyebrow}
+                </p>
+                <div className="mt-3 flex flex-wrap gap-2">
                   {profile.social.map((s) => (
                     <a
                       key={s.href}
                       href={s.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="rounded-full border border-border px-5 py-2.5 text-sm font-medium transition hover:border-accent/40 hover:bg-accent/5"
+                      className="rounded-full border border-border px-5 py-2.5 text-sm font-medium transition hover:border-accent/40 hover:bg-accent/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                     >
                       {s.label}
                     </a>

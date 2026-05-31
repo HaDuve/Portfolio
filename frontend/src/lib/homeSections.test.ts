@@ -6,12 +6,15 @@ import {
 } from "./homeSections";
 
 describe("homeSections", () => {
-  it("lists hub before freelance in page section order", () => {
+  it("lists hub before freelance and coaching after freelance", () => {
     const hubIndex = HOME_PAGE_SECTION_IDS.indexOf("hub");
     const freelanceIndex = HOME_PAGE_SECTION_IDS.indexOf("freelance");
+    const coachingIndex = HOME_PAGE_SECTION_IDS.indexOf("coaching");
     expect(hubIndex).toBeGreaterThan(-1);
     expect(freelanceIndex).toBeGreaterThan(-1);
+    expect(coachingIndex).toBeGreaterThan(-1);
     expect(hubIndex).toBeLessThan(freelanceIndex);
+    expect(freelanceIndex).toBeLessThan(coachingIndex);
   });
 
   it("excludes sections removed by the hub restructure", () => {
@@ -31,5 +34,6 @@ describe("homeSections", () => {
     expect(navIds).not.toContain("zusammenarbeit");
     expect(navIds).not.toContain("ablauf");
     expect(navIds).toContain("hub");
+    expect(navIds).toContain("coaching");
   });
 });

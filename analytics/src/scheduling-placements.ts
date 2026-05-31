@@ -1,6 +1,8 @@
 /** Offering-aware placements (ADR-0003 amendment); shared by ingest validation. */
 export const SCHEDULING_PLACEMENTS = [
   "header",
+  "mobile-freelance",
+  "mobile-coaching",
   "hero-freelance",
   "hero-coaching",
   "lane-freelance",

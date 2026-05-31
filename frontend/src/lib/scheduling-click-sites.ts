@@ -2,6 +2,8 @@ import type { SchedulingPlacement } from "./click-telemetry";
 
 const HOME_PLACEMENTS: SchedulingPlacement[] = [
   "header",
+  "mobile-freelance",
+  "mobile-coaching",
   "hero-freelance",
   "hero-coaching",
   "lane-freelance",
