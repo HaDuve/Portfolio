@@ -56,7 +56,7 @@ const copy: Record<Locale, SiteChromeCopy> = {
       eyebrow: "Stack",
       title: "Was ich in Projekten einsetze",
       description:
-        "Mobile-first Engineering — validierung für technische Entscheider, kein zweiter Pitch.",
+        "React Native und Expo für iOS & Android, Next.js für Web, Node und PostgreSQL fürs Backend — produktionsreife Werkzeuge vom MVP bis zum App-Store-Release.",
     },
     contact: {
       eyebrow: "Kontakt",
@@ -99,7 +99,7 @@ const copy: Record<Locale, SiteChromeCopy> = {
       eyebrow: "Stack",
       title: "What I use on projects",
       description:
-        "Mobile-first engineering — validation for technical buyers, not a second pitch.",
+        "React Native and Expo for iOS and Android, Next.js for web, Node and PostgreSQL for backend — production tooling from MVP through App Store release.",
     },
     contact: {
       eyebrow: "Contact",

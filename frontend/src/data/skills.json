@@ -69,6 +69,13 @@
       "introDe": "Weitere Erfahrung aus Projekten – hilfreich je nach Bestandssystem und Tech-Stack.",
       "introEn": "Additional project experience — useful depending on legacy systems and stack constraints.",
       "items": [".NET", "C#", "Xamarin", "Python", "App Store Optimization"]
+    },
+    {
+      "nameDe": "KI-Tools",
+      "nameEn": "AI tools",
+      "introDe": "KI-gestützte Entwicklung im Alltag — für schnellere Umsetzung und reviewbaren Code.",
+      "introEn": "AI-assisted development in daily work — faster delivery with reviewable output.",
+      "items": ["Cursor", "Claude Code"]
     }
   ]
 }
