@@ -9,13 +9,10 @@ import { CoachingLane } from "@/components/CoachingLane";
 import { SchedulingLink } from "@/components/SchedulingLink";
 import { siteChromeCopy } from "@/lib/siteChromeCopy";
 import { skillsCompactTags, type SkillsCategory } from "@/lib/skillsCompactTags";
-import { HubBlock } from "@/components/HubBlock";
 import { IntroSequence } from "@/components/IntroSequence";
 import { LenisProvider } from "@/components/LenisProvider";
-import { ProjectCard } from "@/components/ProjectCard";
 import { SectionHeading } from "@/components/SectionHeading";
 import type { Profile, Project } from "@/types/content";
-import { projectsForHomeGrid } from "@/lib/homeProjectsGrid";
 import {
   datenschutzPath,
   impressumPath,
@@ -75,12 +72,8 @@ export function PortfolioHome({
   projects,
   skillsData,
 }: Props) {
-  const showEnglish = locale === "en";
   const chrome = siteChromeCopy(locale);
   const skillTags = skillsCompactTags(skillsData.categories);
-  const gridProjects = projectsForHomeGrid(projects);
-  const featured = gridProjects.find((p) => p.featured);
-  const rest = gridProjects.filter((p) => !p.featured);
 
   const [introPhase, setIntroPhase] = useState<"playing" | "fading" | "done">(
     "playing",
@@ -116,15 +109,11 @@ export function PortfolioHome({
           <CredibilityStrip locale={locale} />
 
           <main className="mx-auto w-full max-w-6xl flex-1 px-4 pb-24 pt-16 sm:px-6 sm:pt-20">
-            <HubBlock locale={locale} />
-
-            <div className="mt-24">
-              <FreelanceLane
-                locale={locale}
-                schedulingUrl={profile.schedulingUrl}
-                projects={projects}
-              />
-            </div>
+            <FreelanceLane
+              locale={locale}
+              schedulingUrl={profile.schedulingUrl}
+              projects={projects}
+            />
 
             <div className="mt-24">
               <CoachingLane
@@ -132,36 +121,6 @@ export function PortfolioHome({
                 schedulingUrl={profile.schedulingUrl}
               />
             </div>
-
-            <section id="projects" className="mt-24 scroll-mt-28">
-              <SectionHeading
-                eyebrow={showEnglish ? "Work" : "Referenzen"}
-                title={showEnglish ? "Projects" : "Projekte"}
-                description={
-                  showEnglish
-                    ? "Selected work — shipping, maintainable systems for web and mobile."
-                    : "Ausgewählte Arbeiten — lieferfähige, wartbare Systeme für Web und Mobile."
-                }
-              />
-              <div className="mt-12 space-y-10">
-                {featured ? (
-                  <ProjectCard
-                    project={featured}
-                    locale={locale}
-                    variant="featured"
-                  />
-                ) : null}
-                <div className="grid gap-8 sm:grid-cols-2">
-                  {rest.map((project) => (
-                    <ProjectCard
-                      key={project.id}
-                      project={project}
-                      locale={locale}
-                    />
-                  ))}
-                </div>
-              </div>
-            </section>
 
             <section id="skills" className="mt-24 scroll-mt-28">
               <SectionHeading
@@ -252,7 +211,7 @@ export function PortfolioHome({
             <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
               <p className="font-mono text-xs text-muted">
                 © {new Date().getFullYear()} {profile.name}.{" "}
-                {showEnglish
+                {locale === "en"
                   ? "Next.js, static export, Caddy."
                   : "Next.js, statischer Export, Caddy."}
               </p>
@@ -261,7 +220,7 @@ export function PortfolioHome({
                   href={impressumPath(locale)}
                   className="underline-offset-4 transition hover:text-foreground hover:underline"
                 >
-                  {showEnglish ? "Imprint" : "Impressum"}
+                  {locale === "en" ? "Imprint" : "Impressum"}
                 </Link>
                 <span aria-hidden className="text-border">
                   ·
@@ -270,7 +229,7 @@ export function PortfolioHome({
                   href={datenschutzPath(locale)}
                   className="underline-offset-4 transition hover:text-foreground hover:underline"
                 >
-                  {showEnglish ? "Privacy" : "Datenschutz"}
+                  {locale === "en" ? "Privacy" : "Datenschutz"}
                 </Link>
               </div>
             </div>

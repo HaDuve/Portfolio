@@ -1,17 +1,17 @@
-/** Section ids removed from the home page by ADR-0002 / issue #5. */
+/** Section ids removed from the home page by ADR-0002 / ADR-0004. */
 export const REMOVED_HOME_SECTION_IDS = [
   "app-entwickeln",
   "zusammenarbeit",
   "ablauf",
+  "hub",
+  "projects",
 ] as const;
 
 /** Section ids rendered on the locale home page (scroll targets + scroll-spy). */
 export const HOME_PAGE_SECTION_IDS = [
   "hero",
-  "hub",
   "freelance",
   "coaching",
-  "projects",
   "skills",
   "contact",
 ] as const;
@@ -29,12 +29,6 @@ export type HomeNavSection = {
 export const HOME_NAV_SECTIONS: readonly HomeNavSection[] = [
   { hash: "hero", labelDe: "Start", labelEn: "Start", id: "hero" },
   {
-    hash: "hub",
-    labelDe: "Angebote",
-    labelEn: "Explore",
-    id: "hub",
-  },
-  {
     hash: "freelance",
     labelDe: "Freelance",
     labelEn: "Freelance",
@@ -45,12 +39,6 @@ export const HOME_NAV_SECTIONS: readonly HomeNavSection[] = [
     labelDe: "Coaching",
     labelEn: "Coaching",
     id: "coaching",
-  },
-  {
-    hash: "projects",
-    labelDe: "Projekte",
-    labelEn: "Projects",
-    id: "projects",
   },
   { hash: "skills", labelDe: "Stack", labelEn: "Stack", id: "skills" },
   {

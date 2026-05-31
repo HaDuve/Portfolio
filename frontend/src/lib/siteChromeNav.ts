@@ -1,6 +1,5 @@
-import { homeHubPaths } from "@/data/homeHub";
 import type { HomePageSectionId } from "./homeSections";
-import type { Locale } from "./i18n";
+import { coachingLandingPath, devLandingPath, type Locale } from "./i18n";
 
 export type SiteChromeNavItem = {
   id: HomePageSectionId;
@@ -36,9 +35,8 @@ export function siteChromeMoreLinks(
   locale: Locale,
   labels: { freelance: string; coaching: string },
 ): SiteChromeMoreLink[] {
-  const paths = homeHubPaths(locale);
   return [
-    { href: paths.dev, label: labels.freelance },
-    { href: paths.coaching, label: labels.coaching },
+    { href: devLandingPath(locale), label: labels.freelance },
+    { href: coachingLandingPath(locale), label: labels.coaching },
   ];
 }

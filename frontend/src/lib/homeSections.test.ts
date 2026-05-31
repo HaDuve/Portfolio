@@ -6,21 +6,22 @@ import {
 } from "./homeSections";
 
 describe("homeSections", () => {
-  it("lists hub before freelance and coaching after freelance", () => {
-    const hubIndex = HOME_PAGE_SECTION_IDS.indexOf("hub");
-    const freelanceIndex = HOME_PAGE_SECTION_IDS.indexOf("freelance");
-    const coachingIndex = HOME_PAGE_SECTION_IDS.indexOf("coaching");
-    expect(hubIndex).toBeGreaterThan(-1);
-    expect(freelanceIndex).toBeGreaterThan(-1);
-    expect(coachingIndex).toBeGreaterThan(-1);
-    expect(hubIndex).toBeLessThan(freelanceIndex);
-    expect(freelanceIndex).toBeLessThan(coachingIndex);
+  it("lists dual-lane home sections in ADR-0004 order", () => {
+    expect([...HOME_PAGE_SECTION_IDS]).toEqual([
+      "hero",
+      "freelance",
+      "coaching",
+      "skills",
+      "contact",
+    ]);
   });
 
-  it("excludes sections removed by the hub restructure", () => {
+  it("excludes hub and legacy sections removed by the dual-lane restructure", () => {
     for (const id of REMOVED_HOME_SECTION_IDS) {
       expect(HOME_PAGE_SECTION_IDS).not.toContain(id);
     }
+    expect(HOME_PAGE_SECTION_IDS).not.toContain("hub");
+    expect(HOME_PAGE_SECTION_IDS).not.toContain("projects");
   });
 
   it("keeps header nav targets aligned with rendered home sections", () => {
@@ -29,11 +30,13 @@ describe("homeSections", () => {
     }
   });
 
-  it("drops Collaboration and Process from nav", () => {
+  it("drops hub and projects from nav", () => {
     const navIds = HOME_NAV_SECTIONS.map((s) => s.id);
+    expect(navIds).not.toContain("hub");
+    expect(navIds).not.toContain("projects");
     expect(navIds).not.toContain("zusammenarbeit");
     expect(navIds).not.toContain("ablauf");
-    expect(navIds).toContain("hub");
+    expect(navIds).toContain("freelance");
     expect(navIds).toContain("coaching");
   });
 });
