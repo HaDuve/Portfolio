@@ -11,20 +11,7 @@ export const homePrimaryKeyword: { de: string; en: string } = {
   en: "App Developer",
 };
 
-const brandFirstMeta: Record<Locale, HomeSeoCopy> = {
-  de: {
-    title: "Hannes Duve · App & Full-Stack Freelancer (DACH)",
-    description:
-      "Senior-Freelancer für App, Web & Backend — Next.js, React Native/Expo, Node, Cloud. Remote für KMU in DE, AT & CH. Auch Vibe-Coding-Coaching.",
-  },
-  en: {
-    title: "Hannes Duve · Freelance App & Full-Stack Developer (DACH & EU)",
-    description:
-      "Freelance app & full-stack developer — Next.js, React Native/Expo, Node, cloud. Remote for SMEs in DACH & EU. AI coding coaching too.",
-  },
-};
-
-const keywordFirstMeta: Record<Locale, HomeSeoCopy> = {
+const homeSeoCopy: Record<Locale, HomeSeoCopy> = {
   de: {
     title: `${homePrimaryKeyword.de} — Hannes Duve (DACH)`,
     description:
@@ -38,8 +25,5 @@ const keywordFirstMeta: Record<Locale, HomeSeoCopy> = {
 };
 
 export function homeSeoMeta(locale: Locale): HomeSeoCopy {
-  if (homePrimaryKeyword) {
-    return keywordFirstMeta[locale];
-  }
-  return brandFirstMeta[locale];
+  return homeSeoCopy[locale];
 }

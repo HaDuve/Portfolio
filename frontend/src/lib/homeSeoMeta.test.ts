@@ -11,6 +11,14 @@ describe("homeSeoMeta", () => {
     );
   });
 
+  it("uses keyword-first titles, not interim brand-first pattern", () => {
+    for (const locale of ["de", "en"] as const) {
+      expect(homeSeoMeta(locale).title.startsWith("Hannes Duve ·")).toBe(
+        false,
+      );
+    }
+  });
+
   it("weaves validated secondary terms into DE meta description", () => {
     const description = homeSeoMeta("de").description.toLowerCase();
     expect(description).toMatch(/app entwickler/);

@@ -6,9 +6,9 @@ Content/keyword strategy. Plumbing (locale routing, slugs, sitemap, hreflang, OG
 
 > Home primary keyword locked 2026-05-31 (owner validation via Google Keyword Planner). Landing supporting terms documented in intent map.
 
-| Page | Audience | Primary target (to verify) |
+| Page | Audience | Primary target |
 |---|---|---|
-| Home `/de`, `/en` | brand + both | **App Entwickler** (DE) · **App Developer** (EN) — validated owner, Google Keyword Planner |
+| Home `/de`, `/en` | brand + both | **App Entwickler** (DE, GKP) · **App Developer** (EN, paired) |
 | `/de/app-entwickeln-freelancer` | SME Client | "App entwickeln lassen" · supporting: **app entwickeln kosten** |
 | `/en/freelance-app-development` | intl SME | "freelance app development" |
 | `/de/programmieren-lernen-mit-ki` | beginner / engineer | "programmieren lernen mit KI" · supporting: **eigene app erstellen**, **vibe coden**, **claude lernen**, **claude coaching** |
@@ -29,7 +29,7 @@ Existing: `json-ld.tsx`, `FaqJsonLd`. Add:
 
 ## Home keyword research (2026-05-31)
 
-Preliminary research for issue #35. **Volumes and difficulty are not verified** — owner must check in Ahrefs, Semrush, Ubersuggest, or similar before locking `homePrimaryKeyword` in `frontend/src/lib/homeSeoMeta.ts`.
+Agent shortlist below; **owner validated DE head term in Google Keyword Planner** (issue #35). Locked in `frontend/src/lib/homeSeoMeta.ts`.
 
 ### Constraints
 
@@ -54,12 +54,12 @@ Preliminary research for issue #35. **Volumes and difficulty are not verified** 
 
 | Term | Page assignment | Rationale |
 | --- | --- | --- |
-| **App Entwickler** | Home `/de` (title) | Broad professional identity; fits dual-lane home without colliding with LP *App entwickeln lassen* |
-| **App Developer** | Home `/en` (title) | EN equivalent of home head term |
+| **App Entwickler** | Home `/de` (title) | Owner-validated in GKP; broad professional identity without colliding with LP *App entwickeln lassen* |
+| **App Developer** | Home `/en` (title) | Paired EN equivalent of DE *App Entwickler* (not separately queried in GKP — revisit if EN volumes favor *freelance app developer*) |
 | **app entwickeln kosten** | Freelance LP `/de` (supporting) | Pricing/cost intent — matches Offering Ladder + transparent rates; keep out of home title |
 | **eigene app erstellen** | Coaching LP `/de` (supporting) | DIY/build intent — aligns with Vibe-Coding coaching, not hire-a-freelancer |
 | **vibe coden** | Coaching LP `/de` (supporting) | DE-native Vibe Coding query |
-| **claude lernen** | Coaching LP `/de` (supporting) | Tool-specific learning intent; matches Claude + Cursor stack |
+| **claude lernen** | Coaching LP `/de` (supporting) | Tool-specific learning intent; coach supports Cursor or Claude |
 | **claude coaching** | Coaching LP `/de` + `/en` (supporting) | 1:1 coaching intent with named tool |
 | **ai tools coaching** | Coaching LP `/en` (supporting) | Broad EN coaching query |
 | **learn ai** | Coaching LP `/en` (supporting) | Top-of-funnel learning intent |
