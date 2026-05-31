@@ -48,7 +48,7 @@ const sectionCopy: Record<
     eyebrow: "Coaching",
     title: "Vibe Coding — Programmieren mit KI",
     description:
-      "1:1 an deinem Projekt — Cursor, Claude, Workflow den du wiederholen kannst. Kostenloses Erstgespräch (30 Min.), danach 60 € / 60 Min.",
+      "1:1 an deinem Projekt — Cursor oder Claude, Workflow den du wiederholen kannst. Kostenloses Erstgespräch (30 Min.), danach 60 € / 60 Min.",
     ctaLabel: "Coaching buchen",
     moreLabel: "Mehr zum Coaching →",
   },
@@ -56,7 +56,7 @@ const sectionCopy: Record<
     eyebrow: "Coaching",
     title: "Vibe Coding — Coding with AI",
     description:
-      "1:1 on your project — Cursor, Claude, and a workflow you can repeat. Free 30-minute intro call, then 60 € / 60 min.",
+      "1:1 on your project — Cursor or Claude, and a workflow you can repeat. Free 30-minute intro call, then 60 € / 60 min.",
     ctaLabel: "Book coaching",
     moreLabel: "More on coaching →",
   },
@@ -83,7 +83,7 @@ const timelineCopy: Record<Locale, CoachingTimelineStep[]> = {
       stepNum: "03",
       title: "Live am Projekt",
       description:
-        "Code, Fehler, Prompts — wir lösen es gemeinsam in Cursor.",
+        "Code, Fehler, Prompts — wir lösen es gemeinsam in deinem Setup.",
     },
     {
       id: "unblocked",
@@ -113,7 +113,7 @@ const timelineCopy: Record<Locale, CoachingTimelineStep[]> = {
       stepNum: "03",
       title: "Live on your project",
       description:
-        "Code, errors, prompts — we solve it together in Cursor.",
+        "Code, errors, prompts — we solve it together in your setup.",
     },
     {
       id: "unblocked",

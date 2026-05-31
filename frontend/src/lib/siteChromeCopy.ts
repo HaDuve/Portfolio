@@ -74,7 +74,7 @@ const copy: Record<Locale, SiteChromeCopy> = {
       coachingEyebrow: "Coaching",
       coachingLaneTitle: "Coaching buchen",
       coachingDescription:
-        "Vibe Coding mit Cursor & Claude — kostenloses Kennenlernen, dann Sessions à 60 €.",
+        "Vibe Coding mit Cursor oder Claude — kostenloses Kennenlernen, dann Sessions à 60 €.",
       coachingCta: { label: "Coaching buchen", placement: "contact-coaching" },
       socialEyebrow: "Links",
     },
@@ -117,7 +117,7 @@ const copy: Record<Locale, SiteChromeCopy> = {
       coachingEyebrow: "Coaching",
       coachingLaneTitle: "Book coaching",
       coachingDescription:
-        "Vibe coding with Cursor & Claude — free intro, then 60-minute sessions at €60.",
+        "Vibe coding with Cursor or Claude — free intro, then 60-minute sessions at €60.",
       coachingCta: { label: "Book coaching", placement: "contact-coaching" },
       socialEyebrow: "Links",
     },

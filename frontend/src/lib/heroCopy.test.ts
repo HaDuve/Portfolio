@@ -19,7 +19,7 @@ describe("heroCopy — DE", () => {
   it("uses the voice.md subhead and dual CTAs", () => {
     const hero = heroCopy("de");
     expect(hero.subhead).toBe(
-      "Ich baue stabile Apps, Websites und Server für dein Unternehmen — oder zeige dir 1:1, wie du selbst mit Cursor und Claude baust. Hohe Qualität, direkt und persönlich.",
+      "Ich baue stabile Apps, Websites und Server für dein Unternehmen — oder zeige dir 1:1, wie du selbst mit Cursor oder Claude baust. Hohe Qualität, direkt und persönlich.",
     );
     expect(hero.ctaFreelance).toBe("Projekt anfragen");
     expect(hero.ctaCoaching).toBe("Coaching buchen");
@@ -37,7 +37,7 @@ describe("heroCopy — EN", () => {
   it("mirrors DE voice with EN headline and subhead", () => {
     const hero = heroCopy("en");
     expect(hero.headline).toBe("Software that delivers on its promise.");
-    expect(hero.subhead).toContain("Cursor and Claude");
+    expect(hero.subhead).toContain("Cursor or Claude");
     expect(hero.ctaFreelance).toBe("Request a project");
     expect(hero.ctaCoaching).toBe("Book coaching");
   });

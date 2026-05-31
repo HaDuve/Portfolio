@@ -4,12 +4,12 @@ export const coachingMeta = {
   de: {
     title: "Programmieren lernen mit KI — Vibe Coding Coach",
     description:
-      "Lerne Programmieren mit KI-Unterstützung: Cursor, Claude und Vibe Coding für Einsteiger. 1:1 Coaching — 60 € / 60 Min., kostenloses Erstgespräch.",
+      "Vibe Coden mit Cursor oder Claude lernen: Programmieren mit KI, eigene App erstellen. 1:1 Coaching — ich coache beides, du nutzt deins. 60 € / 60 Min., kostenloses Erstgespräch.",
   },
   en: {
-    title: "Learn to code with AI — Vibe Coding Coach",
+    title: "Vibe Coding Coach — learn AI tools & how to vibe code",
     description:
-      "Learn to code with AI tools: Cursor, Claude, and Vibe Coding for non-technical founders and beginners. 1:1 coaching — 60 € / 60 min, free intro call.",
+      "Learn AI with Cursor or Claude: how to vibe code, build your own app. 1:1 coaching on whichever stack you use — 60 € / 60 min, free intro call.",
   },
 } as const;
 
@@ -18,13 +18,13 @@ export const coachingSections = {
     eyebrow: "Vibe Coding · Programmieren mit KI",
     h1: "Programmieren lernen mit KI — Vibe Coding Coaching",
     lead:
-      "Du willst mit Cursor und Claude eigene Projekte umsetzen — aber steckst fest oder weißt nicht, wie du anfangen sollst? Im 1:1 Coaching arbeiten wir an deinem konkreten Projekt: Nach jeder Session verlässt du die Sitzung entsperrt und mit einem Workflow, den du selbst wiederholen kannst. Gleiche Qualitätsidee wie bei meiner Freelance-Arbeit — nur dass du selbst baust und ich den Weg zeige.",
+      "Du willst mit Cursor oder Claude eigene Projekte umsetzen — aber steckst fest oder weißt nicht, wie du anfangen sollst? Im 1:1 Coaching arbeiten wir an deinem konkreten Projekt: Nach jeder Session verlässt du die Sitzung entsperrt und mit einem Workflow, den du selbst wiederholen kannst. Gleiche Qualitätsidee wie bei meiner Freelance-Arbeit — nur dass du selbst baust und ich den Weg zeige.",
     toolsTitle: "Werkzeuge & Ansatz",
     tools:
-      "Wir arbeiten mit Cursor als KI-Editor und Claude als Underlying Model. Kein Setup-Stress: Ich führe dich durch die Einrichtung, wenn nötig. Der Fokus liegt auf deinem Projekt — nicht auf abstrakter Theorie.",
+      "Du arbeitest mit Cursor oder Claude — was du schon nutzt oder setzen willst. Ich coache beides. Kein Setup-Stress: Ich führe dich durch die Einrichtung, wenn nötig. Der Fokus liegt auf deinem Projekt — nicht auf abstrakter Theorie.",
     fitTitle: "Für wen ist das?",
     fit:
-      "Besonders sinnvoll für nicht-technische oder semi-technische Gründer und Einsteiger, die eigene Ideen mit Cursor und Claude umsetzen wollen — ohne Vorkenntnisse in einer bestimmten Programmiersprache.",
+      "Besonders sinnvoll für nicht-technische oder semi-technische Gründer und Einsteiger, die eigene Ideen mit Cursor oder Claude umsetzen wollen — ohne Vorkenntnisse in einer bestimmten Programmiersprache.",
     alsoFit:
       "Auch passend für Software-Engineers, die bereits produktiv coden und Agent-Workflows, Debugging und Code-Reviews mit KI-Tools professionalisieren wollen — statt jedes Mal von vorn zu prompten.",
     scopeTitle: "Typische Vorhaben in Sessions",
@@ -64,13 +64,13 @@ export const coachingSections = {
     eyebrow: "Vibe Coding · Coding with AI",
     h1: "Learn to code with AI — Vibe Coding Coaching",
     lead:
-      "You want to build your own projects with Cursor and Claude — but you're stuck or don't know where to start. In 1:1 coaching we work on your specific project: after every session you leave unblocked and with a repeatable workflow. Same quality bar as my freelance work — you build, I show the path.",
+      "You want to build your own projects with Cursor or Claude — but you're stuck or don't know where to start. In 1:1 coaching we work on your specific project: after every session you leave unblocked and with a repeatable workflow. Same quality bar as my freelance work — you build, I show the path.",
     toolsTitle: "Tools & approach",
     tools:
-      "We work with Cursor as the AI editor and Claude as the underlying model. No setup frustration: I'll walk you through configuration if needed. The focus is always on your project — not abstract theory.",
+      "You work with Cursor or Claude — whichever you already use or want to adopt. I coach both. No setup frustration: I'll walk you through configuration if needed. The focus is always on your project — not abstract theory.",
     fitTitle: "Who is this for?",
     fit:
-      "A great fit for non-technical and semi-technical founders and beginners who want to ship their own ideas with Cursor and Claude — without needing prior experience in a specific programming language.",
+      "A great fit for non-technical and semi-technical founders and beginners who want to ship their own ideas with Cursor or Claude — without needing prior experience in a specific programming language.",
     alsoFit:
       "Also a fit for software engineers who already ship code and want to professionalize agent workflows, debugging, and code review with AI tools — instead of re-prompting from scratch every time.",
     scopeTitle: "Typical session topics",
@@ -123,12 +123,12 @@ export const coachingFaq: { de: FaqItem[]; en: FaqItem[] } = {
     {
       question: "Welche Tools brauche ich?",
       answer:
-        "Cursor (kostenlose Version reicht für den Einstieg) und einen Claude-Account. Beides richten wir im Erstgespräch oder zu Beginn der Session gemeinsam ein — kein Vorwissen nötig.",
+        "Cursor (kostenlose Version reicht) oder Claude — du brauchst nicht beides. Wir richten dein Setup im Erstgespräch oder zu Beginn der Session ein — kein Vorwissen nötig.",
     },
     {
       question: "Was ist Vibe Coding?",
       answer:
-        "Vibe Coding bedeutet, mit KI-Tools wie Cursor und Claude in natürlicher Sprache zu programmieren: Du beschreibst, was du willst, und die KI schreibt den Code. Du steuerst, prüfst und lernst dabei — ohne alles auswendig können zu müssen.",
+        "Vibe Coding bedeutet, mit KI-Tools wie Cursor oder Claude in natürlicher Sprache zu programmieren: Du beschreibst, was du willst, und die KI schreibt den Code. Du steuerst, prüfst und lernst dabei — ohne alles auswendig können zu müssen.",
     },
     {
       question: "Wie buche ich eine Session?",
@@ -155,12 +155,12 @@ export const coachingFaq: { de: FaqItem[]; en: FaqItem[] } = {
     {
       question: "What tools do I need?",
       answer:
-        "Cursor (the free plan is enough to get started) and a Claude account. We set both up together during the intro call or at the start of the session — no prior knowledge required.",
+        "Cursor (the free plan is enough) or Claude — you don't need both. We set up whichever you use during the intro call or at the start of the session — no prior knowledge required.",
     },
     {
       question: "What is Vibe Coding?",
       answer:
-        "Vibe Coding means programming with AI tools like Cursor and Claude using natural language: you describe what you want, the AI writes the code. You guide, review, and learn — without having to memorise syntax.",
+        "Vibe Coding means programming with AI tools like Cursor or Claude using natural language: you describe what you want, the AI writes the code. You guide, review, and learn — without having to memorise syntax.",
     },
     {
       question: "How do I book a session?",

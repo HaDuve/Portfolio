@@ -66,6 +66,22 @@ describe("coachingMeta shape", () => {
   it("de title does not use redundant (DE) suffix", () => {
     expect(coachingMeta.de.title).not.toMatch(/\(DE\)/);
   });
+
+  it("de meta includes owner-validated coaching keywords", () => {
+    const text = `${coachingMeta.de.title} ${coachingMeta.de.description}`.toLowerCase();
+    expect(text).toMatch(/claude lernen/);
+    expect(text).toMatch(/cursor oder claude/);
+    expect(text).toMatch(/vibe coden/);
+    expect(text).toMatch(/eigene app erstellen/);
+  });
+
+  it("en meta includes owner-validated coaching keywords", () => {
+    const text = `${coachingMeta.en.title} ${coachingMeta.en.description}`.toLowerCase();
+    expect(text).toMatch(/vibe coding coach/);
+    expect(text).toMatch(/how to vibe code/);
+    expect(text).toMatch(/cursor or claude/);
+    expect(text).toMatch(/learn ai/);
+  });
 });
 
 function assertNoBannedWords(text: string) {

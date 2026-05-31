@@ -16,7 +16,7 @@ const copy: Record<Locale, HeroCopy> = {
     eyebrow: "Senior Freelancer · Bremen · Coaching",
     headline: "Software, die hält, was sie verspricht.",
     subhead:
-      "Ich baue stabile Apps, Websites und Server für dein Unternehmen — oder zeige dir 1:1, wie du selbst mit Cursor und Claude baust. Hohe Qualität, direkt und persönlich.",
+      "Ich baue stabile Apps, Websites und Server für dein Unternehmen — oder zeige dir 1:1, wie du selbst mit Cursor oder Claude baust. Hohe Qualität, direkt und persönlich.",
     ctaFreelance: "Projekt anfragen",
     ctaCoaching: "Coaching buchen",
     ctaFreelancePlacement: "hero-freelance",
@@ -26,7 +26,7 @@ const copy: Record<Locale, HeroCopy> = {
     eyebrow: "Senior freelancer · Bremen · Coaching",
     headline: "Software that delivers on its promise.",
     subhead:
-      "I build stable apps, websites, and servers for your business — or show you 1:1 how to build with Cursor and Claude yourself. High quality, direct and personal.",
+      "I build stable apps, websites, and servers for your business — or show you 1:1 how to build with Cursor or Claude yourself. High quality, direct and personal.",
     ctaFreelance: "Request a project",
     ctaCoaching: "Book coaching",
     ctaFreelancePlacement: "hero-freelance",

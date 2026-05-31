@@ -11,8 +11,8 @@ Content/keyword strategy. Plumbing (locale routing, slugs, sitemap, hreflang, OG
 | Home `/de`, `/en` | brand + both | **App Entwickler** (DE) · **App Developer** (EN) — validated owner, Google Keyword Planner |
 | `/de/app-entwickeln-freelancer` | SME Client | "App entwickeln lassen" · supporting: **app entwickeln kosten** |
 | `/en/freelance-app-development` | intl SME | "freelance app development" |
-| `/de/programmieren-lernen-mit-ki` | beginner / engineer | "programmieren lernen mit KI" · supporting: **eigene app erstellen** |
-| `/en/vibe-coding-coach` | intl | "vibe coding coach" |
+| `/de/programmieren-lernen-mit-ki` | beginner / engineer | "programmieren lernen mit KI" · supporting: **eigene app erstellen**, **vibe coden**, **claude lernen**, **claude coaching** |
+| `/en/vibe-coding-coach` | intl | "vibe coding coach" · supporting: **ai tools coaching**, **learn ai**, **how to vibe code**, **claude coaching** |
 
 ## Structured data (JSON-LD) — invest
 
@@ -58,6 +58,12 @@ Preliminary research for issue #35. **Volumes and difficulty are not verified** 
 | **App Developer** | Home `/en` (title) | EN equivalent of home head term |
 | **app entwickeln kosten** | Freelance LP `/de` (supporting) | Pricing/cost intent — matches Offering Ladder + transparent rates; keep out of home title |
 | **eigene app erstellen** | Coaching LP `/de` (supporting) | DIY/build intent — aligns with Vibe-Coding coaching, not hire-a-freelancer |
+| **vibe coden** | Coaching LP `/de` (supporting) | DE-native Vibe Coding query |
+| **claude lernen** | Coaching LP `/de` (supporting) | Tool-specific learning intent; matches Claude + Cursor stack |
+| **claude coaching** | Coaching LP `/de` + `/en` (supporting) | 1:1 coaching intent with named tool |
+| **ai tools coaching** | Coaching LP `/en` (supporting) | Broad EN coaching query |
+| **learn ai** | Coaching LP `/en` (supporting) | Top-of-funnel learning intent |
+| **how to vibe code** | Coaching LP `/en` (supporting) | Matches Vibe Coding hook + slug `/vibe-coding-coach` |
 
 Locked in `frontend/src/lib/homeSeoMeta.ts`:
 

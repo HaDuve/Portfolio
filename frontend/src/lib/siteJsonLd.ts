@@ -50,8 +50,8 @@ function coachingServiceCopy(locale: Locale) {
   return {
     name: isEn ? "AI coding coaching" : "KI-Programmier-Coaching",
     description: isEn
-      ? "1:1 coaching on your project with Cursor, Claude, and a repeatable workflow."
-      : "1:1 Coaching an deinem Projekt mit Cursor, Claude und einem wiederholbaren Workflow.",
+      ? "1:1 coaching on your project with Cursor or Claude and a repeatable workflow."
+      : "1:1 Coaching an deinem Projekt mit Cursor oder Claude und einem wiederholbaren Workflow.",
   };
 }
 
