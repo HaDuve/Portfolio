@@ -72,7 +72,7 @@ export default async function VibeCodingCoachPage({ params }: Props) {
 
   return (
     <>
-      <FaqJsonLd items={faq} />
+      <FaqJsonLd items={faq} locale="en" />
       <main className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
         <Link
           href={localePath(locale)}

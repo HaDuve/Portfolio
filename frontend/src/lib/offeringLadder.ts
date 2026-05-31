@@ -15,6 +15,17 @@ export type OfferingLadder = {
   typeShiftNote: string;
 };
 
+/** Numeric EUR baselines for JSON-LD and tests — keep in sync with tier display copy below. */
+export const offeringBaselineEur = {
+  hourly: 60,
+  coachingSession: 60,
+  tiers: {
+    "micro-mvp": 1200,
+    mvp: 4800,
+    ongoing: 1200,
+  } satisfies Record<OfferingTierId, number>,
+} as const;
+
 const ladder: Record<Locale, OfferingLadder> = {
   de: {
     hourlyRate: "60 €/h",
@@ -70,4 +81,15 @@ const ladder: Record<Locale, OfferingLadder> = {
 
 export function offeringLadder(locale: Locale): OfferingLadder {
   return ladder[locale];
+}
+
+export function offeringTier(
+  locale: Locale,
+  tierId: OfferingTierId,
+): OfferingTier {
+  const tier = offeringLadder(locale).tiers.find((t) => t.id === tierId);
+  if (!tier) {
+    throw new Error(`Unknown offering tier: ${tierId}`);
+  }
+  return tier;
 }
