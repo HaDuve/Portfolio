@@ -5,8 +5,36 @@ import {
   coachingLaneTools,
   coachingLaneFaq,
 } from "./coachingLane";
-import { coachingLandingPath, devLandingPath } from "./i18n";
-import type { Locale } from "./i18n";
+import { coachingLandingPath, devLandingPath, type Locale } from "./i18n";
+
+const BANNED_WORDS = ["weggeworfen", "trägt", "tragen"] as const;
+
+function assertNoBannedWords(text: string) {
+  for (const word of BANNED_WORDS) {
+    expect(text.toLowerCase()).not.toContain(word);
+  }
+}
+
+function allCoachingLaneStrings(locale: Locale): string[] {
+  const section = coachingLaneSection(locale);
+  return [
+    section.eyebrow,
+    section.title,
+    section.description,
+    section.ctaLabel,
+    section.moreLabel,
+    ...coachingLaneTimeline(locale).flatMap((step) => [
+      step.title,
+      step.description,
+    ]),
+    ...coachingLaneTools(locale).map((tool) => tool.label),
+    ...coachingLaneFaq(locale).flatMap((item) => [
+      item.question,
+      item.answer,
+      item.link?.label ?? "",
+    ]),
+  ];
+}
 
 describe("coachingLaneSection", () => {
   it.each<Locale>(["de", "en"])(
@@ -78,6 +106,14 @@ describe("coachingLaneFaq", () => {
     expect(questions).toContain("Do I need to know how to code already?");
     expect(questions).toContain("Coaching or freelance?");
   });
+
+  it("uses du register in the DE coaching-vs-freelance answer", () => {
+    const item = coachingLaneFaq("de").find(
+      (f) => f.id === "coaching-vs-freelance",
+    );
+    expect(item?.answer).not.toMatch(/\beuch\b/i);
+    expect(item?.answer).toMatch(/für dich/i);
+  });
 });
 
 describe("coachingLaneSection copy", () => {
@@ -99,7 +135,21 @@ describe("coachingLaneSection copy", () => {
       expect(title).toMatch(/Vibe Coding/i);
       expect(description).toMatch(/60 €/);
       expect(description).toMatch(/30/i);
-      expect(description.toLowerCase()).not.toMatch(/weggeworfen|throwaway|anti/i);
     }
   });
+
+  it("uses Coding with AI as the plain explainer in the EN title", () => {
+    expect(coachingLaneSection("en").title).toBe("Vibe Coding — Coding with AI");
+  });
+});
+
+describe("coachingLane copy guardrails", () => {
+  it.each<Locale>(["de", "en"])(
+    "avoids banned wording in all %s coaching lane strings",
+    (locale) => {
+      for (const text of allCoachingLaneStrings(locale)) {
+        assertNoBannedWords(text);
+      }
+    },
+  );
 });

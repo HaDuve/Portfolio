@@ -33,6 +33,13 @@ export type CoachingFaqItem = {
   };
 };
 
+type CoachingFaqItemSource = {
+  id: string;
+  question: string;
+  answer: string;
+  linkLabel?: string;
+};
+
 const sectionCopy: Record<
   Locale,
   Omit<CoachingLaneSection, "moreHref" | "schedulingPlacement">
@@ -47,7 +54,7 @@ const sectionCopy: Record<
   },
   en: {
     eyebrow: "Coaching",
-    title: "Vibe Coding — coding with AI",
+    title: "Vibe Coding — Coding with AI",
     description:
       "1:1 on your project — Cursor, Claude, and a workflow you can repeat. Free 30-minute intro call, then 60 € / 60 min.",
     ctaLabel: "Book coaching",
@@ -140,7 +147,7 @@ export function coachingLaneTools(locale: Locale): CoachingToolBadge[] {
   ];
 }
 
-const faqCopy: Record<Locale, CoachingFaqItem[]> = {
+const faqCopy: Record<Locale, CoachingFaqItemSource[]> = {
   de: [
     {
       id: "prior-code",
@@ -151,11 +158,9 @@ const faqCopy: Record<Locale, CoachingFaqItem[]> = {
     {
       id: "coaching-vs-freelance",
       question: "Coaching oder Freelance?",
-      answer: "Coaching: du baust, ich coache. Freelance: ich implementiere für euch — ",
-      link: {
-        href: "", // filled in coachingLaneFaq
-        label: "zur Freelance-Seite",
-      },
+      answer:
+        "Coaching: du baust, ich coache. Freelance: ich implementiere für dich — ",
+      linkLabel: "zur Freelance-Seite",
     },
   ],
   en: [
@@ -169,18 +174,23 @@ const faqCopy: Record<Locale, CoachingFaqItem[]> = {
       id: "coaching-vs-freelance",
       question: "Coaching or freelance?",
       answer: "Coaching: you build, I coach. Freelance: I implement for you — ",
-      link: {
-        href: "",
-        label: "see the freelance page",
-      },
+      linkLabel: "see the freelance page",
     },
   ],
 };
 
 export function coachingLaneFaq(locale: Locale): CoachingFaqItem[] {
-  return faqCopy[locale].map((item) =>
-    item.link
-      ? { ...item, link: { ...item.link, href: devLandingPath(locale) } }
-      : item,
-  );
+  return faqCopy[locale].map((item) => ({
+    id: item.id,
+    question: item.question,
+    answer: item.answer,
+    ...(item.linkLabel
+      ? {
+          link: {
+            href: devLandingPath(locale),
+            label: item.linkLabel,
+          },
+        }
+      : {}),
+  }));
 }
