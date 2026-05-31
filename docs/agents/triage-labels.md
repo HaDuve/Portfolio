@@ -10,6 +10,8 @@ The skills speak in terms of five canonical triage roles. This file maps those r
 | `ready-for-human`          | `ready-for-human`    | Requires human implementation            |
 | `wontfix`                  | `wontfix`            | Will not be actioned                     |
 
+**Human-in-the-loop** work that needs owner validation, legal review, or similar judgment uses the `HITL` label (same triage lane as `ready-for-human`; issue titles often prefixed `HITL:`). Do not use GitHub’s default `help wanted` label.
+
 When a skill mentions a role (e.g. "apply the AFK-ready triage label"), use the corresponding label string from this table.
 
 Edit the right-hand column to match whatever vocabulary you actually use.

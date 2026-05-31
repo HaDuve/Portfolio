@@ -22,7 +22,8 @@ while true; do
                 .[]
                 | select(
                     (.labels | map(.name) | contains(["needs-info"]) | not) and
-                    (.labels | map(.name) | contains(["ready-for-human"]) | not)
+                    (.labels | map(.name) | contains(["ready-for-human"]) | not) and
+                    (.labels | map(.name) | contains(["HITL"]) | not)
                   )
                 | "\(.number) \(.url)"
             ' | sort -n
