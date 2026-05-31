@@ -1,22 +1,35 @@
 "use client";
 
+import { useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import Image from "next/image";
 import type { Profile } from "@/types/content";
 import { heroCopy } from "@/lib/heroCopy";
-import { heroProofShots } from "@/lib/heroProofShots";
+import { heroProofShots, type HeroProofShot } from "@/lib/heroProofShots";
 import { type Locale } from "@/lib/i18n";
 import { SchedulingLink } from "./SchedulingLink";
 
 const ease = [0.16, 1, 0.3, 1] as const;
+const DEFAULT_FRONT_PROOF_SHOT: HeroProofShot["variant"] = "browser";
 
 type Props = { profile: Profile; introDone: boolean; locale: Locale };
+
+function proofShotFrontFromPointer(
+  clientX: number,
+  rect: DOMRect,
+): HeroProofShot["variant"] {
+  const ratio = (clientX - rect.left) / rect.width;
+  return ratio > 0.52 ? "phone" : "browser";
+}
 
 export function Hero({ profile, introDone, locale }: Props) {
   const copy = heroCopy(locale);
   const proofShots = heroProofShots(locale);
   const reduce = useReducedMotion();
   const showContent = reduce || introDone;
+  const [frontProofShot, setFrontProofShot] = useState<HeroProofShot["variant"]>(
+    DEFAULT_FRONT_PROOF_SHOT,
+  );
 
   return (
     <section
@@ -94,14 +107,24 @@ export function Hero({ profile, introDone, locale }: Props) {
           </motion.div>
         </div>
 
-        <div className="relative mx-auto w-full max-w-[420px] lg:mx-0 lg:min-h-[300px] lg:justify-self-end">
+        <div
+          className="relative mx-auto w-full max-w-[420px] lg:mx-0 lg:min-h-[300px] lg:justify-self-end"
+          onPointerLeave={() => setFrontProofShot(DEFAULT_FRONT_PROOF_SHOT)}
+          onPointerMove={(e) => {
+            if (!window.matchMedia("(min-width: 1024px)").matches) return;
+            setFrontProofShot(proofShotFrontFromPointer(e.clientX, e.currentTarget.getBoundingClientRect()));
+          }}
+        >
           {proofShots.map((shot) => (
             <figure
               key={shot.variant}
+              tabIndex={0}
+              onPointerEnter={() => setFrontProofShot(shot.variant)}
+              onFocus={() => setFrontProofShot(shot.variant)}
               className={
                 shot.variant === "phone"
-                  ? "relative z-0 mx-auto w-[min(70%,220px)] overflow-hidden rounded-[1.75rem] border border-border bg-card shadow-lg sm:w-[min(55%,240px)] lg:absolute lg:right-0 lg:top-1/2 lg:w-[min(68%,260px)] lg:-translate-y-1/2"
-                  : "relative z-10 mt-4 w-full overflow-hidden rounded-xl border border-border bg-card shadow-md lg:absolute lg:left-0 lg:top-1/2 lg:mt-0 lg:w-full lg:-translate-x-6 lg:-translate-y-1/2 lg:shadow-lg"
+                  ? `relative mx-auto w-[min(70%,220px)] overflow-hidden rounded-[1.75rem] border border-border bg-card shadow-lg sm:w-[min(55%,240px)] lg:absolute lg:right-0 lg:top-1/2 lg:w-[min(68%,260px)] lg:-translate-y-1/2 ${frontProofShot === shot.variant ? "z-10" : "z-0"}`
+                  : `relative mt-4 w-full overflow-hidden rounded-xl border border-border bg-card shadow-md lg:absolute lg:left-0 lg:top-1/2 lg:mt-0 lg:w-full lg:-translate-x-6 lg:-translate-y-1/2 ${frontProofShot === shot.variant ? "z-10 lg:shadow-lg" : "z-0"}`
               }
             >
               <Image
