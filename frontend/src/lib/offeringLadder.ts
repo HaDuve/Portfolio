@@ -27,7 +27,7 @@ const ladder: Record<Locale, OfferingLadder> = {
       },
       {
         id: "mvp",
-        label: "MVP / launch-ready",
+        label: "MVP / produktionsreif",
         price: "ab 4.800 €",
         timeframe: "~4–8 Wochen",
       },

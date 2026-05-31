@@ -6,16 +6,18 @@ import { freelanceLaneSection } from "@/lib/freelanceLane";
 import { freelanceLaneFeaturedProjects } from "@/lib/freelanceLaneFeatured";
 import { homeServiceCards } from "@/lib/homeServices";
 import type { Locale } from "@/lib/i18n";
+import type { Project } from "@/types/content";
 import { offeringLadder } from "@/lib/offeringLadder";
 
 type Props = {
   locale: Locale;
   schedulingUrl: string;
+  projects: Project[];
 };
 
-export function FreelanceLane({ locale, schedulingUrl }: Props) {
+export function FreelanceLane({ locale, schedulingUrl, projects }: Props) {
   const section = freelanceLaneSection(locale);
-  const featured = freelanceLaneFeaturedProjects(locale);
+  const featured = freelanceLaneFeaturedProjects(locale, projects);
   const ladder = offeringLadder(locale);
   const services = homeServiceCards(locale);
 

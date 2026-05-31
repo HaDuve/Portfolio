@@ -12,6 +12,7 @@ import { LenisProvider } from "@/components/LenisProvider";
 import { ProjectCard } from "@/components/ProjectCard";
 import { SectionHeading } from "@/components/SectionHeading";
 import type { Profile, Project } from "@/types/content";
+import { projectsForHomeGrid } from "@/lib/homeProjectsGrid";
 import {
   datenschutzPath,
   impressumPath,
@@ -78,8 +79,9 @@ export function PortfolioHome({
   skillsData,
 }: Props) {
   const showEnglish = locale === "en";
-  const featured = projects.find((p) => p.featured);
-  const rest = projects.filter((p) => !p.featured);
+  const gridProjects = projectsForHomeGrid(projects);
+  const featured = gridProjects.find((p) => p.featured);
+  const rest = gridProjects.filter((p) => !p.featured);
 
   const [introPhase, setIntroPhase] = useState<"playing" | "fading" | "done">(
     "playing",
@@ -121,6 +123,7 @@ export function PortfolioHome({
               <FreelanceLane
                 locale={locale}
                 schedulingUrl={profile.schedulingUrl}
+                projects={projects}
               />
             </div>
 

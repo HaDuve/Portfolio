@@ -43,4 +43,10 @@ describe("offeringLadder", () => {
     expect(ladder.tiers[2].price).toMatch(/Monat/i);
     expect(ladder.typeShiftNote).toMatch(/App|Web|Server/i);
   });
+
+  it("uses plain German for the DE MVP tier label", () => {
+    const mvp = offeringLadder("de").tiers.find((t) => t.id === "mvp");
+    expect(mvp?.label).toBe("MVP / produktionsreif");
+    expect(mvp?.label).not.toMatch(/launch-ready/i);
+  });
 });
