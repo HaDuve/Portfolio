@@ -100,8 +100,8 @@ export function Hero({ profile, introDone, locale }: Props) {
               key={shot.variant}
               className={
                 shot.variant === "phone"
-                  ? "relative z-10 mx-auto w-[min(70%,220px)] overflow-hidden rounded-[1.75rem] border border-border bg-card shadow-lg sm:w-[min(55%,240px)] lg:absolute lg:right-8 lg:top-1/2 lg:w-[min(68%,260px)] lg:-translate-y-1/2"
-                  : "relative z-0 mt-4 w-full overflow-hidden rounded-xl border border-border bg-card shadow-md lg:absolute lg:right-0 lg:top-1/2 lg:mt-0 lg:w-[min(68%,260px)] lg:translate-x-5 lg:-translate-y-1/2"
+                  ? "relative z-10 mx-auto w-[min(70%,220px)] overflow-hidden rounded-[1.75rem] border border-border bg-card shadow-lg sm:w-[min(55%,240px)] lg:absolute lg:right-0 lg:top-1/2 lg:w-[min(68%,260px)] lg:-translate-y-1/2"
+                  : "relative z-0 mt-4 w-full overflow-hidden rounded-xl border border-border bg-card shadow-md lg:absolute lg:left-0 lg:top-1/2 lg:mt-0 lg:w-full lg:-translate-x-6 lg:-translate-y-1/2"
               }
             >
               <Image
