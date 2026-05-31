@@ -1,5 +1,7 @@
 import type { ServiceLandingBodySection } from "@/components/ServiceLandingPage";
 
+export const COACHING_TOOLS_SECTION_ID = "tools" as const;
+
 type FreelanceSectionCopy = {
   stackTitle: string;
   stack: string;
@@ -46,7 +48,7 @@ export function coachingLandingSections(
 ): ServiceLandingBodySection[] {
   return [
     {
-      id: "tools",
+      id: COACHING_TOOLS_SECTION_ID,
       title: copy.toolsTitle,
       paragraphs: [copy.tools],
     },

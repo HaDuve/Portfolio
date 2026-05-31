@@ -68,6 +68,43 @@ describe("coachingMeta shape", () => {
   });
 });
 
+function assertNoBannedWords(text: string) {
+  const lower = text.toLowerCase();
+  expect(lower).not.toContain("weggeworfen");
+  for (const word of ["trägt", "tragen"] as const) {
+    expect(lower).not.toMatch(new RegExp(`\\b${word}\\b`));
+  }
+}
+
+function allCoachingLandingStrings(locale: "de" | "en"): string[] {
+  const section = coachingSections[locale];
+  return [
+    section.eyebrow,
+    section.h1,
+    section.lead,
+    section.tools,
+    section.fit,
+    section.alsoFit,
+    section.scopeTitle,
+    ...section.scopeExamples.flatMap((ex) => [ex.title, ex.description]),
+    section.processTitle,
+    ...section.processSteps,
+    section.ctaTitle,
+    section.ctaBody,
+    ...coachingFaq[locale].flatMap((item) => [item.question, item.answer]),
+  ];
+}
+
+describe("coaching landing voice", () => {
+  for (const locale of ["de", "en"] as const) {
+    it(`${locale} copy avoids banned wording`, () => {
+      for (const text of allCoachingLandingStrings(locale)) {
+        assertNoBannedWords(text);
+      }
+    });
+  }
+});
+
 describe("coachingSections audience copy", () => {
   it("de fit focuses on beginners; alsoFit covers engineers without repeating fit", () => {
     const { fit, alsoFit } = coachingSections.de;

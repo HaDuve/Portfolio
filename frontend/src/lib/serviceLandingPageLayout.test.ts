@@ -24,4 +24,13 @@ describe("ServiceLandingPage layout contract", () => {
   it("keeps the landing CTA scheduling placement as cta", () => {
     expect(landingSource).toContain('placement="cta"');
   });
+
+  it("renders coaching tool pills inside the tools section, not after all sections", () => {
+    expect(landingSource).toMatch(
+      /section\.id === COACHING_TOOLS_SECTION_ID[\s\S]*toolLabels\.map/,
+    );
+    expect(landingSource).not.toMatch(
+      /\}\)\)\s*\n\s*\{variant === "coaching" && toolLabels/,
+    );
+  });
 });

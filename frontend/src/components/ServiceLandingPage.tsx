@@ -1,8 +1,10 @@
 import Link from "next/link";
+import { OfferingLadderStrip } from "@/components/OfferingLadderStrip";
 import { SchedulingLink } from "@/components/SchedulingLink";
 import type { FaqItem, ScopeExample } from "@/data/appEntwickelnFreelancer";
 import { offeringLadder } from "@/lib/offeringLadder";
 import { localePath, type Locale } from "@/lib/i18n";
+import { COACHING_TOOLS_SECTION_ID } from "@/lib/serviceLandingSections";
 
 export type ServiceLandingBodySection = {
   id: string;
@@ -31,6 +33,8 @@ type Props = {
   priceNote?: string;
 };
 
+const FAQ_HEADING = "FAQ";
+
 export function ServiceLandingPage({
   locale,
   schedulingUrl,
@@ -48,7 +52,8 @@ export function ServiceLandingPage({
 }: Props) {
   const isEn = locale === "en";
   const ladder = variant === "freelance" ? offeringLadder(locale) : null;
-  const faqHeading = isEn ? "FAQ" : "FAQ";
+  const showCoachingTools =
+    variant === "coaching" && toolLabels && toolLabels.length > 0;
 
   return (
     <main className="mx-auto w-full max-w-6xl flex-1 px-4 pb-24 pt-12 sm:px-6 sm:pt-16">
@@ -76,9 +81,9 @@ export function ServiceLandingPage({
           <h2 className="font-display text-2xl font-normal tracking-tight text-foreground sm:text-3xl">
             {section.title}
           </h2>
-          {section.paragraphs?.map((paragraph) => (
+          {section.paragraphs?.map((paragraph, index) => (
             <p
-              key={paragraph.slice(0, 48)}
+              key={`${section.id}-p-${index}`}
               className="mt-4 max-w-3xl text-base leading-relaxed text-stone-600 dark:text-stone-400"
             >
               {paragraph}
@@ -93,44 +98,29 @@ export function ServiceLandingPage({
               ))}
             </ol>
           ) : null}
+          {showCoachingTools && section.id === COACHING_TOOLS_SECTION_ID ? (
+            <div
+              className="mt-8 flex flex-wrap gap-2"
+              aria-label={isEn ? "Tools" : "Werkzeuge"}
+            >
+              {toolLabels.map((label) => (
+                <span
+                  key={label}
+                  className="rounded-full border border-border bg-card px-3 py-1.5 text-sm text-muted"
+                >
+                  {label}
+                </span>
+              ))}
+            </div>
+          ) : null}
         </section>
       ))}
 
-      {variant === "coaching" && toolLabels && toolLabels.length > 0 ? (
-        <div
-          className="mt-8 flex flex-wrap gap-2"
-          aria-label={isEn ? "Tools" : "Werkzeuge"}
-        >
-          {toolLabels.map((label) => (
-            <span
-              key={label}
-              className="rounded-full border border-border bg-card px-3 py-1.5 text-sm text-muted"
-            >
-              {label}
-            </span>
-          ))}
-        </div>
-      ) : null}
-
       {ladder ? (
-        <div
+        <OfferingLadderStrip
+          ladder={ladder}
           className="mt-16 flex flex-wrap items-baseline gap-x-4 gap-y-2 rounded-2xl border border-border bg-card px-5 py-4 text-sm text-stone-600 shadow-sm dark:text-stone-400 sm:gap-x-6 sm:px-6"
-          role="note"
-        >
-          <span className="font-semibold text-foreground">{ladder.hourlyRate}</span>
-          {ladder.tiers.map((tier) => (
-            <span key={tier.id} className="min-w-0 break-words">
-              <strong className="font-semibold text-foreground">{tier.price}</strong>
-              {" · "}
-              {tier.label}
-              {" · "}
-              {tier.timeframe}
-            </span>
-          ))}
-          <span className="w-full min-w-0 text-xs text-muted sm:w-auto sm:basis-full">
-            {ladder.typeShiftNote}
-          </span>
-        </div>
+        />
       ) : null}
 
       <section className="mt-16 scroll-mt-28" aria-labelledby="scope-heading">
@@ -166,7 +156,7 @@ export function ServiceLandingPage({
           id="faq-heading"
           className="font-display text-2xl font-normal tracking-tight text-foreground sm:text-3xl"
         >
-          {faqHeading}
+          {FAQ_HEADING}
         </h2>
         <div className="mt-8 grid max-w-2xl gap-4 sm:max-w-none sm:grid-cols-2">
           {faq.map((item) => (
