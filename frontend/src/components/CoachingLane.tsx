@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { SchedulingLink } from "@/components/SchedulingLink";
-import { SectionHeadingReveal } from "@/components/SectionHeadingReveal";
+import { SectionHeadingMotion } from "@/components/SectionHeadingMotion";
 import {
   coachingLaneFaq,
   coachingLaneSection,
@@ -12,9 +12,14 @@ import type { Locale } from "@/lib/i18n";
 type Props = {
   locale: Locale;
   schedulingUrl: string;
+  scrollReveal?: boolean;
 };
 
-export function CoachingLane({ locale, schedulingUrl }: Props) {
+export function CoachingLane({
+  locale,
+  schedulingUrl,
+  scrollReveal = true,
+}: Props) {
   const section = coachingLaneSection(locale);
   const timeline = coachingLaneTimeline(locale);
   const tools = coachingLaneTools(locale);
@@ -26,7 +31,8 @@ export function CoachingLane({ locale, schedulingUrl }: Props) {
       className="scroll-mt-28"
       aria-label={locale === "en" ? "AI coding coaching" : "KI-Coaching"}
     >
-      <SectionHeadingReveal
+      <SectionHeadingMotion
+        scrollReveal={scrollReveal}
         eyebrow={section.eyebrow}
         title={section.title}
         description={section.description}

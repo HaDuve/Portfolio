@@ -33,12 +33,14 @@ Adopt the OKLch token set; map into Tailwind v4 `@theme`. Same palette as today,
 ## Motion (decision: keep-for-now under guardrails)
 
 - **Dropped:** `HeroFan`; **Embla carousel** and GSAP parallax project cards (`ParallaxMedia`/`ParallaxLetter`/`ProjectMediaCarousel`) — home featured work is static images in the Freelance Lane.
-- **Keep:** Lenis smooth-scroll (gated on `prefers-reduced-motion`), scroll reveals, `IntroSequence` — **on a budget**.
+- **Keep:** Lenis smooth-scroll (gated on `prefers-reduced-motion`, raf via Motion `frame.update` for `whileInView`), scroll reveals, `IntroSequence` — **on a budget**.
+- **IntroSequence (production):** currently **cut** via `ACTIVE_MOTION_CUTS.introSequence` in `frontend/src/lib/motionBudget.ts` after Lighthouse miss; implementation remains for re-enable when budget allows.
 - **Guardrails (non-negotiable):**
   - `prefers-reduced-motion` honored everywhere.
   - **Performance budget:** mobile Lighthouse Performance ≥ 90; healthy LCP/INP. Measure after porting.
   - **IntroSequence:** once per session, < ~800ms, must not block the LCP element.
-  - **2026-05-31 local Lighthouse (mobile, simulated throttling, static export via `serve out`):** Performance **83** with full motion; LCP **4.7s** (IntroSequence overlay); INP **47ms**. Applied cut **IntroSequence** (`ACTIVE_MOTION_CUTS.introSequence` in `frontend/src/lib/motionBudget.ts`) → **91** Performance, LCP **3.5s**. Lenis cut not required.
+  - **Documented cut order if budget breaks:** IntroSequence → Lenis.
+  - **2026-05-31 local Lighthouse (mobile, simulated throttling, static export via `serve out`):** Performance **83** with full motion; LCP **4.7s** (IntroSequence overlay); INP **47ms**. Applied cut **IntroSequence** → **91** Performance, LCP **3.5s**. Lenis cut not required. Re-measure on production host after deploy.
 
 ## Stack
 

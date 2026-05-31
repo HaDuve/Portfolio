@@ -32,6 +32,11 @@ describe("motionBudget", () => {
     });
   });
 
+  it("keeps smooth scroll and scroll reveals enabled together when uncut", () => {
+    const motion = resolveMotionFeatures(false, {});
+    expect(motion.smoothScroll && motion.scrollReveals).toBe(true);
+  });
+
   it("applies documented cut order before disabling smooth scroll", () => {
     expect(resolveMotionFeatures(false, { introSequence: true })).toEqual({
       smoothScroll: true,

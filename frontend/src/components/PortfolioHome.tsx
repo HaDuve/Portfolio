@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useLayoutEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { Hero } from "@/components/Hero";
@@ -9,9 +10,8 @@ import { CoachingLane } from "@/components/CoachingLane";
 import { SchedulingLink } from "@/components/SchedulingLink";
 import { siteChromeCopy } from "@/lib/siteChromeCopy";
 import { skillsCompactTags, type SkillsCategory } from "@/lib/skillsCompactTags";
-import { IntroSequence } from "@/components/IntroSequence";
 import { LenisProvider } from "@/components/LenisProvider";
-import { SectionHeadingReveal } from "@/components/SectionHeadingReveal";
+import { SectionHeadingMotion } from "@/components/SectionHeadingMotion";
 import {
   markIntroPlayedThisSession,
   readIntroPlayedThisSession,
@@ -23,6 +23,14 @@ import {
   impressumPath,
   type Locale,
 } from "@/lib/i18n";
+
+const IntroSequence = dynamic(
+  () =>
+    import("@/components/IntroSequence").then((m) => ({
+      default: m.IntroSequence,
+    })),
+  { ssr: false },
+);
 
 function subscribeReducedMotion(cb: () => void) {
   const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -96,17 +104,20 @@ export function PortfolioHome({
               locale={locale}
               schedulingUrl={profile.schedulingUrl}
               projects={projects}
+              scrollReveal={motion.scrollReveals}
             />
 
             <div className="mt-24">
               <CoachingLane
                 locale={locale}
                 schedulingUrl={profile.schedulingUrl}
+                scrollReveal={motion.scrollReveals}
               />
             </div>
 
             <section id="skills" className="mt-24 scroll-mt-28">
-              <SectionHeadingReveal
+              <SectionHeadingMotion
+                scrollReveal={motion.scrollReveals}
                 eyebrow={chrome.skills.eyebrow}
                 title={chrome.skills.title}
                 description={chrome.skills.description}
@@ -124,7 +135,8 @@ export function PortfolioHome({
             </section>
 
             <section id="contact" className="mt-28 scroll-mt-28">
-              <SectionHeadingReveal
+              <SectionHeadingMotion
+                scrollReveal={motion.scrollReveals}
                 eyebrow={chrome.contact.eyebrow}
                 title={chrome.contact.title}
                 description={chrome.contact.description}

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { SchedulingLink } from "@/components/SchedulingLink";
-import { SectionHeadingReveal } from "@/components/SectionHeadingReveal";
+import { SectionHeadingMotion } from "@/components/SectionHeadingMotion";
 import { freelanceLaneSection } from "@/lib/freelanceLane";
 import { freelanceLaneFeaturedProjects } from "@/lib/freelanceLaneFeatured";
 import { homeServiceCards } from "@/lib/homeServices";
@@ -13,9 +13,15 @@ type Props = {
   locale: Locale;
   schedulingUrl: string;
   projects: Project[];
+  scrollReveal?: boolean;
 };
 
-export function FreelanceLane({ locale, schedulingUrl, projects }: Props) {
+export function FreelanceLane({
+  locale,
+  schedulingUrl,
+  projects,
+  scrollReveal = true,
+}: Props) {
   const section = freelanceLaneSection(locale);
   const featured = freelanceLaneFeaturedProjects(locale, projects);
   const ladder = offeringLadder(locale);
@@ -27,7 +33,8 @@ export function FreelanceLane({ locale, schedulingUrl, projects }: Props) {
       className="scroll-mt-28"
       aria-label={locale === "en" ? "Freelance development" : "Freelance Entwicklung"}
     >
-      <SectionHeadingReveal
+      <SectionHeadingMotion
+        scrollReveal={scrollReveal}
         eyebrow={section.eyebrow}
         title={section.title}
         description={section.description}
