@@ -28,6 +28,12 @@ describe("theme contract in globals.css", () => {
     expect(globalsCss).toContain("--color-accent: var(--accent)");
   });
 
+  it("uses distinct light and dark accent tokens (indigo, hue 275)", () => {
+    expect(DESIGN_TOKENS.light.accent).not.toBe(DESIGN_TOKENS.dark.accent);
+    expect(DESIGN_TOKENS.light.accent).toMatch(/275\)/);
+    expect(DESIGN_TOKENS.dark.accent).toMatch(/275\)/);
+  });
+
   it("does not use legacy hex palette values", () => {
     expect(globalsCss).not.toMatch(/#f5f5f4|#0c0a09|#4f46e5|#a5b4fc/);
   });
