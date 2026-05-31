@@ -29,6 +29,29 @@ describe("buildFunnelReport", () => {
     expect(rows.map((r) => r.path)).toEqual([...FUNNEL_CONTENT_PATHS]);
   });
 
+  it("does not attribute legacy hero or contact placements to an offering", () => {
+    const views = new Map([["/de/", 5]] as const);
+    const clicks: PathPlacementCount[] = [
+      { path: "/de/", placement: "hero", count: 1 },
+      { path: "/de/", placement: "contact", count: 1 },
+      { path: "/de/", placement: "hero-freelance", count: 1 },
+    ];
+
+    const row = buildFunnelReport(views, clicks, {
+      placementBreakdown: true,
+    }).find((r) => r.path === "/de/");
+
+    expect(row).toMatchObject({ clicks: 3 });
+    expect(row?.offerings).toEqual([{ offering: "freelance", count: 1 }]);
+    expect(row?.placements).toEqual(
+      expect.arrayContaining([
+        { placement: "hero", count: 1 },
+        { placement: "contact", count: 1 },
+        { placement: "hero-freelance", count: 1 },
+      ]),
+    );
+  });
+
   it("rolls up home placements into freelance and coaching offerings", () => {
     const views = new Map([["/de/", 10]] as const);
     const clicks: PathPlacementCount[] = [

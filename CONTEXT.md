@@ -57,7 +57,7 @@ _Day rate:_ the exported `240 €/Tag (4 h)` is **dropped** — a 4-hour "Tag" m
 
 **Logged page view** — a Page view counted from an access-log entry for a content page path (Home page or Landing Page, per locale). Asset and non-page requests are excluded when building funnel totals.
 
-**Scheduling click** — a visitor activates a link that opens Calendly to book the free 30-minute intro call (same URL for Freelance Development and Coaching Session). Counted separately from whether they complete a booking on Calendly. Recorded together with the page URL and a **placement** label (e.g. hero vs contact on the Home page, cta on a Landing Page). Captured in the browser at click time and sent to first-party **click telemetry** before the visitor leaves for Calendly.
+**Scheduling click** — a visitor activates a link that opens Calendly to book the free 30-minute intro call (same URL for Freelance Development and Coaching Session). Counted separately from whether they complete a booking on Calendly. Recorded together with the page URL and an offering-aware **placement** label (e.g. `hero-freelance` on the Home page, `cta` on a Landing Page). Captured in the browser at click time and sent to first-party **click telemetry** before the visitor leaves for Calendly.
 
 **Click telemetry** — first-party recording of Scheduling clicks only (not page views). Distinct from access-log-based page views.
 
