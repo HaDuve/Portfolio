@@ -1,4 +1,12 @@
-export type SchedulingPlacement = "hero" | "contact" | "cta";
+export type SchedulingPlacement =
+  | "header"
+  | "hero-freelance"
+  | "hero-coaching"
+  | "lane-freelance"
+  | "lane-coaching"
+  | "contact-freelance"
+  | "contact-coaching"
+  | "cta";
 
 export type SchedulingClickPayload = {
   type: "scheduling_click";

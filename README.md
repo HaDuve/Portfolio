@@ -148,7 +148,7 @@ docker compose run --rm \
   --to 2026-05-31 \
   --log '/var/log/caddy/access*.log'
 
-# Home page: hero vs contact placement breakdown
+# Home page: offering + placement breakdown (Freelance vs Coaching intent)
 docker compose run --rm \
   -v portfolio_caddy_logs:/var/log/caddy:ro \
   -v portfolio_analytics_data:/data:ro \
@@ -160,6 +160,10 @@ docker compose run --rm \
 ```
 
 Output is tab-separated: `path`, `views`, `clicks`, `click_rate` (percent). Paths match the Lead funnel allowlist (Home `/de/`, `/en/` and the four Landing Page slug pairs in `CONTEXT.md`).
+
+With `--placement-breakdown`, home rows list `offering:freelance` / `offering:coaching` rollups (from placement suffixes) plus per-placement lines. Legacy rows stored as `hero` or `contact` still appear in placement lines and in page `clicks`, but they do not count toward `offering:*` until they age out of the click store.
+
+**Deploy:** Ship the analytics ingest service and the static frontend together when changing placement labels. Ingest rejects legacy `hero` / `contact` payloads; a frontend-only or analytics-only deploy can drop clicks in between.
 
 **Retention:** **Analytics retention** is **12 months** for both the click store (monthly `prune-clicks` above) and access logs (`roll_keep_for 8760h` in `caddy/Caddyfile`). Funnel queries should use date ranges within that window.
 

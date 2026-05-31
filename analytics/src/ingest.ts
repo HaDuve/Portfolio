@@ -1,7 +1,6 @@
 import { deriveVisitorKey } from "./visitor-key.js";
 import { ClickStore } from "./click-store.js";
-
-const PLACEMENTS = new Set(["hero", "contact", "cta"]);
+import { PLACEMENTS } from "./scheduling-placements.js";
 const LOCALES = new Set(["de", "en"]);
 
 export type IngestRequest = {

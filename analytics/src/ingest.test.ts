@@ -22,7 +22,7 @@ function req(
     body: body ?? {
       type: "scheduling_click",
       path: "/de/",
-      placement: "hero",
+      placement: "hero-freelance",
       locale: "de",
     },
     ...rest,
@@ -56,7 +56,9 @@ describe("IngestService", () => {
     const result = ingest.handle(req());
     expect(result).toEqual({ ok: true, status: 204 });
     const rows = store.aggregateByPathPlacement();
-    expect(rows).toEqual([{ path: "/de/", placement: "hero", count: 1 }]);
+    expect(rows).toEqual([
+      { path: "/de/", placement: "hero-freelance", count: 1 },
+    ]);
   });
 
   it("rejects unknown event types", () => {
@@ -93,6 +95,40 @@ describe("IngestService", () => {
       }),
     );
     expect(result).toEqual({ ok: true, status: 204 });
+  });
+
+  it("rejects legacy hero and contact placement labels", () => {
+    for (const placement of ["hero", "contact"] as const) {
+      const result = ingest.handle(
+        req({
+          body: {
+            type: "scheduling_click",
+            path: "/de/",
+            placement,
+            locale: "de",
+          },
+        }),
+      );
+      expect(result).toMatchObject({ ok: false, status: 400 });
+    }
+    expect(store.aggregateByPathPlacement()).toHaveLength(0);
+  });
+
+  it("accepts offering-aware placements such as lane-coaching", () => {
+    const result = ingest.handle(
+      req({
+        body: {
+          type: "scheduling_click",
+          path: "/en/",
+          placement: "lane-coaching",
+          locale: "en",
+        },
+      }),
+    );
+    expect(result).toEqual({ ok: true, status: 204 });
+    expect(store.aggregateByPathPlacement()).toEqual([
+      { path: "/en/", placement: "lane-coaching", count: 1 },
+    ]);
   });
 
   it("rejects missing or invalid ingest credentials", () => {
