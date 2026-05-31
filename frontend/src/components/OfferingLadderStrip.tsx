@@ -14,10 +14,11 @@ export function OfferingLadderStrip({ ladder, className }: Props) {
       }
       role="note"
     >
-      <span className="font-semibold text-foreground">{ladder.hourlyRate}</span>
       {ladder.tiers.map((tier) => (
         <span key={tier.id} className="min-w-0 break-words">
-          <strong className="font-semibold text-foreground">{tier.price}</strong>
+          <strong className="font-semibold text-foreground">
+            {tier.price}
+          </strong>
           {" · "}
           {tier.label}
           {" · "}
