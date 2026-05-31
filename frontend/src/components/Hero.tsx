@@ -29,7 +29,7 @@ export function Hero({ profile, introDone, locale }: Props) {
       />
       <div className="grain pointer-events-none absolute inset-0" aria-hidden />
 
-      <div className="relative z-10 mx-auto grid max-w-6xl items-end gap-12 px-4 pb-16 pt-20 sm:px-6 sm:pb-24 sm:pt-24 lg:grid-cols-[1fr_minmax(280px,420px)] lg:items-center lg:gap-16 lg:pt-28">
+      <div className="relative z-10 mx-auto grid max-w-6xl items-end gap-12 px-4 pb-16 pt-24 sm:px-6 sm:pb-24 sm:pt-28 lg:grid-cols-[1fr_minmax(280px,420px)] lg:items-center lg:gap-16 lg:pt-36">
         <div className="min-w-0 max-w-[38rem]">
           <p className="font-mono text-xs font-medium uppercase tracking-[0.2em] text-accent">
             {copy.eyebrow}
@@ -94,14 +94,14 @@ export function Hero({ profile, introDone, locale }: Props) {
           </motion.div>
         </div>
 
-        <div className="relative mx-auto w-full max-w-[420px] lg:mx-0 lg:justify-self-end">
+        <div className="relative mx-auto w-full max-w-[420px] lg:mx-0 lg:min-h-[300px] lg:justify-self-end">
           {proofShots.map((shot) => (
             <figure
               key={shot.variant}
               className={
                 shot.variant === "phone"
-                  ? "relative z-10 mx-auto w-[min(70%,220px)] overflow-hidden rounded-[1.75rem] border border-border bg-card shadow-lg sm:w-[min(55%,240px)] lg:absolute lg:right-0 lg:top-1/2 lg:w-[min(68%,260px)] lg:-translate-y-1/2"
-                  : "relative mt-4 overflow-hidden rounded-xl border border-border bg-card shadow-md lg:relative lg:mt-0 lg:w-full"
+                  ? "relative z-0 mx-auto w-[min(70%,220px)] overflow-hidden rounded-[1.75rem] border border-border bg-card shadow-lg sm:w-[min(55%,240px)] lg:absolute lg:left-0 lg:top-1/2 lg:w-[min(68%,260px)] lg:-translate-y-1/2"
+                  : "relative z-10 mt-4 w-full overflow-hidden rounded-xl border border-border bg-card shadow-md lg:absolute lg:right-0 lg:top-1/2 lg:mt-0 lg:w-[min(68%,260px)] lg:-translate-y-1/2 lg:shadow-lg"
               }
             >
               <Image
@@ -110,7 +110,7 @@ export function Hero({ profile, introDone, locale }: Props) {
                 width={shot.width}
                 height={shot.height}
                 className="h-auto w-full object-cover"
-                priority={shot.variant === "phone"}
+                priority={shot.variant === "browser"}
               />
             </figure>
           ))}
