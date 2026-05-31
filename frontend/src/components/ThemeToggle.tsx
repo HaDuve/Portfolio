@@ -1,19 +1,16 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-
-type Theme = "light" | "dark" | "system";
+import { shouldUseDarkClass, type Theme } from "@/lib/theme";
 
 function applyTheme(theme: Theme) {
-  const root = document.documentElement;
-  if (theme === "system") {
-    const prefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)",
-    ).matches;
-    root.classList.toggle("dark", prefersDark);
-  } else {
-    root.classList.toggle("dark", theme === "dark");
-  }
+  const prefersDark = window.matchMedia(
+    "(prefers-color-scheme: dark)",
+  ).matches;
+  document.documentElement.classList.toggle(
+    "dark",
+    shouldUseDarkClass(theme, prefersDark),
+  );
 }
 
 function getTheme(): Theme {

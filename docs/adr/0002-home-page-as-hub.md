@@ -1,7 +1,7 @@
 # ADR-0002: Home page restructured as a routing hub
 
 ## Status
-Accepted
+Superseded by ADR-0004
 
 ## Context
 The original home page was a long single-scroll portfolio with a hero, four service cards, a mid-page "App entwickeln" section (linking to the landing page), a Collaboration section, a Process section, projects, skills, and contact.

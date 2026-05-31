@@ -4,15 +4,18 @@
 
 **hannesduve.com** — Hannes Duve's personal portfolio and freelance service site. A static Next.js export served by Caddy. Bilingual: DE (primary, default) and EN.
 
-**Home page** — a hub that routes visitors to the right subpage. Structure: Hero → Hub Block → Services → Projects → Skills → Contact. The home page routes; the landing pages close.
+**Home page** — the primary page; it both routes and closes. Structure: Hero → Freelance Lane → Coaching Lane → Skills → Contact. Unlike the old hub model (two bare tiles that bounced visitors away), the home now shows real substance per offering and can convert on the page itself. Landing Pages still exist for SEO depth and deep links. (Supersedes the routing-hub model in ADR-0002.)
+_Avoid_: Hub, landing page (when referring to the home)
 
-**Hub Block** — two tiles immediately after the hero, before projects. Each tile links to one subpage: App/web development and AI coaching. Visitors who know what they want get routed immediately; visitors who browse continue scrolling.
+**Lane** — a full home-page section dedicated to one offering, deep enough to convert on its own. Two lanes: the **Freelance Lane** (featured projects + rates strip + services grid) and the **Coaching Lane** (4-step timeline + inline FAQ). Replaces the old **Hub Block** (two link tiles). Each lane ends with its own CTA plus a "more →" link to the matching Landing Page.
+_Avoid_: Tile, Hub Block, card row
 
-**Services Section** — four cards (Web & web apps, Mobile apps, Backend & Cloud, Quality & ops) with one tight sentence each. Tone anchor: "real engineering — not vibe coding." Positions freelance work as the opposite of AI-generated throwaway code. Intentional contrast with the coaching tile on the same page.
+**Services Section** — four service cards (Web & web apps, Mobile apps, Backend & Cloud, Quality & ops) with one tight sentence each, living **inside the Freelance Lane**. Tone anchor: **production-grade quality, stable, reliable** (German-engineering register). Both offerings share one philosophy — durable, maintainable software — so the Freelance Lane no longer disparages "vibe coding"; it positions freelance work as high-quality, dependable engineering.
+_Avoid in copy_: "weggeworfen", "trägt"/"tragen" (rejected wording)
 
-Hub tile copy:
-- Tile 1 (dev): eyebrow `Freelance` · DE headline `App & Web entwickeln lassen` · EN headline `App & web development` · desc `React Native, Next.js und Backend` / `React Native, Next.js, and backend`
-- Tile 2 (coaching): eyebrow `Coaching` · DE headline `Mit KI programmieren lernen` · EN headline `Learn to build with AI` · desc `1:1 Sessions mit Cursor und Claude` / `1:1 sessions with Cursor and Claude`
+**Credibility strip** — a lightweight trust element drawing only on real proof: shipped products (wikifolio, Budget for Nomads on the App Store), GitHub, Bremen / DACH, senior years. Not fabricated testimonials. A real **Testimonials** section is deferred until genuine quotes exist.
+
+**Vibe Coding** — building software with AI tools (Cursor + Claude). Canonical usage: **"Vibe Coding" as the marketing hook, "Programmieren mit KI" / "Coding with AI" as the plain-language explainer**. Framed positively for the Coaching product: building with AI *and* keeping it maintainable.
 
 ## Service pages (Landing Pages)
 
@@ -35,7 +38,14 @@ Current landing pages:
 
 ## Products
 
-**Freelance Development** — project-based or hourly engagement where Hannes builds web apps (Next.js), mobile apps (React Native/Expo), and backends (Node.js, PostgreSQL, Supabase) for SME Clients.
+**Freelance Development** — project-based or hourly engagement where Hannes builds web apps (Next.js), mobile apps (React Native/Expo), and backends (Node.js, PostgreSQL, Supabase) for SME Clients. Priced transparently on the Site: a visible **hourly rate** as the unit anchor, plus an **Offering Ladder** so a visitor can ballpark a whole product.
+
+**Offering Ladder** — three engagement tiers presented as **"ab/from" baselines** (not fixed quotes — scope varies too much) with a typical timeframe, and a one-line note that app vs web vs backend shifts the estimate. One ladder, not a per-type price matrix. Public **hourly rate 60 €/h** is the unit anchor.
+- **Micro-MVP / Prototyp** — one core flow, clickable and real. ~1–2 weeks. **ab 1.200 €**
+- **MVP / launch-ready** — auth, data, deploy/store-ready product. ~4–8 weeks. **ab 4.800 €**
+- **Laufende Entwicklung / Full Product** — ongoing build + support. **ab 1.200 €/Monat** (retainer); 60 €/h applies.
+
+_Day rate:_ the exported `240 €/Tag (4 h)` is **dropped** — a 4-hour "Tag" misleads (an SME reader assumes ~8 h) and undercuts the senior positioning.
 
 **Coaching Session** — a 1:1 video call where Hannes guides a Vibe Coding Beginner or Software Engineer through building their project using AI coding tools. Lead tool: Cursor. Underlying AI: Claude. Primary outcome: the client leaves unblocked on their specific project and with a repeatable workflow they can use independently. Price: 60 € for 60 minutes. Entry point: free 30-minute intro call via Calendly (same link as Freelance Development) to align on goals before the first paid session.
 
@@ -51,7 +61,7 @@ Current landing pages:
 
 **Click telemetry** — first-party recording of Scheduling clicks only (not page views). Distinct from access-log-based page views.
 
-**Placement** — which booking control on a page produced a Scheduling click. Distinct placements on the same page are counted separately; the Lead funnel can still roll up to page totals.
+**Placement** — which booking control on a page produced a Scheduling click. **Offering-aware**: on the dual-lane home, placements encode both location and offering intent (`header`, `hero-freelance`, `hero-coaching`, `lane-freelance`, `lane-coaching`, `contact-freelance`, `contact-coaching`); Landing Pages use `cta`. Lets the Lead funnel split Freelance vs Coaching intent, and still roll up to page totals. (Extends ADR-0003's click payload shape.)
 
 **App-server analytics** — Lead funnel measurement entirely on the host that serves the Site (no separate database server). Scheduling clicks are kept in a **click store** on that host; Logged page views are derived on demand from the **access log**, not pre-aggregated in the click store.
 
