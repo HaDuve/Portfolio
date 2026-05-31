@@ -103,16 +103,46 @@ export const appEntwickelnFreelancerFaq: {
   ],
 };
 
+export type ScopeExample = {
+  id: string;
+  title: string;
+  description: string;
+};
+
 /** Long-form copy for the landing page (people-first; avoid duplicate FAQ text in prose). */
 export const appEntwickelnSections = {
   de: {
+    eyebrow: "Freelance Entwicklung",
     h1: "App entwickeln & als Freelancer beauftragen",
     lead:
-      "Wenn ihr eine App bauen, ein Backend betreiben oder eine Website mit echtem Nutzen wollt: Ich begleite KMU im DACH-Raum als Senior-Freelancer — von der Idee bis zu stabilem Betrieb, ohne unnötige Agentur-Infrastruktur.",
+      "Wenn ihr eine App bauen, einen Server betreiben oder eine Website mit echtem Nutzen wollt: Ich begleite KMU im DACH-Raum als Senior-Freelancer — von der Idee bis zu stabilem Betrieb. Hohe Qualität, direkt und persönlich: eine Ansprechperson, die auch implementiert.",
+    stackTitle: "Stack & Leistung",
     stack:
-      "Typische Aufträge: React Native/Expo für iOS und Android, Next.js für Web-Apps und Marketing-Sites, Node.js mit PostgreSQL oder Supabase für APIs und Daten, AWS oder ähnliche Cloud-Dienste wenn Skalierung und Kosten es rechtfertigen. So lassen sich Website, App und Backend konsistent halten und später von eurem Team weiterentwickeln.",
+      "Typische Aufträge: React Native/Expo für iOS und Android, Next.js für Web-Apps und Marketing-Sites, Node.js mit PostgreSQL oder Supabase für APIs und Daten, AWS oder ähnliche Cloud-Dienste, wenn Skalierung und Kosten es rechtfertigen. So lassen sich Website, App und Server konsistent halten und später von eurem Team weiterentwickeln.",
+    fitTitle: "Passt das zu euch?",
     fit:
-      "Besonders sinnvoll, wenn ihr einen App-Auftrag klar scoped habt oder ihn gemeinsam scharf bekommen wollt, wenn Remote-Zusammenarbeit für euch Routine ist, und wenn ihr Wert auf lesbaren Code, Tests und Übergabe legt.",
+      "Besonders sinnvoll, wenn ihr einen App-Auftrag klar scoped habt oder ihn gemeinsam scharf bekommen wollt, wenn Remote-Zusammenarbeit für euch Routine ist, und wenn ihr Wert auf lesbaren Code, Tests und Übergabe legt — Software, die wartbar bleibt, wenn das Projekt live ist.",
+    scopeTitle: "Beispiele für Projektumfang",
+    scopeExamples: [
+      {
+        id: "mobile-mvp",
+        title: "Mobile MVP mit Login",
+        description:
+          "React-Native-App (iOS/Android) mit Expo, Auth, REST- oder GraphQL-API und einem schlanken Admin- oder Web-Portal in Next.js — inklusive Store-Vorbereitung und CI für Testflights.",
+      },
+      {
+        id: "web-product",
+        title: "Web-App + Server für ein internes Tool",
+        description:
+          "Next.js-Oberfläche, PostgreSQL oder Supabase, Rollen und Rechte, Exporte oder Schnittstellen zu eurem Bestandssystem — Fokus auf klare Datenmodelle statt Feature-Wildwuchs.",
+      },
+      {
+        id: "retainer",
+        title: "Laufende Weiterentwicklung",
+        description:
+          "Retainer nach Go-Live: Bugfixes, kleine Features, Performance und Dependency-Updates an einer bestehenden Codebasis — mit festen Review-Terminen und transparentem Stundenkontingent.",
+      },
+    ] satisfies ScopeExample[],
     processTitle: "Ablauf",
     processSteps: [
       "Erstgespräch (Ziele, Risiken, grober Budgetrahmen)",
@@ -125,13 +155,37 @@ export const appEntwickelnSections = {
       "Schreibt eine kurze Mail oder bucht direkt ein 30-Minuten-Gespräch — dann klären wir, ob ich für euren App-Auftrag der richtige Freelancer bin.",
   },
   en: {
+    eyebrow: "Freelance development",
     h1: "Freelance app development & how to engage",
     lead:
-      "If you want to build an app, run a backend, or ship a website with real product value, I work with SMEs across the DACH region as a senior freelancer — from discovery to stable operations without unnecessary agency overhead.",
+      "If you want to build an app, run a server, or ship a website with real product value, I work with SMEs across the DACH region as a senior freelancer — from discovery to stable operations. High quality, direct and personal: one point of contact who also ships the code.",
+    stackTitle: "Stack & services",
     stack:
       "Typical work: React Native/Expo for iOS and Android, Next.js for web apps and marketing sites, Node.js with PostgreSQL or Supabase for APIs and data, and AWS or similar cloud services when scale and cost justify it. That keeps website, app, and backend aligned and maintainable by your team later.",
+    fitTitle: "Good fit",
     fit:
-      "A strong fit when you want a clearly scoped app engagement (or help defining one), are comfortable with remote collaboration, and care about readable code, tests, and handover.",
+      "A strong fit when you want a clearly scoped app engagement (or help defining one), are comfortable with remote collaboration, and care about readable code, tests, and handover — software that stays maintainable after launch.",
+    scopeTitle: "Example scopes",
+    scopeExamples: [
+      {
+        id: "mobile-mvp",
+        title: "Mobile MVP with sign-in",
+        description:
+          "React Native app (iOS/Android) with Expo, auth, a REST or GraphQL API, and a lean admin or web portal in Next.js — including store prep and CI for test builds.",
+      },
+      {
+        id: "web-product",
+        title: "Web app + server for an internal tool",
+        description:
+          "Next.js UI, PostgreSQL or Supabase, roles and permissions, exports or integrations to your existing systems — focus on clear data models instead of feature sprawl.",
+      },
+      {
+        id: "retainer",
+        title: "Ongoing development",
+        description:
+          "Retainer after go-live: bug fixes, small features, performance and dependency updates on an existing codebase — with fixed review cadence and transparent hour budgets.",
+      },
+    ] satisfies ScopeExample[],
     processTitle: "Process",
     processSteps: [
       "Intro call (goals, risks, rough budget)",

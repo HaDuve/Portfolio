@@ -1,15 +1,18 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FaqJsonLd } from "@/components/FaqJsonLd";
-import { SchedulingLink } from "@/components/SchedulingLink";
+import { ServiceLandingPage } from "@/components/ServiceLandingPage";
 import profile from "@/data/profile.json";
 import {
   coachingFaq,
   coachingMeta,
   coachingSections,
 } from "@/data/programmierenLernenMitKi";
-import { isLocale, localePath, type Locale } from "@/lib/i18n";
+import { isLocale, type Locale } from "@/lib/i18n";
+import {
+  COACHING_TOOL_LABELS,
+  coachingLandingSections,
+} from "@/lib/serviceLandingSections";
 import type { Profile } from "@/types/content";
 
 const BASE = "https://hannesduve.com";
@@ -73,82 +76,25 @@ export default async function ProgrammierenLernenMitKiPage({ params }: Props) {
   return (
     <>
       <FaqJsonLd items={faq} locale="de" />
-      <main className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
-        <Link
-          href={localePath(locale)}
-          className="font-mono text-sm text-muted underline-offset-4 transition hover:text-foreground hover:underline"
-        >
-          ← Start
-        </Link>
-        <h1 className="font-display mt-8 text-3xl tracking-tight text-foreground sm:text-4xl">
-          {copy.h1}
-        </h1>
-        <p className="mt-6 text-base leading-relaxed text-stone-600 dark:text-stone-400">
-          {copy.lead}
-        </p>
-        <h2 className="font-display mt-14 text-2xl text-foreground">
-          {copy.toolsTitle}
-        </h2>
-        <p className="mt-4 text-base leading-relaxed text-stone-600 dark:text-stone-400">
-          {copy.tools}
-        </p>
-        <h2 className="font-display mt-14 text-2xl text-foreground">
-          {copy.fitTitle}
-        </h2>
-        <p className="mt-4 text-base leading-relaxed text-stone-600 dark:text-stone-400">
-          {copy.fit}
-        </p>
-        <p className="mt-4 text-base leading-relaxed text-stone-600 dark:text-stone-400">
-          {copy.alsoFit}
-        </p>
-        <h2 className="font-display mt-14 text-2xl text-foreground">
-          {copy.processTitle}
-        </h2>
-        <ol className="mt-4 list-decimal space-y-3 pl-6 text-base leading-relaxed text-stone-600 dark:text-stone-400">
-          {copy.processSteps.map((step) => (
-            <li key={step}>{step}</li>
-          ))}
-        </ol>
-        <p className="mt-6 text-base font-medium text-foreground">
-          Preis: {copy.price}
-        </p>
-        <h2 className="font-display mt-14 text-2xl text-foreground" id="faq">
-          FAQ
-        </h2>
-        <div className="mt-6 space-y-8">
-          {faq.map((item) => (
-            <div key={item.question}>
-              <h3 className="text-lg font-medium text-foreground">
-                {item.question}
-              </h3>
-              <p className="mt-2 text-base leading-relaxed text-stone-600 dark:text-stone-400">
-                {item.answer}
-              </p>
-            </div>
-          ))}
-        </div>
-        <section
-          className="mt-14 rounded-2xl border border-border bg-card p-8 shadow-sm"
-          aria-labelledby="cta-heading"
-        >
-          <h2 id="cta-heading" className="font-display text-xl text-foreground">
-            {copy.ctaTitle}
-          </h2>
-          <p className="mt-3 text-base leading-relaxed text-stone-600 dark:text-stone-400">
-            {copy.ctaBody}
-          </p>
-          <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center">
-            <SchedulingLink
-              href={p.schedulingUrl}
-              placement="cta"
-              locale="de"
-              className="inline-flex w-fit rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-white hover:opacity-90 dark:text-stone-950"
-            >
-              Kostenloses Erstgespräch buchen (30 Min.)
-            </SchedulingLink>
-          </div>
-        </section>
-      </main>
+      <ServiceLandingPage
+        locale={locale}
+        schedulingUrl={p.schedulingUrl}
+        eyebrow={copy.eyebrow}
+        h1={copy.h1}
+        lead={copy.lead}
+        sections={coachingLandingSections(copy)}
+        scopeTitle={copy.scopeTitle}
+        scopeExamples={copy.scopeExamples}
+        faq={faq}
+        variant="coaching"
+        toolLabels={COACHING_TOOL_LABELS}
+        priceNote={`Preis: ${copy.price}`}
+        cta={{
+          title: copy.ctaTitle,
+          body: copy.ctaBody,
+          buttonLabel: "Kostenloses Erstgespräch buchen (30 Min.)",
+        }}
+      />
     </>
   );
 }

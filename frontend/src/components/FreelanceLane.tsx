@@ -7,6 +7,7 @@ import { freelanceLaneFeaturedProjects } from "@/lib/freelanceLaneFeatured";
 import { homeServiceCards } from "@/lib/homeServices";
 import type { Locale } from "@/lib/i18n";
 import type { Project } from "@/types/content";
+import { OfferingLadderStrip } from "@/components/OfferingLadderStrip";
 import { offeringLadder } from "@/lib/offeringLadder";
 
 type Props = {
@@ -93,24 +94,7 @@ export function FreelanceLane({
         ))}
       </div>
 
-      <div
-        className="mt-10 flex flex-wrap items-baseline gap-x-4 gap-y-2 rounded-2xl border border-border bg-card px-5 py-4 text-sm text-stone-600 shadow-sm dark:text-stone-400 sm:gap-x-6 sm:px-6"
-        role="note"
-      >
-        <span className="font-semibold text-foreground">{ladder.hourlyRate}</span>
-        {ladder.tiers.map((tier) => (
-          <span key={tier.id} className="min-w-0 break-words">
-            <strong className="font-semibold text-foreground">{tier.price}</strong>
-            {" · "}
-            {tier.label}
-            {" · "}
-            {tier.timeframe}
-          </span>
-        ))}
-        <span className="w-full min-w-0 text-xs text-muted sm:w-auto sm:basis-full">
-          {ladder.typeShiftNote}
-        </span>
-      </div>
+      <OfferingLadderStrip ladder={ladder} />
 
       <div className="mt-10 grid gap-6 sm:grid-cols-2">
         {services.map((card) => (
