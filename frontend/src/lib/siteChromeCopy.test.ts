@@ -18,8 +18,8 @@ describe("siteChromeCopy — header CTA", () => {
 describe("siteChromeCopy — mobile nav CTAs", () => {
   it("maps dual mobile CTAs to hero placements", () => {
     const de = siteChromeCopy("de");
-    expect(de.mobileFreelanceCta.placement).toBe("hero-freelance");
-    expect(de.mobileCoachingCta.placement).toBe("hero-coaching");
+    expect(de.mobileFreelanceCta.placement).toBe("mobile-freelance");
+    expect(de.mobileCoachingCta.placement).toBe("mobile-coaching");
     expect(de.mobileFreelanceCta.label).toBe("Projekt anfragen");
     expect(de.mobileCoachingCta.label).toBe("Coaching buchen");
   });
@@ -39,6 +39,14 @@ describe("siteChromeCopy — contact", () => {
     expect(contact.title).toBe("Book a call");
     expect(contact.freelanceLaneTitle).toBe("Request a project");
     expect(contact.coachingLaneTitle).toBe("Book coaching");
+  });
+});
+
+describe("siteChromeCopy — menu toggle", () => {
+  it("exposes open vs closed menu labels in DE", () => {
+    const chrome = siteChromeCopy("de");
+    expect(chrome.menuToggleLabel).toBe("Menü");
+    expect(chrome.menuCloseLabel).toBe("Menü schließen");
   });
 });
 

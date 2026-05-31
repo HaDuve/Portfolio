@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SchedulingLink } from "./SchedulingLink";
 import { ThemeToggle } from "./ThemeToggle";
@@ -13,6 +14,7 @@ import {
   type SiteChromeNavItem,
 } from "@/lib/siteChromeNav";
 import type { HomePageSectionId } from "@/lib/homeSections";
+import { isLocaleHomePath } from "@/lib/localeHomePath";
 import type { Locale } from "@/lib/i18n";
 import { localePath } from "@/lib/i18n";
 
@@ -28,6 +30,8 @@ function scrollSpySectionIds(nav: SiteChromeNavItem[]): HomePageSectionId[] {
 }
 
 export function Header({ locale, schedulingUrl }: Props) {
+  const pathname = usePathname();
+  const isHome = isLocaleHomePath(pathname);
   const [active, setActive] = useState<HomePageSectionId>("hero");
   const [menuOpen, setMenuOpen] = useState(false);
   const base = localePath(locale);
@@ -40,6 +44,11 @@ export function Header({ locale, schedulingUrl }: Props) {
   const spyIds = scrollSpySectionIds(nav);
 
   useEffect(() => {
+    if (!isHome) {
+      setActive("hero");
+      return;
+    }
+
     const onScroll = () => {
       const y = window.scrollY + SCROLL_OFFSET;
       let current: HomePageSectionId = "hero";
@@ -54,7 +63,11 @@ export function Header({ locale, schedulingUrl }: Props) {
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, [spyIds.join(",")]);
+  }, [isHome, spyIds.join(",")]);
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -63,6 +76,15 @@ export function Header({ locale, schedulingUrl }: Props) {
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
+  }, [menuOpen]);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
   }, [menuOpen]);
 
   const navLabel = locale === "en" ? "Main navigation" : "Hauptnavigation";
@@ -94,7 +116,7 @@ export function Header({ locale, schedulingUrl }: Props) {
                 key={item.hash}
                 href={`${base}#${item.hash}`}
                 className={sectionLinkClass(active === item.id)}
-                aria-current={active === item.id ? "page" : undefined}
+                aria-current={active === item.id && isHome ? true : undefined}
               >
                 {item.label}
               </a>
@@ -102,14 +124,16 @@ export function Header({ locale, schedulingUrl }: Props) {
           </nav>
 
           <div className="flex shrink-0 items-center gap-2">
-            <SchedulingLink
-              href={schedulingUrl}
-              placement={chrome.headerCta.placement}
-              locale={locale}
-              className="hidden rounded-full bg-accent px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent md:inline-flex dark:text-stone-950"
-            >
-              {chrome.headerCta.label}
-            </SchedulingLink>
+            {isHome ? (
+              <SchedulingLink
+                href={schedulingUrl}
+                placement={chrome.headerCta.placement}
+                locale={locale}
+                className="hidden rounded-full bg-accent px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent md:inline-flex dark:text-stone-950"
+              >
+                {chrome.headerCta.label}
+              </SchedulingLink>
+            ) : null}
             <LocaleSwitcher locale={locale} />
             <ThemeToggle />
             <button
@@ -117,7 +141,9 @@ export function Header({ locale, schedulingUrl }: Props) {
               className="grid h-9 w-9 place-items-center rounded-full border border-border bg-card text-sm text-foreground transition hover:border-accent/40 hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent md:hidden"
               aria-expanded={menuOpen}
               aria-controls="mobile-nav"
-              aria-label={chrome.menuToggleLabel}
+              aria-label={
+                menuOpen ? chrome.menuCloseLabel : chrome.menuToggleLabel
+              }
               onClick={() => setMenuOpen((open) => nextMobileNavOpen(open))}
             >
               <span aria-hidden>{menuOpen ? "✕" : "☰"}</span>

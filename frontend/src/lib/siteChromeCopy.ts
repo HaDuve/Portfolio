@@ -34,6 +34,7 @@ export type SiteChromeCopy = {
   skills: SkillsChromeCopy;
   contact: ContactChromeCopy;
   menuToggleLabel: string;
+  menuCloseLabel: string;
   mobileNavLabel: string;
   logoAriaLabel: string;
   moreFreelanceLabel: string;
@@ -45,9 +46,12 @@ const copy: Record<Locale, SiteChromeCopy> = {
     headerCta: { label: "Gespräch buchen", placement: "header" },
     mobileFreelanceCta: {
       label: "Projekt anfragen",
-      placement: "hero-freelance",
+      placement: "mobile-freelance",
     },
-    mobileCoachingCta: { label: "Coaching buchen", placement: "hero-coaching" },
+    mobileCoachingCta: {
+      label: "Coaching buchen",
+      placement: "mobile-coaching",
+    },
     skills: {
       eyebrow: "Stack",
       title: "Was ich in Projekten einsetze",
@@ -75,6 +79,7 @@ const copy: Record<Locale, SiteChromeCopy> = {
       socialEyebrow: "Links",
     },
     menuToggleLabel: "Menü",
+    menuCloseLabel: "Menü schließen",
     mobileNavLabel: "Mobile Navigation",
     logoAriaLabel: "Startseite",
     moreFreelanceLabel: "Mehr · Freelance",
@@ -84,9 +89,12 @@ const copy: Record<Locale, SiteChromeCopy> = {
     headerCta: { label: "Book a call", placement: "header" },
     mobileFreelanceCta: {
       label: "Request a project",
-      placement: "hero-freelance",
+      placement: "mobile-freelance",
     },
-    mobileCoachingCta: { label: "Book coaching", placement: "hero-coaching" },
+    mobileCoachingCta: {
+      label: "Book coaching",
+      placement: "mobile-coaching",
+    },
     skills: {
       eyebrow: "Stack",
       title: "What I use on projects",
@@ -114,6 +122,7 @@ const copy: Record<Locale, SiteChromeCopy> = {
       socialEyebrow: "Links",
     },
     menuToggleLabel: "Menu",
+    menuCloseLabel: "Close menu",
     mobileNavLabel: "Mobile navigation",
     logoAriaLabel: "Home",
     moreFreelanceLabel: "More · Freelance",

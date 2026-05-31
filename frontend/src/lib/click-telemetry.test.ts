@@ -7,10 +7,11 @@ import {
 import { INSTRUMENTED_SCHEDULING_CLICKS } from "./scheduling-click-sites";
 
 describe("INSTRUMENTED_SCHEDULING_CLICKS", () => {
-  it("lists seven home placements per locale plus four landing ctas", () => {
-    expect(INSTRUMENTED_SCHEDULING_CLICKS).toHaveLength(18);
+  it("lists nine home placements per locale plus four landing ctas", () => {
+    expect(INSTRUMENTED_SCHEDULING_CLICKS).toHaveLength(22);
     expect(INSTRUMENTED_SCHEDULING_CLICKS).toEqual(
       expect.arrayContaining([
+        { path: "/de/", placement: "mobile-freelance", locale: "de" },
         { path: "/de/", placement: "hero-freelance", locale: "de" },
         { path: "/en/", placement: "hero-coaching", locale: "en" },
         { path: "/de/app-entwickeln-freelancer/", placement: "cta", locale: "de" },

@@ -114,6 +114,20 @@ describe("IngestService", () => {
     expect(store.aggregateByPathPlacement()).toHaveLength(0);
   });
 
+  it("accepts mobile menu placements such as mobile-freelance", () => {
+    const result = ingest.handle(
+      req({
+        body: {
+          type: "scheduling_click",
+          path: "/de/",
+          placement: "mobile-freelance",
+          locale: "de",
+        },
+      }),
+    );
+    expect(result).toEqual({ ok: true, status: 204 });
+  });
+
   it("accepts offering-aware placements such as lane-coaching", () => {
     const result = ingest.handle(
       req({
