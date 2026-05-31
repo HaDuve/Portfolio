@@ -15,37 +15,50 @@ describe("credibilityStripItems", () => {
   });
 
   it("links shipped products and GitHub to real URLs", () => {
-    const items = credibilityStripItems("de");
-    const byId = Object.fromEntries(items.map((item) => [item.id, item]));
+    const de = Object.fromEntries(
+      credibilityStripItems("de").map((item) => [item.id, item]),
+    );
+    const en = Object.fromEntries(
+      credibilityStripItems("en").map((item) => [item.id, item]),
+    );
 
-    expect(byId["wikifolio"].href).toBe(
+    expect(de["wikifolio"].href).toBe(
       "https://apps.apple.com/de/app/wikifolio/id6476974452",
     );
-    expect(byId["budget-for-nomads"].href).toBe(
+    expect(en["wikifolio"].href).toBe(
+      "https://apps.apple.com/app/wikifolio/id6476974452",
+    );
+    expect(de["budget-for-nomads"].href).toBe(
       "https://apps.apple.com/app/budget-for-nomads/id6446042796",
     );
-    expect(byId["github"].href).toBe("https://github.com/HaDuve");
-    expect(byId["location"].href).toBeUndefined();
-    expect(byId["senior"].href).toBeUndefined();
+    expect(de["github"].href).toBe("https://github.com/HaDuve");
+    expect(de["location"].href).toBeUndefined();
+    expect(de["senior"].href).toBeUndefined();
+  });
+
+  it("uses factual senior label without unverified numeric claims", () => {
+    for (const locale of ["de", "en"] as const) {
+      const senior = credibilityStripItems(locale).find((i) => i.id === "senior");
+      expect(senior?.label).toMatch(/Senior freelancer/i);
+      expect(senior?.label).not.toMatch(/\d/);
+    }
   });
 
   it("labels DE proof with App Store and DACH context", () => {
     const byId = Object.fromEntries(
       credibilityStripItems("de").map((item) => [item.id, item.label]),
     );
-    expect(byId["wikifolio"]).toContain("wikifolio");
+    expect(byId["wikifolio"]).toBe("wikifolio · live im App Store");
     expect(byId["budget-for-nomads"]).toMatch(/Budget for Nomads|App Store/i);
     expect(byId["location"]).toMatch(/Bremen|DACH/);
-    expect(byId["senior"]).toMatch(/Senior|Jahre/);
   });
 
   it("labels EN proof in plain English", () => {
     const byId = Object.fromEntries(
       credibilityStripItems("en").map((item) => [item.id, item.label]),
     );
-    expect(byId["wikifolio"]).toContain("wikifolio");
+    expect(byId["wikifolio"]).toBe("wikifolio · shipped");
     expect(byId["budget-for-nomads"]).toMatch(/Budget for Nomads|App Store/i);
     expect(byId["location"]).toMatch(/Bremen|DACH/);
-    expect(byId["senior"]).toMatch(/Senior|years/i);
   });
 });
