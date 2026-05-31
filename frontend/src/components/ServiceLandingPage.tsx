@@ -119,7 +119,7 @@ export function ServiceLandingPage({
       {ladder ? (
         <OfferingLadderStrip
           ladder={ladder}
-          className="mt-16 flex flex-wrap items-baseline gap-x-4 gap-y-2 rounded-2xl border border-border bg-card px-5 py-4 text-sm text-stone-600 shadow-sm dark:text-stone-400 sm:gap-x-6 sm:px-6"
+          className="mt-16 flex flex-col gap-2 rounded-2xl border border-border bg-card px-5 py-4 text-sm text-stone-600 shadow-sm dark:text-stone-400 sm:px-6"
         />
       ) : null}
 
