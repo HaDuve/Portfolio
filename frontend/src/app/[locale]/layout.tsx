@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Header } from "@/components/Header";
 import { JsonLd } from "@/app/json-ld";
+import profile from "@/data/profile.json";
 import { isLocale, siteCopy, type Locale } from "@/lib/i18n";
 
 export function generateStaticParams() {
@@ -80,7 +81,7 @@ export default async function LocaleLayout({ children, params }: Props) {
   return (
     <>
       <JsonLd locale={locale} />
-      <Header locale={locale} />
+      <Header locale={locale} schedulingUrl={profile.schedulingUrl} />
       {children}
     </>
   );

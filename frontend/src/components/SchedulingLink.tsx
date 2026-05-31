@@ -15,6 +15,7 @@ type Props = {
   locale: Locale;
   className?: string;
   children: ReactNode;
+  onClick?: () => void;
 };
 
 export function SchedulingLink({
@@ -23,6 +24,7 @@ export function SchedulingLink({
   locale,
   className,
   children,
+  onClick,
 }: Props) {
   const pathname = usePathname();
 
@@ -37,6 +39,7 @@ export function SchedulingLink({
         sendSchedulingClick(
           buildSchedulingClickPayload(path, placement, locale),
         );
+        onClick?.();
       }}
     >
       {children}

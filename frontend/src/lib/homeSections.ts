@@ -10,6 +10,7 @@ export const HOME_PAGE_SECTION_IDS = [
   "hero",
   "hub",
   "freelance",
+  "coaching",
   "projects",
   "skills",
   "contact",
@@ -38,6 +39,12 @@ export const HOME_NAV_SECTIONS: readonly HomeNavSection[] = [
     labelDe: "Freelance",
     labelEn: "Freelance",
     id: "freelance",
+  },
+  {
+    hash: "coaching",
+    labelDe: "Coaching",
+    labelEn: "Coaching",
+    id: "coaching",
   },
   {
     hash: "projects",
