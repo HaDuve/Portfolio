@@ -5,8 +5,11 @@ export type HomeSeoCopy = {
   title: string;
 };
 
-/** Set after owner validates volume/difficulty in a keyword tool (issue #35). */
-export const homePrimaryKeyword: { de: string; en: string } | null = null;
+/** Owner-validated primary head terms (issue #35, Google Keyword Planner). */
+export const homePrimaryKeyword: { de: string; en: string } = {
+  de: "App Entwickler",
+  en: "App Developer",
+};
 
 const brandFirstMeta: Record<Locale, HomeSeoCopy> = {
   de: {
@@ -21,26 +24,22 @@ const brandFirstMeta: Record<Locale, HomeSeoCopy> = {
   },
 };
 
-function keywordFirstMeta(
-  locale: Locale,
-  keyword: { de: string; en: string },
-): HomeSeoCopy {
-  const head = keyword[locale];
-  if (locale === "de") {
-    return {
-      title: `${head} — Hannes Duve (DACH)`,
-      description: brandFirstMeta.de.description,
-    };
-  }
-  return {
-    title: `${head} — Hannes Duve (DACH & EU)`,
-    description: brandFirstMeta.en.description,
-  };
-}
+const keywordFirstMeta: Record<Locale, HomeSeoCopy> = {
+  de: {
+    title: `${homePrimaryKeyword.de} — Hannes Duve (DACH)`,
+    description:
+      "Senior App Entwickler (Freelancer) für Mobile, Web & Backend — Next.js, React Native/Expo, Node, Cloud. Transparente App-Entwicklung-Kosten ab 60 €/h. Remote für KMU in DE, AT & CH — oder Coaching, wenn du deine eigene App erstellen willst.",
+  },
+  en: {
+    title: `${homePrimaryKeyword.en} — Hannes Duve (DACH & EU)`,
+    description:
+      "Freelance app developer for mobile, web & backend — Next.js, React Native/Expo, Node, cloud. Transparent pricing from €60/h. Remote for DACH & EU — or coaching if you want to build your own app.",
+  },
+};
 
 export function homeSeoMeta(locale: Locale): HomeSeoCopy {
   if (homePrimaryKeyword) {
-    return keywordFirstMeta(locale, homePrimaryKeyword);
+    return keywordFirstMeta[locale];
   }
   return brandFirstMeta[locale];
 }

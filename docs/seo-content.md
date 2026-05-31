@@ -4,14 +4,14 @@ Content/keyword strategy. Plumbing (locale routing, slugs, sitemap, hreflang, OG
 
 ## Intent map (one primary head term per page)
 
-> ⚠️ **Verify search volume in a real keyword tool before locking slugs/titles.** Do not assume German volumes. Home keyword choice is deferred until research is done.
+> Home primary keyword locked 2026-05-31 (owner validation via Google Keyword Planner). Landing supporting terms documented in intent map.
 
 | Page | Audience | Primary target (to verify) |
 |---|---|---|
-| Home `/de`, `/en` | brand + both | **Pending owner validation** — see [Home keyword research](#home-keyword-research-2026-05-31) |
-| `/de/app-entwickeln-freelancer` | SME Client | "App entwickeln lassen" |
+| Home `/de`, `/en` | brand + both | **App Entwickler** (DE) · **App Developer** (EN) — validated owner, Google Keyword Planner |
+| `/de/app-entwickeln-freelancer` | SME Client | "App entwickeln lassen" · supporting: **app entwickeln kosten** |
 | `/en/freelance-app-development` | intl SME | "freelance app development" |
-| `/de/programmieren-lernen-mit-ki` | beginner / engineer | "programmieren lernen mit KI" |
+| `/de/programmieren-lernen-mit-ki` | beginner / engineer | "programmieren lernen mit KI" · supporting: **eigene app erstellen** |
 | `/en/vibe-coding-coach` | intl | "vibe coding coach" |
 
 ## Structured data (JSON-LD) — invest
@@ -50,20 +50,18 @@ Preliminary research for issue #35. **Volumes and difficulty are not verified** 
 | **3** | React Native Freelancer | React Native freelancer | Transactional — hire mobile specialist | Niche portfolios ([mariusstiedl.com](https://mariusstiedl.com/)), platform role pages ([Fratch](https://fratch.io/de/role/react-native-developer/frankfurt)), job boards | Matches stack strength (Expo/RN) | **Low** with LPs |
 | **4** | App Entwickler Freelancer | freelance app developer | Transactional — DE hiring phrasing | Mix of agencies and *App entwickeln lassen* content ([TJ Labs](https://tj-labs.de/blog-posts/wie-viel-kostet-es-eine-app-entwickeln-zu-lassen)) | Readable for DACH SMEs | **High** — collides with freelance LP intent |
 
-### Recommendation for keyword-tool validation
+### Owner decision (2026-05-31, Google Keyword Planner)
 
-Validate **rank 1** first (DE *App & Full-Stack Freelancer*, EN *freelance app & full-stack developer*). If volume is negligible or difficulty is extreme, compare **rank 3** (stack wedge) or **stay brand-first** and rely on landing pages for head-term capture.
+| Term | Page assignment | Rationale |
+| --- | --- | --- |
+| **App Entwickler** | Home `/de` (title) | Broad professional identity; fits dual-lane home without colliding with LP *App entwickeln lassen* |
+| **App Developer** | Home `/en` (title) | EN equivalent of home head term |
+| **app entwickeln kosten** | Freelance LP `/de` (supporting) | Pricing/cost intent — matches Offering Ladder + transparent rates; keep out of home title |
+| **eigene app erstellen** | Coaching LP `/de` (supporting) | DIY/build intent — aligns with Vibe-Coding coaching, not hire-a-freelancer |
 
-### Interim state (until validated)
+Locked in `frontend/src/lib/homeSeoMeta.ts`:
 
-Home ships **brand-first** titles via `homeSeoMeta.ts` (`homePrimaryKeyword = null`):
+- DE title: `App Entwickler — Hannes Duve (DACH)`
+- EN title: `App Developer — Hannes Duve (DACH & EU)`
 
-- DE: `Hannes Duve · App & Full-Stack Freelancer (DACH)`
-- EN: `Hannes Duve · Freelance App & Full-Stack Developer (DACH & EU)`
-
-After owner picks a term: set `homePrimaryKeyword`, run tests, update the intent-map row above.
-
-## Open
-
-- [ ] **Owner validates** shortlist in a keyword tool and picks primary DE + EN terms (#35 HITL).
-- [ ] Lock home `title`/meta in `homeSeoMeta.ts` and record chosen terms in the intent map.
+### Agent shortlist (superseded for home)
