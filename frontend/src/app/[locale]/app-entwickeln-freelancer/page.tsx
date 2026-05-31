@@ -79,7 +79,7 @@ export default async function AppEntwickelnFreelancerPage({ params }: Props) {
 
   return (
     <>
-      <FaqJsonLd items={faq} />
+      <FaqJsonLd items={faq} locale={isEn ? "en" : "de"} />
       <main className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
         <Link
           href={localePath(locale)}

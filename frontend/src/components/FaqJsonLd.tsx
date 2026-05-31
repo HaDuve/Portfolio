@@ -1,20 +1,11 @@
 import type { FaqItem } from "@/data/appEntwickelnFreelancer";
+import { buildFaqJsonLdPayload } from "@/lib/faqJsonLd";
+import type { Locale } from "@/lib/i18n";
 
-type Props = { items: FaqItem[] };
+type Props = { items: FaqItem[]; locale: Locale };
 
-export function FaqJsonLd({ items }: Props) {
-  const payload = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: items.map((item) => ({
-      "@type": "Question",
-      name: item.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: item.answer,
-      },
-    })),
-  };
+export function FaqJsonLd({ items, locale }: Props) {
+  const payload = buildFaqJsonLdPayload(items, locale);
 
   return (
     <script
