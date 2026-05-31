@@ -6,12 +6,12 @@ import {
 } from "./homeSections";
 
 describe("homeSections", () => {
-  it("lists hub before services in page section order", () => {
+  it("lists hub before freelance in page section order", () => {
     const hubIndex = HOME_PAGE_SECTION_IDS.indexOf("hub");
-    const servicesIndex = HOME_PAGE_SECTION_IDS.indexOf("leistungen");
+    const freelanceIndex = HOME_PAGE_SECTION_IDS.indexOf("freelance");
     expect(hubIndex).toBeGreaterThan(-1);
-    expect(servicesIndex).toBeGreaterThan(-1);
-    expect(hubIndex).toBeLessThan(servicesIndex);
+    expect(freelanceIndex).toBeGreaterThan(-1);
+    expect(hubIndex).toBeLessThan(freelanceIndex);
   });
 
   it("excludes sections removed by the hub restructure", () => {
