@@ -32,17 +32,17 @@ Adopt the OKLch token set; map into Tailwind v4 `@theme`. Same palette as today,
 
 ## Motion (decision: keep-for-now under guardrails)
 
-- **Dropped:** `HeroFan`; **Embla carousel** (home uses static single-image featured cards — re-add only if a project gains multiple screenshots).
-- **Keep:** Lenis smooth-scroll (gated on `prefers-reduced-motion`), scroll reveals, `IntroSequence`, GSAP parallax (`ParallaxMedia`/`ParallaxLetter`) — **on a budget**.
+- **Dropped:** `HeroFan`; **Embla carousel** and GSAP parallax project cards (`ParallaxMedia`/`ParallaxLetter`/`ProjectMediaCarousel`) — home featured work is static images in the Freelance Lane.
+- **Keep:** Lenis smooth-scroll (gated on `prefers-reduced-motion`), scroll reveals, `IntroSequence` — **on a budget**.
 - **Guardrails (non-negotiable):**
   - `prefers-reduced-motion` honored everywhere.
   - **Performance budget:** mobile Lighthouse Performance ≥ 90; healthy LCP/INP. Measure after porting.
   - **IntroSequence:** once per session, < ~800ms, must not block the LCP element.
-  - **Documented cut order if budget breaks:** parallax → IntroSequence.
+  - **Documented cut order if budget breaks:** IntroSequence → Lenis.
 
 ## Stack
 
-Next.js 16 (static export), React 19, Tailwind v4 (`@theme`), Lenis, GSAP, Motion, Embla. Bilingual `[locale]` routing retained.
+Next.js 16 (static export), React 19, Tailwind v4 (`@theme`), Lenis, GSAP, Motion. Bilingual `[locale]` routing retained.
 
 ## Responsive contract
 
