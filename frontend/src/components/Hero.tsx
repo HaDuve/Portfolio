@@ -10,7 +10,7 @@ import { type Locale } from "@/lib/i18n";
 import { SchedulingLink } from "./SchedulingLink";
 
 const ease = [0.16, 1, 0.3, 1] as const;
-const DEFAULT_FRONT_PROOF_SHOT: HeroProofShot["variant"] = "browser";
+const DEFAULT_FRONT_PROOF_SHOT: HeroProofShot["variant"] = "phone";
 
 type Props = { profile: Profile; introDone: boolean; locale: Locale };
 
@@ -19,7 +19,7 @@ function proofShotFrontFromPointer(
   rect: DOMRect,
 ): HeroProofShot["variant"] {
   const ratio = (clientX - rect.left) / rect.width;
-  return ratio > 0.52 ? "phone" : "browser";
+  return ratio > 0.58 ? "phone" : "browser";
 }
 
 export function Hero({ profile, introDone, locale }: Props) {
@@ -123,8 +123,8 @@ export function Hero({ profile, introDone, locale }: Props) {
               onFocus={() => setFrontProofShot(shot.variant)}
               className={
                 shot.variant === "phone"
-                  ? `relative mx-auto w-[min(70%,220px)] overflow-hidden rounded-[1.75rem] border border-border bg-card shadow-lg sm:w-[min(55%,240px)] lg:absolute lg:right-0 lg:top-1/2 lg:w-[min(68%,260px)] lg:-translate-y-1/2 ${frontProofShot === shot.variant ? "z-10" : "z-0"}`
-                  : `relative mt-4 w-full overflow-hidden rounded-xl border border-border bg-card shadow-md lg:absolute lg:left-0 lg:top-1/2 lg:mt-0 lg:w-full lg:-translate-x-6 lg:-translate-y-1/2 ${frontProofShot === shot.variant ? "z-10 lg:shadow-lg" : "z-0"}`
+                  ? `relative mx-auto w-[min(70%,220px)] overflow-hidden rounded-[1.75rem] border border-border bg-card shadow-lg sm:w-[min(55%,240px)] lg:absolute lg:-right-4 lg:top-1/2 lg:w-[min(68%,260px)] lg:-translate-y-1/2 ${frontProofShot === shot.variant ? "z-10 lg:shadow-lg" : "z-0"}`
+                  : `relative mt-4 w-full overflow-hidden rounded-xl border border-border bg-card shadow-md lg:absolute lg:left-0 lg:top-1/2 lg:mt-0 lg:w-full lg:-translate-x-12 lg:-translate-y-1/2 ${frontProofShot === shot.variant ? "z-10 lg:shadow-lg" : "z-0"}`
               }
             >
               <Image
@@ -133,7 +133,7 @@ export function Hero({ profile, introDone, locale }: Props) {
                 width={shot.width}
                 height={shot.height}
                 className="h-auto w-full object-cover"
-                priority={shot.variant === "browser"}
+                priority={shot.variant === "phone"}
               />
             </figure>
           ))}
