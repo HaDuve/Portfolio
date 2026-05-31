@@ -1,4 +1,5 @@
 import { AhrefsAnalytics } from "@/components/AhrefsAnalytics";
+import { GoogleAdsTag } from "@/components/GoogleAdsTag";
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
@@ -59,6 +60,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        <GoogleAdsTag />
         <link rel="preload" href="/fan-object.png" as="image" type="image/png" />
         <AhrefsAnalytics />
       </head>
