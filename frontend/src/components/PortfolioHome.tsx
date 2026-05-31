@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useLayoutEffect, useState, useSyncExternalStore } from "react";
 import { Hero } from "@/components/Hero";
+import { CredibilityStrip } from "@/components/CredibilityStrip";
 import { SchedulingLink } from "@/components/SchedulingLink";
 import { HubBlock } from "@/components/HubBlock";
 import { IntroSequence } from "@/components/IntroSequence";
@@ -112,6 +113,7 @@ export function PortfolioHome({
           aria-hidden={introPhase === "playing" && !prefersReducedMotion}
         >
           <Hero profile={profile} introDone={introDone} locale={locale} />
+          <CredibilityStrip locale={locale} />
 
           <main className="mx-auto w-full max-w-6xl flex-1 px-4 pb-24 pt-16 sm:px-6 sm:pt-20">
             <HubBlock locale={locale} />
