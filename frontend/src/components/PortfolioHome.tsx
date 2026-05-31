@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useLayoutEffect, useState, useSyncExternalStore } from "react";
+import { useLayoutEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { Hero } from "@/components/Hero";
 import { CredibilityStrip } from "@/components/CredibilityStrip";
 import { FreelanceLane } from "@/components/FreelanceLane";
@@ -11,7 +11,12 @@ import { siteChromeCopy } from "@/lib/siteChromeCopy";
 import { skillsCompactTags, type SkillsCategory } from "@/lib/skillsCompactTags";
 import { IntroSequence } from "@/components/IntroSequence";
 import { LenisProvider } from "@/components/LenisProvider";
-import { SectionHeading } from "@/components/SectionHeading";
+import { SectionHeadingReveal } from "@/components/SectionHeadingReveal";
+import {
+  markIntroPlayedThisSession,
+  readIntroPlayedThisSession,
+} from "@/lib/introSession";
+import { resolveMotionFeatures } from "@/lib/motionBudget";
 import type { Profile, Project } from "@/types/content";
 import {
   datenschutzPath,
@@ -27,32 +32,6 @@ function subscribeReducedMotion(cb: () => void) {
 
 function getReducedMotionSnapshot() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-}
-
-/** After the intro finishes, do not show it again for this many ms (per-tab “session” feel via localStorage). */
-const INTRO_BLOCK_MS = 10 * 60 * 1000;
-const INTRO_STORAGE_KEY = "portfolioIntroBlockedUntil";
-
-function readIntroBlockedUntil(): number | null {
-  try {
-    const raw = localStorage.getItem(INTRO_STORAGE_KEY);
-    if (!raw) return null;
-    const n = parseInt(raw, 10);
-    return Number.isFinite(n) ? n : null;
-  } catch {
-    return null;
-  }
-}
-
-function writeIntroBlockedUntil(): void {
-  try {
-    localStorage.setItem(
-      INTRO_STORAGE_KEY,
-      String(Date.now() + INTRO_BLOCK_MS),
-    );
-  } catch {
-    /* quota / private mode */
-  }
 }
 
 type SkillsData = {
@@ -83,27 +62,31 @@ export function PortfolioHome({
     getReducedMotionSnapshot,
     () => false,
   );
+  const motion = useMemo(
+    () => resolveMotionFeatures(prefersReducedMotion),
+    [prefersReducedMotion],
+  );
 
   useLayoutEffect(() => {
-    if (prefersReducedMotion) return;
-    const until = readIntroBlockedUntil();
-    if (until !== null && Date.now() < until) {
+    if (!motion.introSequence) return;
+    if (readIntroPlayedThisSession()) {
       queueMicrotask(() => {
         setIntroPhase("done");
       });
     }
-  }, [prefersReducedMotion]);
+  }, [motion.introSequence]);
 
   /** Hero motion: unblock when intro fade starts (not only when DOM unmounts). */
-  const introDone = prefersReducedMotion || introPhase !== "playing";
-  const showIntro = !prefersReducedMotion && introPhase !== "done";
+  const introDone =
+    prefersReducedMotion || !motion.introSequence || introPhase !== "playing";
+  const showIntro = motion.introSequence && introPhase !== "done";
 
   return (
-    <LenisProvider enabled={false}>
+    <LenisProvider enabled={motion.smoothScroll}>
       <div id="top" className="relative flex flex-1 flex-col">
         <div
-          className={`flex flex-1 flex-col ${introPhase === "playing" && !prefersReducedMotion ? "pointer-events-none" : ""}`}
-          aria-hidden={introPhase === "playing" && !prefersReducedMotion}
+          className={`flex flex-1 flex-col ${introPhase === "playing" && showIntro ? "pointer-events-none" : ""}`}
+          aria-hidden={introPhase === "playing" && showIntro}
         >
           <Hero profile={profile} introDone={introDone} locale={locale} />
           <CredibilityStrip locale={locale} />
@@ -123,7 +106,7 @@ export function PortfolioHome({
             </div>
 
             <section id="skills" className="mt-24 scroll-mt-28">
-              <SectionHeading
+              <SectionHeadingReveal
                 eyebrow={chrome.skills.eyebrow}
                 title={chrome.skills.title}
                 description={chrome.skills.description}
@@ -141,7 +124,7 @@ export function PortfolioHome({
             </section>
 
             <section id="contact" className="mt-28 scroll-mt-28">
-              <SectionHeading
+              <SectionHeadingReveal
                 eyebrow={chrome.contact.eyebrow}
                 title={chrome.contact.title}
                 description={chrome.contact.description}
@@ -241,7 +224,7 @@ export function PortfolioHome({
             fullName={profile.name}
             onFadeStart={() => setIntroPhase("fading")}
             onComplete={() => {
-              writeIntroBlockedUntil();
+              markIntroPlayedThisSession();
               setIntroPhase("done");
             }}
           />

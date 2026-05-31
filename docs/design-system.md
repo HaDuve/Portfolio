@@ -38,7 +38,7 @@ Adopt the OKLch token set; map into Tailwind v4 `@theme`. Same palette as today,
   - `prefers-reduced-motion` honored everywhere.
   - **Performance budget:** mobile Lighthouse Performance ≥ 90; healthy LCP/INP. Measure after porting.
   - **IntroSequence:** once per session, < ~800ms, must not block the LCP element.
-  - **Documented cut order if budget breaks:** IntroSequence → Lenis.
+  - **2026-05-31 local Lighthouse (mobile, simulated throttling, static export via `serve out`):** Performance **83** with full motion; LCP **4.7s** (IntroSequence overlay); INP **47ms**. Applied cut **IntroSequence** (`ACTIVE_MOTION_CUTS.introSequence` in `frontend/src/lib/motionBudget.ts`) → **91** Performance, LCP **3.5s**. Lenis cut not required.
 
 ## Stack
 

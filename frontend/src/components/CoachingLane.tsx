@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { SchedulingLink } from "@/components/SchedulingLink";
-import { SectionHeading } from "@/components/SectionHeading";
+import { SectionHeadingReveal } from "@/components/SectionHeadingReveal";
 import {
   coachingLaneFaq,
   coachingLaneSection,
@@ -26,7 +26,7 @@ export function CoachingLane({ locale, schedulingUrl }: Props) {
       className="scroll-mt-28"
       aria-label={locale === "en" ? "AI coding coaching" : "KI-Coaching"}
     >
-      <SectionHeading
+      <SectionHeadingReveal
         eyebrow={section.eyebrow}
         title={section.title}
         description={section.description}

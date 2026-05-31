@@ -42,6 +42,15 @@ describe("freelanceLaneFeaturedProjects", () => {
     }
   });
 
+  it("uses a single static image per featured card (no carousel)", () => {
+    for (const locale of ["de", "en"] as const) {
+      for (const project of freelanceLaneFeaturedProjects(locale, projects)) {
+        expect(project.imageSrc).toMatch(/^\/(assets|projects)\//);
+        expect(project.imageSrc).not.toContain(",");
+      }
+    }
+  });
+
   it("provides localized copy without empty fields", () => {
     for (const locale of ["de", "en"] as const) {
       for (const project of freelanceLaneFeaturedProjects(locale, projects)) {

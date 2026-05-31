@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { SchedulingLink } from "@/components/SchedulingLink";
-import { SectionHeading } from "@/components/SectionHeading";
+import { SectionHeadingReveal } from "@/components/SectionHeadingReveal";
 import { freelanceLaneSection } from "@/lib/freelanceLane";
 import { freelanceLaneFeaturedProjects } from "@/lib/freelanceLaneFeatured";
 import { homeServiceCards } from "@/lib/homeServices";
@@ -27,7 +27,7 @@ export function FreelanceLane({ locale, schedulingUrl, projects }: Props) {
       className="scroll-mt-28"
       aria-label={locale === "en" ? "Freelance development" : "Freelance Entwicklung"}
     >
-      <SectionHeading
+      <SectionHeadingReveal
         eyebrow={section.eyebrow}
         title={section.title}
         description={section.description}
