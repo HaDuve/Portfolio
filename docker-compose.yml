@@ -43,6 +43,7 @@ services:
       dockerfile: Dockerfile
       args:
         NEXT_PUBLIC_ANALYTICS_INGEST_KEY: ${ANALYTICS_INGEST_SECRET:?set on server}
+        NEXT_PUBLIC_AHREFS_KEY: ${NEXT_PUBLIC_AHREFS_KEY:-}
     restart: "no"
     volumes:
       - site_data:/site

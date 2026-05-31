@@ -1,3 +1,5 @@
+import { homeSeoMeta } from "./homeSeoMeta";
+
 export const locales = ["de", "en"] as const;
 export type Locale = (typeof locales)[number];
 
@@ -80,17 +82,7 @@ export function absoluteUrl(path: string): string {
 }
 
 export const siteCopy = {
-  de: {
-    title:
-      "App entwickeln & Full-Stack — Freelancer Hannes Duve (DACH)",
-    description:
-      "App entwickeln, Webapps und Backends bauen: Senior-Freelancer (Next.js, React Native/Expo, Node, Cloud). App beauftragen — remote für KMU in DE, AT & CH.",
-  },
-  en: {
-    title:
-      "Freelance app & full-stack developer — Hannes Duve (DACH & EU)",
-    description:
-      "Hire a freelance app developer for web apps, mobile (React Native/Expo), and backends — Next.js, Node, cloud. Remote for SMEs in Germany, Austria, Switzerland, and beyond.",
-  },
+  de: homeSeoMeta("de"),
+  en: homeSeoMeta("en"),
 } as const;
 

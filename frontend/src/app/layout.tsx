@@ -1,3 +1,4 @@
+import { AhrefsAnalytics } from "@/components/AhrefsAnalytics";
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
@@ -59,6 +60,7 @@ export default function RootLayout({
     >
       <head>
         <link rel="preload" href="/fan-object.png" as="image" type="image/png" />
+        <AhrefsAnalytics />
       </head>
       <body className="flex min-h-full flex-col bg-background text-foreground">
         <Script id="lang-init" strategy="beforeInteractive">
