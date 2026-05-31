@@ -1,4 +1,4 @@
-import type { FaqItem } from "./appEntwickelnFreelancer";
+import type { FaqItem, ScopeExample } from "./appEntwickelnFreelancer";
 
 export const coachingMeta = {
   de: {
@@ -15,9 +15,10 @@ export const coachingMeta = {
 
 export const coachingSections = {
   de: {
+    eyebrow: "Vibe Coding · Programmieren mit KI",
     h1: "Programmieren lernen mit KI — Vibe Coding Coaching",
     lead:
-      "Du willst mit Cursor und Claude eigene Projekte umsetzen — aber steckst fest oder weißt nicht, wie du anfangen sollst? Im 1:1 Coaching arbeiten wir an deinem konkreten Projekt: Nach jeder Session verlässt du die Sitzung entsperrt und mit einem Workflow, den du selbst wiederholen kannst.",
+      "Du willst mit Cursor und Claude eigene Projekte umsetzen — aber steckst fest oder weißt nicht, wie du anfangen sollst? Im 1:1 Coaching arbeiten wir an deinem konkreten Projekt: Nach jeder Session verlässt du die Sitzung entsperrt und mit einem Workflow, den du selbst wiederholen kannst. Gleiche Qualitätsidee wie bei meiner Freelance-Arbeit — nur dass du selbst baust und ich den Weg zeige.",
     toolsTitle: "Werkzeuge & Ansatz",
     tools:
       "Wir arbeiten mit Cursor als KI-Editor und Claude als Underlying Model. Kein Setup-Stress: Ich führe dich durch die Einrichtung, wenn nötig. Der Fokus liegt auf deinem Projekt — nicht auf abstrakter Theorie.",
@@ -26,6 +27,27 @@ export const coachingSections = {
       "Besonders sinnvoll für nicht-technische oder semi-technische Gründer und Einsteiger, die eigene Ideen mit Cursor und Claude umsetzen wollen — ohne Vorkenntnisse in einer bestimmten Programmiersprache.",
     alsoFit:
       "Auch passend für Software-Engineers, die bereits produktiv coden und Agent-Workflows, Debugging und Code-Reviews mit KI-Tools professionalisieren wollen — statt jedes Mal von vorn zu prompten.",
+    scopeTitle: "Typische Vorhaben in Sessions",
+    scopeExamples: [
+      {
+        id: "founder-landing",
+        title: "Landing Page für dein Produkt",
+        description:
+          "Von der Idee zur veröffentlichten Seite: Repo anlegen, Cursor-Workflow, Deployment — du lernst, wie du Änderungen selbst nachziehst, ohne jedes Mal neu zu starten.",
+      },
+      {
+        id: "founder-mvp",
+        title: "Kleines MVP mit Auth und Datenbank",
+        description:
+          "Login, einfaches Datenmodell, eine API — wir bauen Schritt für Schritt und du verstehst, was der generierte Code tut und wie du ihn prüfst.",
+      },
+      {
+        id: "engineer-agents",
+        title: "Agent-Workflows für Engineers",
+        description:
+          "Größere Refactors, Tests, Reviews: wie du Claude/Cursor so einsetzt, dass der Output in eurem Stack bleibt und nicht nur Demo-Code liefert.",
+      },
+    ] satisfies ScopeExample[],
     processTitle: "Ablauf",
     processSteps: [
       "Kostenloses 30-Min.-Erstgespräch: Dein Projekt, dein Stand, deine Ziele",
@@ -39,9 +61,10 @@ export const coachingSections = {
       "Buche ein kostenloses 30-Minuten-Gespräch — wir schauen gemeinsam, ob Coaching das Richtige für dich ist und was dein nächster Schritt wäre.",
   },
   en: {
+    eyebrow: "Vibe Coding · Coding with AI",
     h1: "Learn to code with AI — Vibe Coding Coaching",
     lead:
-      "You want to build your own projects with Cursor and Claude — but you're stuck or don't know where to start. In 1:1 coaching we work on your specific project: after every session you leave unblocked and with a repeatable workflow.",
+      "You want to build your own projects with Cursor and Claude — but you're stuck or don't know where to start. In 1:1 coaching we work on your specific project: after every session you leave unblocked and with a repeatable workflow. Same quality bar as my freelance work — you build, I show the path.",
     toolsTitle: "Tools & approach",
     tools:
       "We work with Cursor as the AI editor and Claude as the underlying model. No setup frustration: I'll walk you through configuration if needed. The focus is always on your project — not abstract theory.",
@@ -50,6 +73,27 @@ export const coachingSections = {
       "A great fit for non-technical and semi-technical founders and beginners who want to ship their own ideas with Cursor and Claude — without needing prior experience in a specific programming language.",
     alsoFit:
       "Also a fit for software engineers who already ship code and want to professionalize agent workflows, debugging, and code review with AI tools — instead of re-prompting from scratch every time.",
+    scopeTitle: "Typical session topics",
+    scopeExamples: [
+      {
+        id: "founder-landing",
+        title: "Landing page for your product",
+        description:
+          "From idea to a published page: repo setup, Cursor workflow, deployment — you learn how to ship follow-up changes without starting over each time.",
+      },
+      {
+        id: "founder-mvp",
+        title: "Small MVP with auth and a database",
+        description:
+          "Sign-in, a simple data model, an API — we build step by step and you learn what the generated code does and how to review it.",
+      },
+      {
+        id: "engineer-agents",
+        title: "Agent workflows for engineers",
+        description:
+          "Larger refactors, tests, reviews: how to use Claude/Cursor so output fits your stack instead of one-off demo code.",
+      },
+    ] satisfies ScopeExample[],
     processTitle: "Process",
     processSteps: [
       "Free 30-minute intro call: your project, your current level, your goals",

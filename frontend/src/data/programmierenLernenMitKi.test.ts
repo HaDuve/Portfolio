@@ -6,6 +6,7 @@ import {
 } from "./programmierenLernenMitKi";
 
 const REQUIRED_SECTION_KEYS = [
+  "eyebrow",
   "h1",
   "lead",
   "toolsTitle",
@@ -13,6 +14,8 @@ const REQUIRED_SECTION_KEYS = [
   "fitTitle",
   "fit",
   "alsoFit",
+  "scopeTitle",
+  "scopeExamples",
   "processTitle",
   "processSteps",
   "price",
@@ -31,6 +34,12 @@ describe("coachingSections shape", () => {
 
     it(`${locale} processSteps is a non-empty array`, () => {
       expect(coachingSections[locale].processSteps.length).toBeGreaterThan(0);
+    });
+
+    it(`${locale} scopeExamples has at least three items`, () => {
+      expect(coachingSections[locale].scopeExamples.length).toBeGreaterThanOrEqual(
+        3,
+      );
     });
   }
 });
