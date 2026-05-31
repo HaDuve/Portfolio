@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useLayoutEffect, useState, useSyncExternalStore } from "react";
 import { Hero } from "@/components/Hero";
 import { CredibilityStrip } from "@/components/CredibilityStrip";
+import { FreelanceLane } from "@/components/FreelanceLane";
 import { SchedulingLink } from "@/components/SchedulingLink";
 import { HubBlock } from "@/components/HubBlock";
 import { IntroSequence } from "@/components/IntroSequence";
@@ -11,7 +12,7 @@ import { LenisProvider } from "@/components/LenisProvider";
 import { ProjectCard } from "@/components/ProjectCard";
 import { SectionHeading } from "@/components/SectionHeading";
 import type { Profile, Project } from "@/types/content";
-import { homeServiceCards } from "@/lib/homeServices";
+import { projectsForHomeGrid } from "@/lib/homeProjectsGrid";
 import {
   datenschutzPath,
   impressumPath,
@@ -78,9 +79,9 @@ export function PortfolioHome({
   skillsData,
 }: Props) {
   const showEnglish = locale === "en";
-  const serviceCards = homeServiceCards(locale);
-  const featured = projects.find((p) => p.featured);
-  const rest = projects.filter((p) => !p.featured);
+  const gridProjects = projectsForHomeGrid(projects);
+  const featured = gridProjects.find((p) => p.featured);
+  const rest = gridProjects.filter((p) => !p.featured);
 
   const [introPhase, setIntroPhase] = useState<"playing" | "fading" | "done">(
     "playing",
@@ -118,42 +119,13 @@ export function PortfolioHome({
           <main className="mx-auto w-full max-w-6xl flex-1 px-4 pb-24 pt-16 sm:px-6 sm:pt-20">
             <HubBlock locale={locale} />
 
-            <section id="leistungen" className="mt-24 scroll-mt-28">
-              <SectionHeading
-                eyebrow={showEnglish ? "Services" : "Angebot"}
-                title={showEnglish ? "Services" : "Leistungen"}
-                description={
-                  showEnglish
-                    ? "Web, mobile, and full-stack: from MVP to production-ready delivery."
-                    : "Web, Mobile und Full-Stack: von MVP bis produktionsreif."
-                }
+            <div className="mt-24">
+              <FreelanceLane
+                locale={locale}
+                schedulingUrl={profile.schedulingUrl}
+                projects={projects}
               />
-              {profile.ratesDe && profile.ratesEn ? (
-                <div className="mt-8 max-w-2xl rounded-2xl border border-border bg-card p-6 shadow-sm">
-                  <p className="font-mono text-xs uppercase tracking-widest text-muted">
-                    {showEnglish ? "Rates" : "Preise"}
-                  </p>
-                  <p className="mt-3 text-sm leading-relaxed text-stone-600 dark:text-stone-400">
-                    {showEnglish ? profile.ratesEn : profile.ratesDe}
-                  </p>
-                </div>
-              ) : null}
-              <div className="mt-10 grid gap-6 sm:grid-cols-2">
-                {serviceCards.map((card) => (
-                  <div
-                    key={card.id}
-                    className="rounded-2xl border border-border bg-card p-6 shadow-sm"
-                  >
-                    <h3 className="font-display text-xl font-normal text-foreground">
-                      {card.title}
-                    </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-stone-600 dark:text-stone-400">
-                      {card.description}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </section>
+            </div>
 
             <section id="projects" className="mt-24 scroll-mt-28">
               <SectionHeading

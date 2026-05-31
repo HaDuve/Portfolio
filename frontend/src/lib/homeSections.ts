@@ -9,7 +9,7 @@ export const REMOVED_HOME_SECTION_IDS = [
 export const HOME_PAGE_SECTION_IDS = [
   "hero",
   "hub",
-  "leistungen",
+  "freelance",
   "projects",
   "skills",
   "contact",
@@ -34,10 +34,10 @@ export const HOME_NAV_SECTIONS: readonly HomeNavSection[] = [
     id: "hub",
   },
   {
-    hash: "leistungen",
-    labelDe: "Leistungen",
-    labelEn: "Services",
-    id: "leistungen",
+    hash: "freelance",
+    labelDe: "Freelance",
+    labelEn: "Freelance",
+    id: "freelance",
   },
   {
     hash: "projects",

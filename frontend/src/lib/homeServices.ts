@@ -10,9 +10,9 @@ const cards: Record<Locale, HomeServiceCard[]> = {
   de: [
     {
       id: "web",
-      title: "Web & Webapps",
+      title: "Websites & Webapps",
       description:
-        "Next.js-Webapps mit APIs, Auth und SEO — von MVP bis produktionsreif.",
+        "Next.js mit APIs, Auth und SEO — von MVP bis produktionsreif und wartbar.",
     },
     {
       id: "mobile",
@@ -22,23 +22,23 @@ const cards: Record<Locale, HomeServiceCard[]> = {
     },
     {
       id: "backend",
-      title: "Backend & Cloud",
+      title: "Server & Cloud",
       description:
-        "Node, PostgreSQL, Prisma, Supabase und AWS — passend zu Budget und Team.",
+        "Node, PostgreSQL und AWS — stabil, wartbar und passend zu Budget und Team.",
     },
     {
       id: "quality",
       title: "Qualität & Betrieb",
       description:
-        "Tests, CI/CD und pragmatische Security — echtes Engineering, kein Vibe Coding.",
+        "Tests, CI/CD und pragmatische Security — verlässlicher Betrieb statt Quick Fixes.",
     },
   ],
   en: [
     {
       id: "web",
-      title: "Web & web apps",
+      title: "Websites & web apps",
       description:
-        "Next.js apps with APIs, auth, and SEO-ready delivery from MVP to production.",
+        "Next.js apps with APIs, auth, and SEO — from MVP to production-ready and maintainable.",
     },
     {
       id: "mobile",
@@ -48,15 +48,15 @@ const cards: Record<Locale, HomeServiceCard[]> = {
     },
     {
       id: "backend",
-      title: "Backend & Cloud",
+      title: "Server & cloud",
       description:
-        "Node.js, PostgreSQL, Prisma, Supabase, and AWS — shaped for your team and budget.",
+        "Node.js, PostgreSQL, and AWS — stable, maintainable, shaped for your team and budget.",
     },
     {
       id: "quality",
       title: "Quality & operations",
       description:
-        "Tests, CI/CD, and pragmatic security — real engineering — not vibe coding.",
+        "Tests, CI/CD, and pragmatic security — reliable operations instead of quick fixes.",
     },
   ],
 };

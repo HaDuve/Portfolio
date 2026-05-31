@@ -2,10 +2,11 @@ import { describe, it, expect } from "vitest";
 import { homeServiceCards, type HomeServiceCard } from "./homeServices";
 import type { Locale } from "./i18n";
 
-const QUALITY_TONE_ANCHOR: Record<Locale, string> = {
-  en: "real engineering — not vibe coding.",
-  de: "echtes Engineering, kein Vibe Coding.",
-};
+const BANNED_ANTI_VIBE_PHRASES = [
+  /kein Vibe Coding/i,
+  /not vibe coding/i,
+  /weggeworfen/i,
+];
 
 function sentenceCount(text: string): number {
   const trimmed = text.trim();
@@ -30,12 +31,26 @@ describe("homeServiceCards", () => {
   );
 
   it.each<Locale>(["de", "en"])(
-    "anchors Quality & ops with the tone line in %s",
+    "avoids anti–vibe-coding framing in %s service copy",
     (locale) => {
-      const quality = homeServiceCards(locale).find((c) => c.id === "quality");
-      expect(quality?.description).toContain(QUALITY_TONE_ANCHOR[locale]);
+      const copy = homeServiceCards(locale)
+        .map((c) => `${c.title} ${c.description}`)
+        .join(" ");
+      for (const phrase of BANNED_ANTI_VIBE_PHRASES) {
+        expect(copy).not.toMatch(phrase);
+      }
     },
   );
+
+  it("uses plain-German service titles in DE", () => {
+    const titles = homeServiceCards("de").map((c) => c.title);
+    expect(titles).toEqual([
+      "Websites & Webapps",
+      "Mobile Apps",
+      "Server & Cloud",
+      "Qualität & Betrieb",
+    ]);
+  });
 
   it("uses stable card ids across locales", () => {
     const ids = (cards: HomeServiceCard[]) => cards.map((c) => c.id);
