@@ -78,7 +78,7 @@ fi
 
 echo "Funnel report → ${SSH_TARGET}:${REMOTE_DIR} (${FUNNEL_FROM} … ${FUNNEL_TO})"
 
-ssh "$SSH_TARGET" bash -s <<REMOTE
+ssh "$SSH_TARGET" bash -s <<REMOTE | sed 's/\t/,/g' >"$REPORT_FILE"
 set -euo pipefail
 REMOTE_DIR="${REMOTE_DIR}"
 FUNNEL_FROM="${FUNNEL_FROM}"
@@ -139,7 +139,6 @@ docker compose run --rm --no-deps \
   --log '/var/log/caddy/access*.log' \
   \${PLACEMENT_FLAG}
 REMOTE
-  | sed 's/\t/,/g' >"$REPORT_FILE"
 
 echo "Saved report: ${REPORT_FILE}"
 cat "$REPORT_FILE"

@@ -1,0 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap");
+
+:root {
+  --bg: oklch(97.5% 0.003 85);
+  --surface: oklch(99% 0.002 85);
+  --fg: oklch(18% 0.012 50);
+  --muted: oklch(46% 0.014 70);
+  --border: oklch(88% 0.006 85);
+  --accent: oklch(52% 0.20 275);
+  --accent-muted: oklch(52% 0.20 275 / 0.10);
+  --accent-fg: oklch(99% 0.002 85);
+
+  --font-display: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --radius: 0.875rem;
+  --radius-lg: 1.125rem;
+  --ease: cubic-bezier(0.23, 1, 0.32, 1);
+  --max: 68rem;
+  --nav-h: 4rem;
+}
+
+[data-theme="dark"] {
+  --bg: oklch(16% 0.012 50);
+  --surface: oklch(20% 0.014 50);
+  --fg: oklch(96% 0.004 85);
+  --muted: oklch(66% 0.012 70);
+  --border: oklch(28% 0.012 50);
+  --accent: oklch(72% 0.14 275);
+  --accent-muted: oklch(72% 0.14 275 / 0.12);
+  --accent-fg: oklch(16% 0.012 50);
+}
