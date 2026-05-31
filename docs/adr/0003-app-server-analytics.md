@@ -1,7 +1,10 @@
 # ADR-0003: App-server analytics for the Lead funnel
 
 ## Status
-Accepted
+Accepted (amended by ADR-0004 redesign — placements are now offering-aware)
+
+## Amendment (dual-lane redesign)
+The dual-lane home (ADR-0004) mixes Freelance and Coaching CTAs on one page, so the binary `hero`/`contact` placement can no longer express intent. `SchedulingPlacement` is extended to be **offering-aware**: `header`, `hero-freelance`, `hero-coaching`, `lane-freelance`, `lane-coaching`, `contact-freelance`, `contact-coaching`; Landing Pages keep `cta`. The click payload shape and the enumerated call-site list (`scheduling-click-sites.ts`) and funnel report update accordingly.
 
 ## Context
 The Site is a static Next.js export on a single app host (Caddy, no database VM). Hannes needs to understand the **Lead funnel**: **Logged page views** and **Scheduling clicks** per Home page and Landing Page (DE/EN), with **placement** on the Home page (hero vs contact).
