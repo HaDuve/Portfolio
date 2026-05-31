@@ -148,7 +148,7 @@ docker compose run --rm \
   --to 2026-05-31 \
   --log '/var/log/caddy/access*.log'
 
-# Home page: hero vs contact placement breakdown
+# Home page: offering + placement breakdown (Freelance vs Coaching intent)
 docker compose run --rm \
   -v portfolio_caddy_logs:/var/log/caddy:ro \
   -v portfolio_analytics_data:/data:ro \

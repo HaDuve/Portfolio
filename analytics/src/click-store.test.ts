@@ -24,14 +24,14 @@ describe("ClickStore", () => {
   it("inserts a scheduling click and aggregates by placement", () => {
     store.insertSchedulingClick({
       path: "/de/",
-      placement: "hero",
+      placement: "hero-freelance",
       locale: "de",
       visitorKey: "abc123",
       receivedAt: "2026-05-22T12:00:00.000Z",
     });
     store.insertSchedulingClick({
       path: "/de/",
-      placement: "contact",
+      placement: "contact-freelance",
       locale: "de",
       visitorKey: "abc123",
       receivedAt: "2026-05-22T12:01:00.000Z",
@@ -40,8 +40,8 @@ describe("ClickStore", () => {
     const rows = store.aggregateByPathPlacement();
     expect(rows).toEqual(
       expect.arrayContaining([
-        { path: "/de/", placement: "hero", count: 1 },
-        { path: "/de/", placement: "contact", count: 1 },
+        { path: "/de/", placement: "hero-freelance", count: 1 },
+        { path: "/de/", placement: "contact-freelance", count: 1 },
       ]),
     );
     expect(rows).toHaveLength(2);
@@ -50,28 +50,28 @@ describe("ClickStore", () => {
   it("aggregates clicks within a received_at range", () => {
     store.insertSchedulingClick({
       path: "/de/",
-      placement: "hero",
+      placement: "hero-freelance",
       locale: "de",
       visitorKey: "k1",
       receivedAt: "2026-05-20T10:00:00.000Z",
     });
     store.insertSchedulingClick({
       path: "/de/",
-      placement: "hero",
+      placement: "hero-freelance",
       locale: "de",
       visitorKey: "k2",
       receivedAt: "2026-05-22T12:00:00.000Z",
     });
     store.insertSchedulingClick({
       path: "/de/",
-      placement: "contact",
+      placement: "contact-freelance",
       locale: "de",
       visitorKey: "k3",
       receivedAt: "2026-05-22T18:00:00.000Z",
     });
     store.insertSchedulingClick({
       path: "/de/",
-      placement: "contact",
+      placement: "contact-freelance",
       locale: "de",
       visitorKey: "k4",
       receivedAt: "2026-05-25T10:00:00.000Z",
@@ -83,8 +83,8 @@ describe("ClickStore", () => {
     );
     expect(inRange).toEqual(
       expect.arrayContaining([
-        { path: "/de/", placement: "hero", count: 1 },
-        { path: "/de/", placement: "contact", count: 1 },
+        { path: "/de/", placement: "hero-freelance", count: 1 },
+        { path: "/de/", placement: "contact-freelance", count: 1 },
       ]),
     );
     expect(inRange).toHaveLength(2);
@@ -93,14 +93,14 @@ describe("ClickStore", () => {
   it("prunes rows older than 12 months", () => {
     store.insertSchedulingClick({
       path: "/en/",
-      placement: "hero",
+      placement: "hero-freelance",
       locale: "en",
       visitorKey: "k1",
       receivedAt: "2024-01-01T00:00:00.000Z",
     });
     store.insertSchedulingClick({
       path: "/en/",
-      placement: "hero",
+      placement: "hero-freelance",
       locale: "en",
       visitorKey: "k2",
       receivedAt: "2026-05-22T12:00:00.000Z",
@@ -109,7 +109,7 @@ describe("ClickStore", () => {
     const deleted = store.pruneOlderThanMonths(12, "2026-05-22T12:00:00.000Z");
     expect(deleted).toBe(1);
     expect(store.aggregateByPathPlacement()).toEqual([
-      { path: "/en/", placement: "hero", count: 1 },
+      { path: "/en/", placement: "hero-freelance", count: 1 },
     ]);
   });
 });

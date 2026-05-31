@@ -236,7 +236,7 @@ export function PortfolioHome({
                   </p>
                   <SchedulingLink
                     href={profile.schedulingUrl}
-                    placement="contact"
+                    placement="contact-freelance"
                     locale={locale}
                     className="mt-2 inline-flex rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-white transition hover:opacity-90 dark:text-stone-950"
                   >

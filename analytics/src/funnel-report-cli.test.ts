@@ -65,7 +65,7 @@ describe("runFunnelReportCli", () => {
     const store = new ClickStore(dbPath);
     store.insertSchedulingClick({
       path: "/de/",
-      placement: "hero",
+      placement: "hero-freelance",
       locale: "de",
       visitorKey: "k1",
       receivedAt: "2026-05-22T12:00:00.000Z",

@@ -223,7 +223,7 @@ function printUsage(): void {
 Options:
   --log PATH              Caddy access log (repeatable; globs supported, e.g. /var/log/caddy/access*.log)
   --db PATH               Click store SQLite (default: ANALYTICS_DB_PATH or /data/clicks.sqlite)
-  --placement-breakdown   Hero vs contact clicks on Home paths (/de/, /en/)
+  --placement-breakdown   Offering + placement clicks on Home paths (/de/, /en/)
 `);
 }
 

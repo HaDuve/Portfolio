@@ -6,6 +6,19 @@ import {
 } from "./click-telemetry";
 import { INSTRUMENTED_SCHEDULING_CLICKS } from "./scheduling-click-sites";
 
+describe("INSTRUMENTED_SCHEDULING_CLICKS", () => {
+  it("lists seven home placements per locale plus four landing ctas", () => {
+    expect(INSTRUMENTED_SCHEDULING_CLICKS).toHaveLength(18);
+    expect(INSTRUMENTED_SCHEDULING_CLICKS).toEqual(
+      expect.arrayContaining([
+        { path: "/de/", placement: "hero-freelance", locale: "de" },
+        { path: "/en/", placement: "hero-coaching", locale: "en" },
+        { path: "/de/app-entwickeln-freelancer/", placement: "cta", locale: "de" },
+      ]),
+    );
+  });
+});
+
 describe("buildSchedulingClickPayload", () => {
   it.each(INSTRUMENTED_SCHEDULING_CLICKS)(
     "builds scheduling_click for $placement on $path",
@@ -30,7 +43,7 @@ describe("createSchedulingClickSender", () => {
     });
 
     const ok = send(
-      buildSchedulingClickPayload("/de/", "hero", "de"),
+      buildSchedulingClickPayload("/de/", "hero-freelance", "de"),
     );
 
     expect(ok).toBe(true);
@@ -47,7 +60,7 @@ describe("createSchedulingClickSender", () => {
       JSON.stringify({
         type: "scheduling_click",
         path: "/de/",
-        placement: "hero",
+        placement: "hero-freelance",
         locale: "de",
       }),
     );

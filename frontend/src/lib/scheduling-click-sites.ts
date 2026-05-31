@@ -1,13 +1,32 @@
 import type { SchedulingPlacement } from "./click-telemetry";
 
-/** All six Calendly SchedulingLink call sites (path, placement, locale). */
+const HOME_PLACEMENTS: SchedulingPlacement[] = [
+  "header",
+  "hero-freelance",
+  "hero-coaching",
+  "lane-freelance",
+  "lane-coaching",
+  "contact-freelance",
+  "contact-coaching",
+];
+
+function homeClicks(locale: "de" | "en"): ReadonlyArray<{
+  path: string;
+  placement: SchedulingPlacement;
+  locale: "de" | "en";
+}> {
+  const path = locale === "de" ? "/de/" : "/en/";
+  return HOME_PLACEMENTS.map((placement) => ({ path, placement, locale }));
+}
+
+/** All Calendly SchedulingLink call sites (dual-lane home per locale + landing cta). */
 export const INSTRUMENTED_SCHEDULING_CLICKS: ReadonlyArray<{
   path: string;
   placement: SchedulingPlacement;
   locale: "de" | "en";
 }> = [
-  { path: "/de/", placement: "hero", locale: "de" },
-  { path: "/de/", placement: "contact", locale: "de" },
+  ...homeClicks("de"),
+  ...homeClicks("en"),
   { path: "/de/app-entwickeln-freelancer/", placement: "cta", locale: "de" },
   { path: "/de/programmieren-lernen-mit-ki/", placement: "cta", locale: "de" },
   { path: "/en/freelance-app-development/", placement: "cta", locale: "en" },

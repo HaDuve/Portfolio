@@ -115,7 +115,7 @@ export function Hero({ profile, introDone, locale }: Props) {
               >
                 <SchedulingLink
                   href={profile.schedulingUrl}
-                  placement="hero"
+                  placement="hero-freelance"
                   locale={locale}
                   className="inline-flex items-center justify-center rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:opacity-90 dark:text-stone-950"
                 >

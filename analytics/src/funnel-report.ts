@@ -4,12 +4,17 @@ import {
 } from "./content-paths.js";
 import type { PathPlacementCount } from "./click-store.js";
 import type { PageViewCount } from "./access-log-parser.js";
+import {
+  offeringIntentFromPlacement,
+  type OfferingIntent,
+} from "./scheduling-placements.js";
 
 export type FunnelRow = {
   path: FunnelContentPath;
   views: number;
   clicks: number;
   clickRate: number | null;
+  offerings?: { offering: OfferingIntent; count: number }[];
   placements?: { placement: string; count: number }[];
 };
 
@@ -36,6 +41,7 @@ export function buildFunnelReport(
       clickRate: pathViews > 0 ? pathClicks / pathViews : null,
     };
     if (options.placementBreakdown && HOME_PATHS.has(path)) {
+      row.offerings = offeringRowsForPath(path, clickCounts);
       row.placements = placementRowsForPath(path, clickCounts);
     }
     return row;
@@ -59,6 +65,11 @@ export function formatFunnelReport(
     lines.push(
       `${row.path}\t${row.views}\t${row.clicks}\t${rate}`,
     );
+    if (options.placementBreakdown && row.offerings?.length) {
+      for (const o of row.offerings) {
+        lines.push(`  offering:${o.offering}\t\t${o.count}\t`);
+      }
+    }
     if (options.placementBreakdown && row.placements?.length) {
       for (const p of row.placements) {
         lines.push(`  ${p.placement}\t\t${p.count}\t`);
@@ -74,6 +85,22 @@ function rollupClicks(clickCounts: PathPlacementCount[]): Map<string, number> {
     byPath.set(row.path, (byPath.get(row.path) ?? 0) + row.count);
   }
   return byPath;
+}
+
+function offeringRowsForPath(
+  path: string,
+  clickCounts: PathPlacementCount[],
+): { offering: OfferingIntent; count: number }[] {
+  const byOffering = new Map<OfferingIntent, number>();
+  for (const row of clickCounts) {
+    if (row.path !== path) continue;
+    const offering = offeringIntentFromPlacement(row.placement);
+    if (!offering) continue;
+    byOffering.set(offering, (byOffering.get(offering) ?? 0) + row.count);
+  }
+  return [...byOffering.entries()]
+    .map(([offering, count]) => ({ offering, count }))
+    .sort((a, b) => a.offering.localeCompare(b.offering));
 }
 
 function placementRowsForPath(

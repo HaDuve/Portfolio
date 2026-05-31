@@ -11,9 +11,9 @@ describe("buildFunnelReport", () => {
     views.set("/en/", 50);
 
     const clicks: PathPlacementCount[] = [
-      { path: "/de/", placement: "hero", count: 2 },
-      { path: "/de/", placement: "contact", count: 1 },
-      { path: "/en/", placement: "hero", count: 4 },
+      { path: "/de/", placement: "hero-freelance", count: 2 },
+      { path: "/de/", placement: "contact-freelance", count: 1 },
+      { path: "/en/", placement: "hero-coaching", count: 4 },
     ];
 
     const rows = buildFunnelReport(views, clicks);
@@ -29,11 +29,32 @@ describe("buildFunnelReport", () => {
     expect(rows.map((r) => r.path)).toEqual([...FUNNEL_CONTENT_PATHS]);
   });
 
+  it("rolls up home placements into freelance and coaching offerings", () => {
+    const views = new Map([["/de/", 10]] as const);
+    const clicks: PathPlacementCount[] = [
+      { path: "/de/", placement: "hero-freelance", count: 2 },
+      { path: "/de/", placement: "lane-coaching", count: 1 },
+      { path: "/de/", placement: "header", count: 1 },
+    ];
+
+    const row = buildFunnelReport(views, clicks, {
+      placementBreakdown: true,
+    }).find((r) => r.path === "/de/");
+
+    expect(row).toMatchObject({ views: 10, clicks: 4 });
+    expect(row?.offerings).toEqual(
+      expect.arrayContaining([
+        { offering: "freelance", count: 2 },
+        { offering: "coaching", count: 1 },
+      ]),
+    );
+  });
+
   it("includes placement breakdown for home paths when requested", () => {
     const views = new Map([["/de/", 10]] as const);
     const clicks: PathPlacementCount[] = [
-      { path: "/de/", placement: "hero", count: 2 },
-      { path: "/de/", placement: "contact", count: 1 },
+      { path: "/de/", placement: "hero-freelance", count: 2 },
+      { path: "/de/", placement: "contact-coaching", count: 1 },
     ];
 
     const text = formatFunnelReport(
@@ -42,7 +63,9 @@ describe("buildFunnelReport", () => {
     );
 
     expect(text).toContain("/de/");
-    expect(text).toContain("hero");
-    expect(text).toContain("contact");
+    expect(text).toContain("offering:freelance");
+    expect(text).toContain("offering:coaching");
+    expect(text).toContain("hero-freelance");
+    expect(text).toContain("contact-coaching");
   });
 });
