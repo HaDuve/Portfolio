@@ -25,6 +25,20 @@ export function buildSchedulingClickPayload(
   return { type: "scheduling_click", path, placement, locale };
 }
 
+const SCHEDULING_UTM_SOURCE = "hannesduve.com";
+
+export function buildSchedulingHref(
+  baseUrl: string,
+  path: string,
+  placement: SchedulingPlacement,
+): string {
+  const url = new URL(baseUrl);
+  url.searchParams.set("utm_content", placement);
+  url.searchParams.set("utm_medium", path);
+  url.searchParams.set("utm_source", SCHEDULING_UTM_SOURCE);
+  return url.toString();
+}
+
 export const ANALYTICS_INGEST_HEADER = "X-Analytics-Ingest-Key";
 
 type SenderDeps = {

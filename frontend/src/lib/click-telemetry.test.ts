@@ -2,6 +2,7 @@ import { describe, it, expect, vi } from "vitest";
 import {
   ANALYTICS_INGEST_HEADER,
   buildSchedulingClickPayload,
+  buildSchedulingHref,
   createSchedulingClickSender,
 } from "./click-telemetry";
 import { INSTRUMENTED_SCHEDULING_CLICKS } from "./scheduling-click-sites";
@@ -18,6 +19,32 @@ describe("INSTRUMENTED_SCHEDULING_CLICKS", () => {
       ]),
     );
   });
+});
+
+const CALENDLY_BASE = "https://calendly.com/hannes-duve-pbqa/30min";
+
+describe("buildSchedulingHref", () => {
+  it("appends placement passthrough utm params to the calendly url", () => {
+    const href = buildSchedulingHref(
+      CALENDLY_BASE,
+      "/en/vibe-coding-coach/",
+      "cta",
+    );
+    const url = new URL(href);
+    expect(url.searchParams.get("utm_content")).toBe("cta");
+    expect(url.searchParams.get("utm_medium")).toBe("/en/vibe-coding-coach/");
+    expect(url.searchParams.get("utm_source")).toBe("hannesduve.com");
+  });
+
+  it.each(INSTRUMENTED_SCHEDULING_CLICKS)(
+    "appends utm passthrough for $placement on $path ($locale)",
+    ({ path, placement }) => {
+      const url = new URL(buildSchedulingHref(CALENDLY_BASE, path, placement));
+      expect(url.searchParams.get("utm_content")).toBe(placement);
+      expect(url.searchParams.get("utm_medium")).toBe(path);
+      expect(url.searchParams.get("utm_source")).toBe("hannesduve.com");
+    },
+  );
 });
 
 describe("buildSchedulingClickPayload", () => {

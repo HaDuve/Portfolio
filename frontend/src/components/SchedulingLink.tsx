@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import {
   buildSchedulingClickPayload,
+  buildSchedulingHref,
   sendSchedulingClick,
   type SchedulingPlacement,
 } from "@/lib/click-telemetry";
@@ -28,15 +29,16 @@ export function SchedulingLink({
   onClick,
 }: Props) {
   const pathname = usePathname();
+  const path = pathname.endsWith("/") ? pathname : `${pathname}/`;
+  const schedulingHref = buildSchedulingHref(href, path, placement);
 
   return (
     <a
-      href={href}
+      href={schedulingHref}
       target="_blank"
       rel="noopener noreferrer"
       className={className}
       onClick={(event) => {
-        const path = pathname.endsWith("/") ? pathname : `${pathname}/`;
         sendSchedulingClick(
           buildSchedulingClickPayload(path, placement, locale),
         );
@@ -48,7 +50,7 @@ export function SchedulingLink({
           shouldInterceptForGoogleAdsConversion(event, conversionEnabled)
         ) {
           event.preventDefault();
-          window.gtag_report_conversion!(href, true);
+          window.gtag_report_conversion!(schedulingHref, true);
         }
       }}
     >
