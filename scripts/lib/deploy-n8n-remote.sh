@@ -51,7 +51,7 @@ build_n8n_workflow() {
     -w /app \
     --env-file .env \
     node:22-bookworm-slim \
-    bash -lc "npm ci && npm run build:workflow && node scripts/check-prod-stack-env.mjs"
+    bash -lc "npm ci && npm run build:workflow && npm run check:prod-stack"
 }
 
 deploy_n8n_compose() {

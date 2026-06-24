@@ -15,6 +15,8 @@
 # Optional — deploy operator automation (HaDuve/n8n) alongside the site (separate /opt/n8n compose):
 #   DEPLOY_N8N=1 ./scripts/deploy-remote.sh
 #
+# Validate syntax: bash -n scripts/deploy-remote.example.sh scripts/lib/deploy-n8n-remote.sh
+#
 # Env: SSH_TARGET, REMOTE_DIR, REPO_URL, PRUNE_CLICKS, DEPLOY_N8N, REMOTE_N8N_DIR, N8N_REPO_URL
 
 set -euo pipefail
