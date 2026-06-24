@@ -51,6 +51,27 @@ On each run the script (over SSH):
 
 Also available via `cd frontend && npm run deploy`.
 
+### Operator automation (n8n) on the same VM
+
+Optional — does not change the site deploy unless you opt in. n8n runs as a **separate** compose project at `/opt/n8n` (localhost-only port `5678`); Portfolio Caddy and frontend are untouched.
+
+```bash
+DEPLOY_N8N=1 ./scripts/deploy-remote.sh
+```
+
+First run creates `/opt/n8n/.env` from `.env.prod.example` and exits — fill `DISCORD_BOOKING_ALERT_WEBHOOK_URL`, `CALENDLY_PERSONAL_ACCESS_TOKEN`, and `WEBHOOK_URL`, then re-run. The **site deploy still completes** on that run; only n8n setup stops until secrets are filled.
+
+On each `DEPLOY_N8N=1` run the script also:
+
+1. Clones/pulls [HaDuve/n8n](https://github.com/HaDuve/n8n) into `/opt/n8n`
+2. Builds `workflows/booking-alert.json` via a one-off `node:22` container (no Node required on the host)
+3. Validates env with `npm run check:prod-stack`
+4. `docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d`
+
+Env: `REMOTE_N8N_DIR` (default `/opt/n8n`), `N8N_REPO_URL`. Requires [HaDuve/n8n](https://github.com/HaDuve/n8n) `main` at or past prod-stack merge ([#8](https://github.com/HaDuve/n8n/pull/8)). See [n8n docs/prod-stack.md](https://github.com/HaDuve/n8n/blob/main/docs/prod-stack.md).
+
+Syntax check (local): `bash -n scripts/deploy-remote.example.sh scripts/lib/deploy-n8n-remote.sh`
+
 ### Manual deploy on the server
 
 If you prefer to run Compose on the VM directly (same result as the script’s remote steps):
